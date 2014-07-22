@@ -1,5 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings;
 
+import android.app.Application;
+
 import java.util.Random;
 
 /**
@@ -9,9 +11,15 @@ import java.util.Random;
  *    int[] array = {1, 2, 3};
  *    Util.shuffle(array);
  */
-public class Util {
+public class Util{
 
     private static Random random;
+    private static DBHelper sDbHelper;
+    private static Application instance;
+
+    public static Application getInstance() {
+        return instance;
+    }
 
     /**
      * Code from method java.util.Collections.shuffle();
@@ -29,4 +37,5 @@ public class Util {
         array[i] = array[j];
         array[j] = temp;
     }
+
 }
