@@ -5,6 +5,8 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.timothyblumberg.autodidacticism.learnthings.question.DBHelper;
+
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = "App";

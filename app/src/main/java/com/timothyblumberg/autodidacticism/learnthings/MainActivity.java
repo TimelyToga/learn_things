@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 
 public class MainActivity extends Activity {
@@ -164,5 +167,13 @@ public class MainActivity extends Activity {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
+
+        JSONObject jsonObject = new JSONObject("{\"something\":\"value\"}");
     }
+
+    public void createQuestions(){
+        final Gson gson = new Gson();
+        
+    }
+
 }

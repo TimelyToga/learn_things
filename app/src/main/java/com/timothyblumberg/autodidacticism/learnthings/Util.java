@@ -2,6 +2,8 @@ package com.timothyblumberg.autodidacticism.learnthings;
 
 import android.app.Application;
 
+import com.timothyblumberg.autodidacticism.learnthings.question.DBHelper;
+
 import java.util.Random;
 
 /**
@@ -36,6 +38,10 @@ public class Util{
         String temp = array[i];
         array[i] = array[j];
         array[j] = temp;
+    }
+
+    public void initializeDB(){
+
     }
 
 }

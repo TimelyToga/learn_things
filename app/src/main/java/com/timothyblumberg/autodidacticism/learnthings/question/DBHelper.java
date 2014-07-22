@@ -1,8 +1,10 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.question;
 
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.timothyblumberg.autodidacticism.learnthings.App;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
