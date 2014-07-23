@@ -2,10 +2,13 @@ package com.timothyblumberg.autodidacticism.learnthings;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.timothyblumberg.autodidacticism.learnthings.question.DBHelper;
+
+import dagger.ObjectGraph;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
 
@@ -13,21 +16,15 @@ public class App extends Application implements Application.ActivityLifecycleCal
 
     private static App instance;
     private static DBHelper sDbHelper;
-
+    private ObjectGraph objectGraph;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
 
-//        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-//
-//        Display display = wm.getDefaultDisplay();
-//
-//        Point size = new Point();
-//        display.getSize(size);
-//        Globals.setDisplayWidth(size.x);
-//        Globals.setDisplayHeight(size.y);
+        objectGraph = ObjectGraph.create(new AppModule(this));
+        objectGraph.injectStatics();
 
         registerActivityLifecycleCallbacks(this);
     }
@@ -49,13 +46,17 @@ public class App extends Application implements Application.ActivityLifecycleCal
         return instance;
     }
 
+    public static Context getAppContext() {
+        return instance;
+    }
+
     public static SQLiteDatabase getWritableDB() {
         return getDBHelper().getWritableDatabase();
     }
 
     public static DBHelper getDBHelper() {
         if (sDbHelper == null) {
-            sDbHelper = new DBHelper(getInstance());
+            sDbHelper = new DBHelper(getAppContext());
         }
         return sDbHelper;
     }
@@ -87,5 +88,10 @@ public class App extends Application implements Application.ActivityLifecycleCal
     @Override public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
 
     }
+
+    public void inject(Object object) {
+        objectGraph.inject(object);
+    }
+
 
 }

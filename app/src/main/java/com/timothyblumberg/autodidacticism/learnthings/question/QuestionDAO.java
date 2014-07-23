@@ -1,5 +1,6 @@
 package com.timothyblumberg.autodidacticism.learnthings.question;
 
+import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
@@ -23,6 +24,13 @@ public class QuestionDAO {
         }
     }
 
+    public static Question getRandomQuestion(){
+        Cursor c = App.getWritableDB().rawQuery("SELECT * FROM mainTable ORDER BY RANDOM() LIMIT 1", null);
+        String question_id = c.getString(0);
+        Question rand_q = getQuestionById(question_id);
+        return rand_q;
+    }
+
     public static void save(Question question) {
 
         // See if the group already exists
@@ -40,12 +48,14 @@ public class QuestionDAO {
 
     public static void deleteQuestion(Question question) {
 
-        // Delete Question in DB
+        // Delete LeoGroup in DB
         cupboard().withDatabase(App.getWritableDB()).delete(question);
     }
 
+    // Private Methods
     private static DatabaseCompartment.QueryBuilder<Question> getQueryBuilder() {
         return cupboard().withDatabase(App.getWritableDB()).query(Question.class);
     }
+
 
 }

@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import org.json.JSONObject;
+import com.timothyblumberg.autodidacticism.learnthings.question.Question;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 
 public class MainActivity extends Activity {
@@ -26,7 +26,9 @@ public class MainActivity extends Activity {
     public final int C_CODE = 2;
 
     public final String EXTRA_ANSWER = "EXTRA_ANSWER";
+    public final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
     public final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
+    public static App sApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +37,17 @@ public class MainActivity extends Activity {
 
         TextView tView = (TextView)findViewById(R.id.resultText);
 
+        sApp = App.getInstance();
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             int answer_code = extras.getInt(EXTRA_ANSWER);
             boolean correct = extras.getBoolean(EXTRA_CORRECT);
+            String question_id = extras.getString(EXTRA_QUESTION_ID);
+
+            Question question = QuestionDAO.getQuestionById(question_id);
+            question.setOutcome(correct);
 
             switch(answer_code){
                 case A_CODE:
@@ -58,9 +67,13 @@ public class MainActivity extends Activity {
                 tView.append("\nIncorrect");
             }
 
+            tView.append("\nQ_ID: " + question_id + "\nViews: " + question.numberAsks);
+
         } else {
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
         }
+
+        createQuestions();
     }
 
 
@@ -84,13 +97,16 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * This method creates a Notification builder from the specified question and
-     * String array of answers
+     * This method creates a Notification builder from the specified Question obj
      * @param question A simple string with the question (? included)
-     * @param answers An array of answers
-     * @return
+     * @return NotificationCompat.Builder to create the notifs
      */
-    public NotificationCompat.Builder createBuilder(String question, String[] answers){
+    public NotificationCompat.Builder createBuilder(Question question){
+        // Get pertinent fields from Question obj
+        String curQText = question.qText;
+        String[] answers = question.getAnswers();
+        String id = question.getQuestionId();
+
         boolean[] correctArray = new boolean[3];
         // Find right answer, strip identifiers
         for(int a = 0; a < answers.length; a++){
@@ -108,14 +124,17 @@ public class MainActivity extends Activity {
         Intent aIntent = new Intent(this, MainActivity.class)
                 .setAction("answer_a")
                 .putExtra(EXTRA_ANSWER, A_CODE)
+                .putExtra(EXTRA_QUESTION_ID, id)
                 .putExtra(EXTRA_CORRECT, correctArray[0]);
         Intent bIntent = new Intent(this, MainActivity.class)
                 .setAction("answer_b")
                 .putExtra(EXTRA_ANSWER, B_CODE)
+                .putExtra(EXTRA_QUESTION_ID, id)
                 .putExtra(EXTRA_CORRECT, correctArray[1]);        ;
         Intent cIntent = new Intent(this, MainActivity.class)
                 .setAction("answer_c")
                 .putExtra(EXTRA_ANSWER, C_CODE)
+                .putExtra(EXTRA_QUESTION_ID, id)
                 .putExtra(EXTRA_CORRECT, correctArray[2]);
 
         // Create the pending intents
@@ -126,7 +145,8 @@ public class MainActivity extends Activity {
         // Create and return the Notification Builder
         return new NotificationCompat.Builder(this)
                         .setStyle(new NotificationCompat.InboxStyle()
-                                .setBigContentTitle("What is the capital of France?")
+                                .setBigContentTitle(curQText)
+                                .setSummaryText(curQText)
                                 .addLine(String.format("A) %s", answers[0]))
                                 .addLine(String.format("B) %s", answers[1]))
                                 .addLine(String.format("C) %s",answers[2])) )
@@ -137,16 +157,18 @@ public class MainActivity extends Activity {
     }
 
     public void notify(View v){
-        Toast.makeText(this, "Notified", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Notified", Toast.LENGTH_SHORT).show();
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
-
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, resultIntent, 0);
 
-        String[] answers = {"@Paris", "#Toulouse", "#Orleans"};
+        Question rand_q = QuestionDAO.getRandomQuestion();
 
-        NotificationCompat.Builder mBuilder = createBuilder("What is the capital of France?", answers);
+        String[] answers = {"@Paris", "#Toulouse", "#Orleans"};
+        Question q = Question.create("What is the capital of France?", answers);
+
+        NotificationCompat.Builder mBuilder = createBuilder(q);
 
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
@@ -168,12 +190,23 @@ public class MainActivity extends Activity {
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
 
-        JSONObject jsonObject = new JSONObject("{\"something\":\"value\"}");
+//        createQuestions();
     }
 
     public void createQuestions(){
+        String testJSON = "{'question':'This is the quesion'}";
+        String[] array = {"#North", "@South", "#East"};
+        Question test = Question.create("What is the capital?", array);
+    }
+
+    public Question createQuestionfromJson(String json){
         final Gson gson = new Gson();
-        
+//        String out = gson.toJson(test);
+        Question q = gson.fromJson(json, Question.class);
+        return q;
+//        String outcome = gson.toJson(q);
+
+//        Toast.makeText(this,outcome, Toast.LENGTH_SHORT).show();
     }
 
 }

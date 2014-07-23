@@ -2,7 +2,6 @@ package com.timothyblumberg.autodidacticism.learnthings.question;
 
 import com.timothyblumberg.autodidacticism.learnthings.Util;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -13,23 +12,28 @@ public class Question {
     public long _id; // required by cupboard
     public String question_id;
     public String qText;
-    public String[] answers;
+    public String answers_a;
+    public String answers_b;
+    public String answers_c;
     public int numberAsks = 0;
     public boolean correctlyAnswered = false;
-    public int lastAsked;
+    public long lastAsked;
 
     public static Question create(String qText, String[] answers){
 
         final Question question = new Question();
         question.question_id = UUID.randomUUID().toString();
-        question._id = UUID.fromString(this.question_id).getMostSignificantBits();
+        question._id = Util.getLongFromUUIDString(question.question_id);
         question.qText = qText;
-        question.answers = answers;
         question.numberAsks = 0;
         question.correctlyAnswered = false;
         question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
 
-        Question.save(question);
+        question.answers_a = answers[0];
+        question.answers_b = answers[1];
+        question.answers_c = answers[2];
+
+        QuestionDAO.save(question);
         return question;
     }
 
@@ -51,7 +55,7 @@ public class Question {
      * @return randomized string array of answers
      */
     public String[] getAnswers(){
-        String[] temp = this.answers;
+        String[] temp = {answers_a, answers_b, answers_c};
         Util.shuffle(temp);
         return temp;
     }

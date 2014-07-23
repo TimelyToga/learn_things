@@ -48,8 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * Clears all the data in the DB
      */
-    public void clearAllData() {
-
+    public void clearAllData(Context context) {
         // Drop tables - cupboard uses a class's getSimpleName() method.
         final SQLiteDatabase db = App.getWritableDB();
         db.execSQL("DELETE FROM " + Question.class.getSimpleName());

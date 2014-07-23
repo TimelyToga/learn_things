@@ -5,6 +5,7 @@ import android.app.Application;
 import com.timothyblumberg.autodidacticism.learnthings.question.DBHelper;
 
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * As from: http://stackoverflow.com/questions/1519736/random-shuffling-of-an-array
@@ -42,6 +43,10 @@ public class Util{
 
     public void initializeDB(){
 
+    }
+
+    public static Long getLongFromUUIDString(String uuid) {
+        return UUID.fromString(uuid).getMostSignificantBits();
     }
 
 }
