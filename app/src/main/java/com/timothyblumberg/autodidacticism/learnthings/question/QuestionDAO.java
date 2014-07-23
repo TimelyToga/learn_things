@@ -25,10 +25,24 @@ public class QuestionDAO {
     }
 
     public static Question getRandomQuestion(){
-        Cursor c = App.getWritableDB().rawQuery("SELECT * FROM mainTable ORDER BY RANDOM() LIMIT 1", null);
-        String question_id = c.getString(0);
+        Cursor c = App.getWritableDB().rawQuery("SELECT * FROM Question ORDER BY RANDOM() LIMIT 1", null);
+        int column = c.getColumnCount();
+        int count = c.getCount();
+
+        // Logging bullshit
+//        Log.d(QuestionDAO.class.getSimpleName(), "columns: " + column + "\ncount: " + count);
+//        for(int a = 0; a < 9; a++){
+//            String name = c.getColumnName(a);
+//            Log.d(QuestionDAO.class.getSimpleName(), "NAME: "+ name);
+//        }
+
+        // Move the cursor, grab question_id, convert to Question obj, return
+        String question_id;
+        c.moveToFirst();
+        question_id = c.getString(1);
         Question rand_q = getQuestionById(question_id);
         return rand_q;
+
     }
 
     public static void save(Question question) {
@@ -52,6 +66,10 @@ public class QuestionDAO {
         cupboard().withDatabase(App.getWritableDB()).delete(question);
     }
 
+    public static int getNumberOfQuestions(){
+        Cursor c = cupboard().withDatabase(App.getWritableDB()).query(Question.class).getCursor();
+        return c.getCount();
+    }
     // Private Methods
     private static DatabaseCompartment.QueryBuilder<Question> getQueryBuilder() {
         return cupboard().withDatabase(App.getWritableDB()).query(Question.class);

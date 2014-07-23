@@ -1,6 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -21,6 +22,8 @@ import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 public class MainActivity extends Activity {
 
+    public final int DEFAULT_NOTIFICATIONS_CODE = 98;
+
     public final int A_CODE = 0;
     public final int B_CODE = 1;
     public final int C_CODE = 2;
@@ -35,8 +38,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tView = (TextView)findViewById(R.id.resultText);
+        NotificationManager notificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(DEFAULT_NOTIFICATIONS_CODE);
 
+        // Get important references
+        TextView tView = (TextView)findViewById(R.id.resultText);
         sApp = App.getInstance();
 
 
@@ -72,8 +79,9 @@ public class MainActivity extends Activity {
         } else {
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
         }
-
-        createQuestions();
+        if(QuestionDAO.getNumberOfQuestions() == 0){
+            createQuestions();
+        }
     }
 
 
@@ -153,11 +161,12 @@ public class MainActivity extends Activity {
                         .setSmallIcon(R.drawable.notif_pic)
                         .addAction(R.drawable.a_icn, "", aPIntent)
                         .addAction(R.drawable.b_icn, "", bPIntent)
-                        .addAction(R.drawable.c_icn, "", cPIntent);
+                        .addAction(R.drawable.c_icn, "", cPIntent)
+                        .setAutoCancel(true);
     }
 
     public void notify(View v){
-//        Toast.makeText(this, "Notified", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, String.valueOf(QuestionDAO.getNumberOfQuestions()), Toast.LENGTH_SHORT).show();
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
@@ -165,10 +174,7 @@ public class MainActivity extends Activity {
 
         Question rand_q = QuestionDAO.getRandomQuestion();
 
-        String[] answers = {"@Paris", "#Toulouse", "#Orleans"};
-        Question q = Question.create("What is the capital of France?", answers);
-
-        NotificationCompat.Builder mBuilder = createBuilder(q);
+        NotificationCompat.Builder mBuilder = createBuilder(rand_q);
 
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
@@ -188,25 +194,27 @@ public class MainActivity extends Activity {
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(1, mBuilder.build());
+
+        Notification notif = mBuilder.build();
+        mNotificationManager.notify(DEFAULT_NOTIFICATIONS_CODE, notif);
 
 //        createQuestions();
     }
 
     public void createQuestions(){
-        String testJSON = "{'question':'This is the quesion'}";
         String[] array = {"#North", "@South", "#East"};
-        Question test = Question.create("What is the capital?", array);
+        Question test = Question.create("Which direction is generally down on a map?", array);
+        String[] answers = {"@San Francisco", "#Durham", "#Gray"};
+        String[] answers2 = {"@Paris", "#Toulouse", "#Orleans"};
+        Question q = Question.create("What is the capital of France?", answers2);
+        Question q2 = Question.create("What city is the best city?", answers);
     }
 
     public Question createQuestionfromJson(String json){
         final Gson gson = new Gson();
-//        String out = gson.toJson(test);
         Question q = gson.fromJson(json, Question.class);
+        Toast.makeText(this, "Your questions have been saved.", Toast.LENGTH_SHORT).show();
         return q;
-//        String outcome = gson.toJson(q);
-
-//        Toast.makeText(this,outcome, Toast.LENGTH_SHORT).show();
     }
 
 }
