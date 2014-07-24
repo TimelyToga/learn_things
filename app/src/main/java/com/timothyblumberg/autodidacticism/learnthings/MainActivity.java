@@ -1,6 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,33 +16,38 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends Activity {
 
-    public final int DEFAULT_NOTIFICATIONS_CODE = 98;
+    public static final int DEFAULT_NOTIFICATIONS_CODE = 98;
 
     public CountDownTimer waitTimer;
-    private final int COUNTDOWN_LENGTH = 5000;
 
 
-    public final int A_CODE = 0;
-    public final int B_CODE = 1;
-    public final int C_CODE = 2;
+    public static final int A_CODE = 0;
+    public static final int B_CODE = 1;
+    public static final int C_CODE = 2;
 
     private final String TAG = MainActivity.class.getSimpleName();
-    public final String EXTRA_ANSWER = "EXTRA_ANSWER";
-    public final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
-    public final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
+    public static final String EXTRA_ANSWER = "EXTRA_ANSWER";
+    public static final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
+    public static final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
     public static App sApp;
     public static TextView wordTextView;
     public static TextView timerTextView;
+    public static ImageView questionResult;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +61,10 @@ public class MainActivity extends Activity {
         // Get important references
         wordTextView = (TextView)findViewById(R.id.resultText);
         timerTextView = (TextView)findViewById(R.id.timer);
+        questionResult = (ImageView)findViewById(R.id.questionResult);
         sApp = App.getInstance();
 
-        waitTimer = new CountDownTimer(COUNTDOWN_LENGTH, 500) {
+        waitTimer = new CountDownTimer(Globals.COUNTDOWN_LENGTH, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
@@ -92,25 +99,29 @@ public class MainActivity extends Activity {
             }
 
             if(correct){
-                wordTextView.append("\nCorrect");
+                questionResult.setImageResource(R.drawable.success_icn);
             } else {
-                wordTextView.append("\nIncorrect");
+                questionResult.setImageResource(R.drawable.failure_icn);
             }
 
-            wordTextView.append("\nViews: " + question.numberAsks);
-            Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
-            for(Question q : qList){
-                if(q.numberAsks > 0){
-                    wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
+            if(Globals.DEBUG){
+                wordTextView.append("\nViews: " + question.numberAsks);
+                Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
+                for(Question q : qList){
+                    if(q.numberAsks > 0){
+                        wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
+                    }
                 }
             }
 
-        } else {
+        } else if(Globals.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
         }
         if(QuestionDAO.getNumberOfQuestions() == 0){
             createQuestions();
         }
+
+        scheduleNotif();
     }
 
 
@@ -198,7 +209,10 @@ public class MainActivity extends Activity {
     }
 
     public void notify(View v){
-        Toast.makeText(this, String.valueOf(QuestionDAO.getNumberOfQuestions()), Toast.LENGTH_SHORT).show();
+        if(Globals.DEBUG) Toast.makeText(this,
+                String.valueOf(QuestionDAO.getNumberOfQuestions()),
+                Toast.LENGTH_SHORT)
+                .show();
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
@@ -268,6 +282,20 @@ public class MainActivity extends Activity {
         }
 
         super.finish();
+    }
+
+    /**
+     * Sets the time
+     */
+    private void scheduleNotif() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        int timeUntilNextNotif = Globals.TIME_UNTIL_NEXT_NOTIFICATION +
+                Globals.rgen.nextInt(Globals.TIME_UNTIL_NEXT_NOTIFICATION);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                Calendar.getInstance().getTimeInMillis() + timeUntilNextNotif,
+                alarmIntent);
     }
 
 }

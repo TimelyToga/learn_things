@@ -10,4 +10,8 @@ public class User {
     /* User Stats*/
     public int total_answer_attempts;
     public int total_questions;
+    public int total_correct_questions;
+
+    /* User Information */
+    public String name;
 }
