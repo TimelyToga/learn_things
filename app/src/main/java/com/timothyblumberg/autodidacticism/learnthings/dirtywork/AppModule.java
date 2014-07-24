@@ -1,4 +1,6 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.dirtywork;
+
+import com.timothyblumberg.autodidacticism.learnthings.App;
 
 import dagger.Module;
 

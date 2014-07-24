@@ -1,9 +1,12 @@
 package com.timothyblumberg.autodidacticism.learnthings.question;
 
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.text.TextUtils;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
+
+import java.util.Random;
 
 import nl.qbusict.cupboard.DatabaseCompartment;
 
@@ -15,6 +18,16 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  */
 public class QuestionDAO {
 
+    final public static String RATIO_QUERY_FORMAT =  "SELECT *, (num_correct / numberAsks) as ratio FROM Question ORDER BY ratio LIMIT %s";
+    final public static String RATIO_QUERY =  "SELECT *, (num_correct / numberAsks) as ratio FROM Question ORDER BY ratio LIMIT 1";
+    final public static String RANDOM_QUERY_FORMAT =  "SELECT * FROM Question ORDER BY RANDOM() LIMIT %s";
+    final public static String RANDOM_QUERY =  "SELECT * FROM Question ORDER BY RANDOM() LIMIT 1";
+    final public static String RAND_RATIO_QUERY = "SELECT *, (num_correct / (num_incorrect + 1) ) as ratio FROM (SELECT * FROM Question ORDER BY RANDOM() LIMIT 3) ORDER BY ratio LIMIT 1";
+    final public static String RAND_WRONG = "SELECT * FROM Question WHERE correctlyAnswered = 'F' ORDER BY RANDOM() LIMIT 1";
+
+    final public static String[] queryArray = {RAND_WRONG}; //RATIO_QUERY, RANDOM_QUERY, RAND_RATIO_QUERY
+
+
     public static Question getQuestionById(String questionId) {
         if (TextUtils.isEmpty(questionId)) {
             return null;
@@ -24,22 +37,13 @@ public class QuestionDAO {
         }
     }
 
-    public static Question getRandomQuestion(){
-        Cursor c = App.getWritableDB().rawQuery("SELECT * FROM Question ORDER BY RANDOM() LIMIT 1", null);
-        int column = c.getColumnCount();
-        int count = c.getCount();
-
-        // Logging bullshit
-//        Log.d(QuestionDAO.class.getSimpleName(), "columns: " + column + "\ncount: " + count);
-//        for(int a = 0; a < 9; a++){
-//            String name = c.getColumnName(a);
-//            Log.d(QuestionDAO.class.getSimpleName(), "NAME: "+ name);
-//        }
+    public static Question getRandomQuestion() throws CursorIndexOutOfBoundsException{
+        Cursor c = App.getWritableDB().rawQuery(getRandomQuery(), null);
 
         // Move the cursor, grab question_id, convert to Question obj, return
-        String question_id;
         c.moveToFirst();
-        question_id = c.getString(1);
+        int question_idCol = c.getColumnIndex("question_id");
+        String question_id = c.getString(question_idCol);
         Question rand_q = getQuestionById(question_id);
         return rand_q;
 
@@ -70,9 +74,41 @@ public class QuestionDAO {
         Cursor c = cupboard().withDatabase(App.getWritableDB()).query(Question.class).getCursor();
         return c.getCount();
     }
+
+    public static Question[] getQuestionList(String query, int num_qs) {
+        Cursor c = App.getWritableDB().rawQuery(String.format(query, num_qs), null);
+        Question[] qArray = new Question[num_qs];
+        int i = 0;
+        int qTextCol = c.getColumnIndex("qText");
+
+        c.moveToFirst();
+        while (c.isAfterLast() == false) {
+            // Get question
+            int question_idCol = c.getColumnIndex("question_id");
+            String question_id = c.getString(question_idCol);
+            qArray[i] = getQuestionById(question_id);
+
+            // Bookkeeping
+            i++;
+            c.moveToNext();
+        }
+
+        return qArray;
+    }
+
     // Private Methods
     private static DatabaseCompartment.QueryBuilder<Question> getQueryBuilder() {
         return cupboard().withDatabase(App.getWritableDB()).query(Question.class);
+    }
+
+    private static String getRandomQuery(){
+        if(queryArray.length == 1){
+            return queryArray[0];
+        } else {
+            Random r = new Random();
+            int rand_index = r.nextInt(queryArray.length - 1);
+            return queryArray[rand_index];
+        }
     }
 
 

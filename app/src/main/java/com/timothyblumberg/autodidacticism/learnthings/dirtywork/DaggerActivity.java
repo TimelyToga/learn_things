@@ -1,9 +1,10 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.dirtywork;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.squareup.otto.Bus;
+import com.timothyblumberg.autodidacticism.learnthings.App;
 
 import javax.inject.Inject;
 

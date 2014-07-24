@@ -6,7 +6,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import com.timothyblumberg.autodidacticism.learnthings.question.DBHelper;
+import com.timothyblumberg.autodidacticism.learnthings.dirtywork.AppModule;
+import com.timothyblumberg.autodidacticism.learnthings.common.DBHelper;
 
 import dagger.ObjectGraph;
 

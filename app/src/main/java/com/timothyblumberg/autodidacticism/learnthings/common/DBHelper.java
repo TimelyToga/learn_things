@@ -1,10 +1,11 @@
-package com.timothyblumberg.autodidacticism.learnthings.question;
+package com.timothyblumberg.autodidacticism.learnthings.common;
 
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
+import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
@@ -16,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // DB name for version 5 and below was leo.db
     private static final String DATABASE_NAME = "learnthings.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
     private static final String TAG = "DBHelper";
 
     /* Static Initializer to register entities with Cupboard */

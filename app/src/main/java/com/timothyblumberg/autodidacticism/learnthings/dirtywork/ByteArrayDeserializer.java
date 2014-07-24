@@ -1,4 +1,4 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.dirtywork;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

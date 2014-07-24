@@ -1,8 +1,6 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.common;
 
 import android.app.Application;
-
-import com.timothyblumberg.autodidacticism.learnthings.question.DBHelper;
 
 import java.util.Random;
 import java.util.UUID;
@@ -39,10 +37,6 @@ public class Util{
         String temp = array[i];
         array[i] = array[j];
         array[j] = temp;
-    }
-
-    public void initializeDB(){
-
     }
 
     public static Long getLongFromUUIDString(String uuid) {

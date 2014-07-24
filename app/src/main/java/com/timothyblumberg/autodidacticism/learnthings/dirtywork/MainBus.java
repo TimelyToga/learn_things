@@ -1,4 +1,4 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.dirtywork;
 
 import android.os.Handler;
 import android.os.Looper;

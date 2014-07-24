@@ -7,8 +7,11 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,14 +27,21 @@ public class MainActivity extends Activity {
 
     public final int DEFAULT_NOTIFICATIONS_CODE = 98;
 
+    public CountDownTimer waitTimer;
+    private final int COUNTDOWN_LENGTH = 5000;
+
+
     public final int A_CODE = 0;
     public final int B_CODE = 1;
     public final int C_CODE = 2;
 
+    private final String TAG = MainActivity.class.getSimpleName();
     public final String EXTRA_ANSWER = "EXTRA_ANSWER";
     public final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
     public final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
     public static App sApp;
+    public static TextView wordTextView;
+    public static TextView timerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +53,21 @@ public class MainActivity extends Activity {
         notificationManager.cancel(DEFAULT_NOTIFICATIONS_CODE);
 
         // Get important references
-        TextView tView = (TextView)findViewById(R.id.resultText);
+        wordTextView = (TextView)findViewById(R.id.resultText);
+        timerTextView = (TextView)findViewById(R.id.timer);
         sApp = App.getInstance();
+
+        waitTimer = new CountDownTimer(COUNTDOWN_LENGTH, 500) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                finish();
+            }
+        }.start();
 
 
         Bundle extras = getIntent().getExtras();
@@ -58,23 +81,29 @@ public class MainActivity extends Activity {
 
             switch(answer_code){
                 case A_CODE:
-                    tView.setText("Answered A");
+                    wordTextView.setText("Answered A");
                     break;
                 case B_CODE:
-                    tView.setText("Answered B");
+                    wordTextView.setText("Answered B");
                     break;
                 case C_CODE:
-                    tView.setText("Answered C");
+                    wordTextView.setText("Answered C");
                     break;
             }
 
             if(correct){
-                tView.append("\nCorrect");
+                wordTextView.append("\nCorrect");
             } else {
-                tView.append("\nIncorrect");
+                wordTextView.append("\nIncorrect");
             }
 
-            tView.append("\nQ_ID: " + question_id + "\nViews: " + question.numberAsks);
+            wordTextView.append("\nViews: " + question.numberAsks);
+            Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
+            for(Question q : qList){
+                if(q.numberAsks > 0){
+                    wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
+                }
+            }
 
         } else {
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
@@ -109,7 +138,7 @@ public class MainActivity extends Activity {
      * @param question A simple string with the question (? included)
      * @return NotificationCompat.Builder to create the notifs
      */
-    public NotificationCompat.Builder createBuilder(Question question){
+    public NotificationCompat.Builder createMCBuilder(Question question){
         // Get pertinent fields from Question obj
         String curQText = question.qText;
         String[] answers = question.getAnswers();
@@ -153,8 +182,9 @@ public class MainActivity extends Activity {
         // Create and return the Notification Builder
         return new NotificationCompat.Builder(this)
                         .setStyle(new NotificationCompat.InboxStyle()
-                                .setBigContentTitle(curQText)
-                                .setSummaryText(curQText)
+                                .setBigContentTitle(getString(R.string.new_q))
+                                .addLine(curQText)
+//                                .setSummaryText(curQText)
                                 .addLine(String.format("A) %s", answers[0]))
                                 .addLine(String.format("B) %s", answers[1]))
                                 .addLine(String.format("C) %s",answers[2])) )
@@ -162,6 +192,8 @@ public class MainActivity extends Activity {
                         .addAction(R.drawable.a_icn, "", aPIntent)
                         .addAction(R.drawable.b_icn, "", bPIntent)
                         .addAction(R.drawable.c_icn, "", cPIntent)
+                        .setContentTitle(getString(R.string.new_q))
+                        .setContentText(curQText)
                         .setAutoCancel(true);
     }
 
@@ -172,9 +204,16 @@ public class MainActivity extends Activity {
         Intent resultIntent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, resultIntent, 0);
 
-        Question rand_q = QuestionDAO.getRandomQuestion();
+        Question rand_q;
+        try{
+            rand_q = QuestionDAO.getRandomQuestion();
+        } catch(CursorIndexOutOfBoundsException e) {
+            //TODO: Figure out what to do when all questions have been correctly answered
+            Log.d(TAG, "All questions have been correctly answered");
+            rand_q = QuestionDAO.getQuestionList(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
+        }
 
-        NotificationCompat.Builder mBuilder = createBuilder(rand_q);
+        NotificationCompat.Builder mBuilder = createMCBuilder(rand_q);
 
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
@@ -203,11 +242,15 @@ public class MainActivity extends Activity {
 
     public void createQuestions(){
         String[] array = {"#North", "@South", "#East"};
-        Question test = Question.create("Which direction is generally down on a map?", array);
+        Question q1 = Question.create("Which direction is generally down on a map?", array);
         String[] answers = {"@San Francisco", "#Durham", "#Gray"};
         String[] answers2 = {"@Paris", "#Toulouse", "#Orleans"};
-        Question q = Question.create("What is the capital of France?", answers2);
+        String[] answers3 = {"@IKEA", "#Grand Furniture", "#Zack's Furniture"};
+        String[] answers4 = {"@Santa Claus", "#Easter Bunny", "#Father Time"};
+        Question q5 = Question.create("What is the capital of France?", answers2);
         Question q2 = Question.create("What city is the best city?", answers);
+        Question q3 = Question.create("Where is cheap furniture bought from?", answers3);
+        Question q4 = Question.create("Who comes down the chimney on Christmas?", answers4);
     }
 
     public Question createQuestionfromJson(String json){
@@ -215,6 +258,16 @@ public class MainActivity extends Activity {
         Question q = gson.fromJson(json, Question.class);
         Toast.makeText(this, "Your questions have been saved.", Toast.LENGTH_SHORT).show();
         return q;
+    }
+
+    @Override
+    public void finish(){
+        if(waitTimer != null) {
+            waitTimer.cancel();
+            waitTimer = null;
+        }
+
+        super.finish();
     }
 
 }
