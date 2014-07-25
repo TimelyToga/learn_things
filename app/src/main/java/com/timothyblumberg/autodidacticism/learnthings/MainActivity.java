@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -276,6 +277,7 @@ public class MainActivity extends Activity {
         Question q2 = Question.create("What city is the best city?", answers);
         Question q3 = Question.create("Where is cheap furniture bought from?", answers3);
         Question q4 = Question.create("Who comes down the chimney on Christmas?", answers4);
+        Util.readCSV();
     }
 
     public Question createQuestionfromJson(String json){
@@ -284,6 +286,7 @@ public class MainActivity extends Activity {
         Toast.makeText(this, "Your questions have been saved.", Toast.LENGTH_SHORT).show();
         return q;
     }
+
 
     @Override
     public void finish(){
