@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
+import com.timothyblumberg.autodidacticism.learnthings.user.User;
 
 import java.util.Calendar;
 
@@ -117,8 +118,13 @@ public class MainActivity extends Activity {
         } else if(Globals.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
         }
+
+        // initialization
         if(QuestionDAO.getNumberOfQuestions() == 0){
             createQuestions();
+        }
+        if(Globals.curUser == null){
+            produceUser();
         }
 
         scheduleNotif();
@@ -272,6 +278,10 @@ public class MainActivity extends Activity {
         Question q = gson.fromJson(json, Question.class);
         Toast.makeText(this, "Your questions have been saved.", Toast.LENGTH_SHORT).show();
         return q;
+    }
+
+    public void produceUser(){
+        Globals.curUser = User.create();
     }
 
     @Override

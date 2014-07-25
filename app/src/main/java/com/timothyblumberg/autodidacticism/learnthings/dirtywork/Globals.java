@@ -1,5 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings.dirtywork;
 
+import com.timothyblumberg.autodidacticism.learnthings.user.User;
+
 import java.util.Random;
 
 /**
@@ -13,5 +15,5 @@ public class Globals {
     public static int TIME_UNTIL_NEXT_NOTIFICATION = 10000;
 
     public final static Random rgen = new Random();
-
+    public static User curUser;
 }
