@@ -3,6 +3,8 @@ package com.timothyblumberg.autodidacticism.learnthings.user;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
+import java.util.UUID;
+
 /**
  * Created by Tim on 7/24/14.
  */
@@ -23,6 +25,7 @@ public class User {
 
     public static User create(){
         User user = new User();
+        user.user_id = UUID.randomUUID().toString();
         user._id = Util.getLongFromUUIDString(user.user_id);
         user.total_questions = QuestionDAO.getNumberOfQuestions();
         user.curTrue = "F";

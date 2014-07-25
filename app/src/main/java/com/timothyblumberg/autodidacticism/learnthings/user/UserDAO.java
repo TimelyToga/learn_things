@@ -1,6 +1,8 @@
 package com.timothyblumberg.autodidacticism.learnthings.user;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.text.TextUtils;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
@@ -21,7 +23,7 @@ public class UserDAO {
         if (TextUtils.isEmpty(userId)) {
             return null;
         } else {
-            final String selectionStr = "question_id = ?";
+            final String selectionStr = "user_id = ?";
             return getQueryBuilder().withSelection(selectionStr, userId).get();
         }
     }
@@ -49,6 +51,19 @@ public class UserDAO {
         ContentValues values = new ContentValues(1);
         values.put("curTrue", curTrue);
         cupboard().withDatabase(App.getWritableDB()).update(User.class, values, "user_id = ?", Globals.curUser.getUserId());
+    }
+
+
+    public static User testUserExistence() throws CursorIndexOutOfBoundsException {
+        Cursor c = cupboard().withDatabase(App.getWritableDB()).query(User.class).getCursor();
+
+        // Test if there is a user
+        c.moveToFirst();
+        int user_idCol = c.getColumnIndex("user_id");
+        String user_id = c.getString(user_idCol);
+        User user = getUserById(user_id);
+        return user;
+
     }
 
 

@@ -25,6 +25,7 @@ import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 import com.timothyblumberg.autodidacticism.learnthings.user.User;
+import com.timothyblumberg.autodidacticism.learnthings.user.UserDAO;
 
 import java.util.Calendar;
 
@@ -123,8 +124,12 @@ public class MainActivity extends Activity {
         if(QuestionDAO.getNumberOfQuestions() == 0){
             createQuestions();
         }
-        if(Globals.curUser == null){
-            produceUser();
+        try{
+            Globals.curUser = UserDAO.testUserExistence();
+        } catch (CursorIndexOutOfBoundsException e){
+            // If nothing is found, create the user
+            Log.d(TAG, "\n\n\nCreating user\n\n\n");
+            Globals.curUser = User.create();
         }
 
         scheduleNotif();
@@ -278,10 +283,6 @@ public class MainActivity extends Activity {
         Question q = gson.fromJson(json, Question.class);
         Toast.makeText(this, "Your questions have been saved.", Toast.LENGTH_SHORT).show();
         return q;
-    }
-
-    public void produceUser(){
-        Globals.curUser = User.create();
     }
 
     @Override
