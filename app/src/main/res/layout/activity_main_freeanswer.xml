@@ -44,4 +44,19 @@
         android:layout_below="@+id/notif_button"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Correct"
+        android:id="@+id/correctButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/resultText" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Incorrect"
+        android:id="@+id/incorrectButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/resultText" />
 </RelativeLayout>
