@@ -11,7 +11,7 @@ All questions will be stored in a csv file.
 
 ### Multiple Choice
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![MC Question](https://github.com/TimelyToga/learn_things/blob/master/pics/mc_question_notif.png "MC question")
 
 
 
@@ -27,8 +27,7 @@ Incorrect Answers are prepended with a `#` without any leading whitespace.
 
 
 ### Freeresponse
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
+![FR Question](https://github.com/TimelyToga/learn_things/blob/master/pics/fr_question_notif.png "FR question")
 `Question text with question mark?,&Correct Answer`
 
 The correct answer is prepended with a `&` without any leading whitespace.
