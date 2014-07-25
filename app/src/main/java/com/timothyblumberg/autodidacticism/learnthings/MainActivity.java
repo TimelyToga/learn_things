@@ -37,6 +37,11 @@ public class MainActivity extends Activity {
 
     public CountDownTimer waitTimer;
 
+    public static final String ANSWER_FR = "ANSWER_FR";
+    public static final String ANSWER_A = "ANSWER_A";
+    public static final String ANSWER_B = "ANSWER_B";
+    public static final String ANSWER_C = "ANSWER_C";
+
 
     public static final int A_CODE = 0;
     public static final int B_CODE = 1;
@@ -46,31 +51,92 @@ public class MainActivity extends Activity {
     public static final String EXTRA_ANSWER = "EXTRA_ANSWER";
     public static final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
     public static final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
+    public static final String EXTRA_IS_FR = "EXTRA_IS_FR"; // true FR, false MC
     public static App sApp;
     public static TextView wordTextView;
     public static TextView timerTextView;
     public static ImageView questionResult;
 
+    private static int timerLength;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            boolean isFR = extras.getBoolean(EXTRA_IS_FR);
+            String question_id = extras.getString(EXTRA_QUESTION_ID);
+            Question question = QuestionDAO.getQuestionById(question_id);
+            Log.d(TAG, "FR: " + String.valueOf(isFR));
+
+            if(isFR){
+                timerLength = Globals.FR_COUNTDOWN_LENGTH;
+
+                setContentView(R.layout.activity_main_freeanswer);
+                // Get important references
+                wordTextView = (TextView)findViewById(R.id.resultText);
+                timerTextView = (TextView)findViewById(R.id.timer);
+                questionResult = (ImageView)findViewById(R.id.questionResult);
+                sApp = App.getInstance();
+
+            } else {
+                timerLength = Globals.MC_COUNTDOWN_LENGTH;
+
+                setContentView(R.layout.activity_main);
+                // Get important references
+                wordTextView = (TextView)findViewById(R.id.resultText);
+                timerTextView = (TextView)findViewById(R.id.timer);
+                questionResult = (ImageView)findViewById(R.id.questionResult);
+                sApp = App.getInstance();
+
+                int answer_code = extras.getInt(EXTRA_ANSWER);
+                boolean correct = extras.getBoolean(EXTRA_CORRECT);
+
+                question.setOutcome(correct);
+
+                switch(answer_code){
+                    case A_CODE:
+                        wordTextView.setText("Answered A");
+                        break;
+                    case B_CODE:
+                        wordTextView.setText("Answered B");
+                        break;
+                    case C_CODE:
+                        wordTextView.setText("Answered C");
+                        break;
+                }
+                if(correct){
+                    questionResult.setImageResource(R.drawable.success_icn);
+                } else {
+                    questionResult.setImageResource(R.drawable.failure_icn);
+                }
+
+                if(Globals.DEBUG){
+                    wordTextView.append("\nViews: " + question.numberAsks);
+                    Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
+                    for(Question q : qList){
+                        if(q.numberAsks > 0){
+                            wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
+                        }
+                    }
+                }
+            }
+
+        }  else if(Globals.DEBUG){
+            Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
+        }
 
         NotificationManager notificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
+                App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(DEFAULT_NOTIFICATIONS_CODE);
 
-        // Get important references
-        wordTextView = (TextView)findViewById(R.id.resultText);
-        timerTextView = (TextView)findViewById(R.id.timer);
-        questionResult = (ImageView)findViewById(R.id.questionResult);
-        sApp = App.getInstance();
 
-        waitTimer = new CountDownTimer(Globals.COUNTDOWN_LENGTH, 1000) {
+        waitTimer = new CountDownTimer(timerLength, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
+//                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
             }
 
             @Override
@@ -79,48 +145,6 @@ public class MainActivity extends Activity {
             }
         }.start();
 
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            int answer_code = extras.getInt(EXTRA_ANSWER);
-            boolean correct = extras.getBoolean(EXTRA_CORRECT);
-            String question_id = extras.getString(EXTRA_QUESTION_ID);
-
-            Question question = QuestionDAO.getQuestionById(question_id);
-            question.setOutcome(correct);
-
-            switch(answer_code){
-                case A_CODE:
-                    wordTextView.setText("Answered A");
-                    break;
-                case B_CODE:
-                    wordTextView.setText("Answered B");
-                    break;
-                case C_CODE:
-                    wordTextView.setText("Answered C");
-                    break;
-            }
-
-            if(correct){
-                questionResult.setImageResource(R.drawable.success_icn);
-            } else {
-                questionResult.setImageResource(R.drawable.failure_icn);
-            }
-
-            if(Globals.DEBUG){
-                wordTextView.append("\nViews: " + question.numberAsks);
-                Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
-                for(Question q : qList){
-                    if(q.numberAsks > 0){
-                        wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
-                    }
-                }
-            }
-
-        } else if(Globals.DEBUG){
-            Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
-        }
-
         // initialization
         if(QuestionDAO.getNumberOfQuestions() == 0){
             createQuestions();
@@ -128,7 +152,7 @@ public class MainActivity extends Activity {
         try{
             Globals.curUser = UserDAO.testUserExistence();
         } catch (CursorIndexOutOfBoundsException e){
-            // If nothing is found, create the user
+            // If nothing is found, createMC the user
             Log.d(TAG, "\n\n\nCreating user\n\n\n");
             Globals.curUser = User.create();
         }
@@ -159,7 +183,7 @@ public class MainActivity extends Activity {
     /**
      * This method creates a Notification builder from the specified Question obj
      * @param question A simple string with the question (? included)
-     * @return NotificationCompat.Builder to create the notifs
+     * @return NotificationCompat.Builder to createMC the notifs
      */
     public NotificationCompat.Builder createMCBuilder(Question question){
         // Get pertinent fields from Question obj
@@ -268,15 +292,18 @@ public class MainActivity extends Activity {
 
     public void createQuestions(){
         String[] array = {"#North", "@South", "#East"};
-        Question q1 = Question.create("Which direction is generally down on a map?", array);
+        Question q1 = Question.createMC("Which direction is generally down on a map?", array);
         String[] answers = {"@San Francisco", "#Durham", "#Gray"};
         String[] answers2 = {"@Paris", "#Toulouse", "#Orleans"};
         String[] answers3 = {"@IKEA", "#Grand Furniture", "#Zack's Furniture"};
         String[] answers4 = {"@Santa Claus", "#Easter Bunny", "#Father Time"};
-        Question q5 = Question.create("What is the capital of France?", answers2);
-        Question q2 = Question.create("What city is the best city?", answers);
-        Question q3 = Question.create("Where is cheap furniture bought from?", answers3);
-        Question q4 = Question.create("Who comes down the chimney on Christmas?", answers4);
+        Question q5 = Question.createMC("What is the capital of France?", answers2);
+        Question q2 = Question.createMC("What city is the best city?", answers);
+        Question q3 = Question.createMC("Where is cheap furniture bought from?", answers3);
+        Question q4 = Question.createMC("Who comes down the chimney on Christmas?", answers4);
+
+        // FR Questions
+        Question freeQuestion = Question.createFR("What time is it?");
         Util.readCSV();
     }
 

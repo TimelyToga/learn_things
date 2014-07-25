@@ -21,8 +21,9 @@ public class Question {
     public String correctlyAnswered = "F"; // Has the question ever been answered correctly?
     public String lastAnswerCorrect = "F"; // Answered correctly last time answered?
     public long lastAsked;
+    public boolean multipleChoice; // True for MC, False for free response
 
-    public static Question create(String qText, String[] answers){
+    public static Question createFR(String qText){
 
         final Question question = new Question();
         question.question_id = UUID.randomUUID().toString();
@@ -33,6 +34,24 @@ public class Question {
         question.num_incorrect = 0;
         question.correctlyAnswered = "F";
         question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
+        question.multipleChoice = false;
+
+        QuestionDAO.save(question);
+        return question;
+    }
+
+    public static Question createMC(String qText, String[] answers){
+
+        final Question question = new Question();
+        question.question_id = UUID.randomUUID().toString();
+        question._id = Util.getLongFromUUIDString(question.question_id);
+        question.qText = qText;
+        question.numberAsks = 0;
+        question.num_correct = 0;
+        question.num_incorrect = 0;
+        question.correctlyAnswered = "F";
+        question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
+        question.multipleChoice = true;
 
         question.answers_a = answers[0];
         question.answers_b = answers[1];

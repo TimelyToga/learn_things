@@ -74,11 +74,19 @@ public class Util{
             while ((line = br.readLine()) != null) {
                 // use comma as separator
                 String[] qArray = line.split(cvsSplitBy);
-                String[] answers = {qArray[1], qArray[2], qArray[3]};
+                Question cur_question = null;
+                if(qArray.length > 1){
+                    // MUST be a Multiple Choice Question
+                    String[] answers = {qArray[1], qArray[2], qArray[3]};
 
-                Question q = Question.create(qArray[0], answers);
-                questionArrayList.add(q);
-                Log.d(TAG, "made question " + q.question_id);
+                    cur_question = Question.createMC(qArray[0], answers);
+                } else {
+                    // Must be a free response
+                    cur_question = Question.createFR(qArray[0]);
+                }
+                // Add newly created question to list for output to JSON
+                questionArrayList.add(cur_question);
+                Log.d(TAG, "made question " + cur_question.question_id);
             }
 
         } catch (FileNotFoundException e) {

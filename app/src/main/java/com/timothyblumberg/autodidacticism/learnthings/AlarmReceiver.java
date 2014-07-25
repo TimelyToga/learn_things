@@ -25,7 +25,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static final String TAG = BroadcastReceiver.class.getSimpleName();
     @Override
     public void onReceive(Context context, Intent intent){
-        Log.d("ALARM RECEIVER", "--> onReceive called!");
+        Log.d(TAG, "--> onReceive called!");
         publishNotif();
     }
 
@@ -37,7 +37,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(App.getAppContext(), MainActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(App.getAppContext(), 0, resultIntent, 0);
 
         Question rand_q;
         try{
@@ -48,8 +47,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             rand_q = QuestionDAO.getQuestionList(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
         }
 
-        NotificationCompat.Builder mBuilder = createMCBuilder(rand_q);
-
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
         // This ensures that navigating backward from the Activity leads out of
@@ -59,24 +56,38 @@ public class AlarmReceiver extends BroadcastReceiver {
         stackBuilder.addParentStack(MainActivity.class);
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
-//        PendingIntent resultPendingIntent =
-//                stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-//        mBuilder.setContentIntent(resultPendingIntent);
+
+        // Create the notification builder of the correct type
+        NotificationCompat.Builder mBuilder = null;
+        if (rand_q.multipleChoice){
+            mBuilder = createMCBuilder(rand_q);
+        } else {
+            mBuilder = createFRBuilder(rand_q);
+
+            // Assign the correct intent for click through
+            resultIntent.setAction(MainActivity.ANSWER_FR)
+                        .putExtra(MainActivity.EXTRA_IS_FR, true);
+            PendingIntent pIntent = PendingIntent.getActivity(App.getAppContext(),
+                                                                0,
+                                                                resultIntent,
+                                                                PendingIntent.FLAG_CANCEL_CURRENT);
+            mBuilder.setContentIntent(pIntent);
+        }
+
+
         NotificationManager mNotificationManager =
                 (NotificationManager) App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
 
         Notification notif = mBuilder.build();
         mNotificationManager.notify(MainActivity.DEFAULT_NOTIFICATIONS_CODE, notif);
 
-//        createQuestions();
     }
 
 
     /**
      * This method creates a Notification builder from the specified Question obj
      * @param question A simple string with the question (? included)
-     * @return NotificationCompat.Builder to create the notifs
+     * @return NotificationCompat.Builder to createMC the notifs
      */
     public NotificationCompat.Builder createMCBuilder(Question question){
         Context context = App.getAppContext();
@@ -101,17 +112,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Creates an explicit intent for an Activity in your app
         Intent aIntent = new Intent(context, MainActivity.class)
-                .setAction("answer_a")
+                .setAction(MainActivity.ANSWER_A)
                 .putExtra(MainActivity.EXTRA_ANSWER, MainActivity.A_CODE)
                 .putExtra(MainActivity.EXTRA_QUESTION_ID, id)
                 .putExtra(MainActivity.EXTRA_CORRECT, correctArray[0]);
         Intent bIntent = new Intent(context, MainActivity.class)
-                .setAction("answer_b")
+                .setAction(MainActivity.ANSWER_B)
                 .putExtra(MainActivity.EXTRA_ANSWER, MainActivity.B_CODE)
                 .putExtra(MainActivity.EXTRA_QUESTION_ID, id)
                 .putExtra(MainActivity.EXTRA_CORRECT, correctArray[1]);
         Intent cIntent = new Intent(context, MainActivity.class)
-                .setAction("answer_c")
+                .setAction(MainActivity.ANSWER_C)
                 .putExtra(MainActivity.EXTRA_ANSWER, MainActivity.C_CODE)
                 .putExtra(MainActivity.EXTRA_QUESTION_ID, id)
                 .putExtra(MainActivity.EXTRA_CORRECT, correctArray[2]);
@@ -134,6 +145,25 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .addAction(R.drawable.a_icn, "", aPIntent)
                 .addAction(R.drawable.b_icn, "", bPIntent)
                 .addAction(R.drawable.c_icn, "", cPIntent)
+                .setContentTitle(context.getString(R.string.new_q))
+                .setContentText(curQText)
+                .setAutoCancel(true);
+    }
+
+    public NotificationCompat.Builder createFRBuilder(Question question){
+        Context context = App.getAppContext();
+
+        // Get pertinent fields from Question obj
+        String curQText = question.qText;
+
+
+        //        PendingIntent resultPendingIntent =
+//                stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(resultPendingIntent);
+
+        // Create and return the Notification Builder
+        return new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.notif_pic)
                 .setContentTitle(context.getString(R.string.new_q))
                 .setContentText(curQText)
                 .setAutoCancel(true);
