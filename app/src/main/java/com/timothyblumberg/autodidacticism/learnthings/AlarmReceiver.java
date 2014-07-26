@@ -65,8 +65,8 @@ public class AlarmReceiver extends BroadcastReceiver {
             mBuilder = createFRBuilder(rand_q);
 
             // Assign the correct intent for click through
-            resultIntent.setAction(MainActivity.ANSWER_FR)
-                        .putExtra(MainActivity.EXTRA_IS_FR, true);
+            resultIntent.setAction(Globals.ANSWER_FR)
+                        .putExtra(Globals.EXTRA_IS_FR, true);
             PendingIntent pIntent = PendingIntent.getActivity(App.getAppContext(),
                                                                 0,
                                                                 resultIntent,
@@ -79,7 +79,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 (NotificationManager) App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification notif = mBuilder.build();
-        mNotificationManager.notify(MainActivity.DEFAULT_NOTIFICATIONS_CODE, notif);
+        mNotificationManager.notify(Globals.DEFAULT_NOTIFICATIONS_CODE, notif);
 
     }
 
@@ -112,20 +112,20 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Creates an explicit intent for an Activity in your app
         Intent aIntent = new Intent(context, MainActivity.class)
-                .setAction(MainActivity.ANSWER_A)
-                .putExtra(MainActivity.EXTRA_ANSWER, MainActivity.A_CODE)
-                .putExtra(MainActivity.EXTRA_QUESTION_ID, id)
-                .putExtra(MainActivity.EXTRA_CORRECT, correctArray[0]);
+                .setAction(Globals.ANSWER_A)
+                .putExtra(Globals.EXTRA_ANSWER, Globals.A_CODE)
+                .putExtra(Globals.EXTRA_QUESTION_ID, id)
+                .putExtra(Globals.EXTRA_CORRECT, correctArray[0]);
         Intent bIntent = new Intent(context, MainActivity.class)
-                .setAction(MainActivity.ANSWER_B)
-                .putExtra(MainActivity.EXTRA_ANSWER, MainActivity.B_CODE)
-                .putExtra(MainActivity.EXTRA_QUESTION_ID, id)
-                .putExtra(MainActivity.EXTRA_CORRECT, correctArray[1]);
+                .setAction(Globals.ANSWER_B)
+                .putExtra(Globals.EXTRA_ANSWER, Globals.B_CODE)
+                .putExtra(Globals.EXTRA_QUESTION_ID, id)
+                .putExtra(Globals.EXTRA_CORRECT, correctArray[1]);
         Intent cIntent = new Intent(context, MainActivity.class)
-                .setAction(MainActivity.ANSWER_C)
-                .putExtra(MainActivity.EXTRA_ANSWER, MainActivity.C_CODE)
-                .putExtra(MainActivity.EXTRA_QUESTION_ID, id)
-                .putExtra(MainActivity.EXTRA_CORRECT, correctArray[2]);
+                .setAction(Globals.ANSWER_C)
+                .putExtra(Globals.EXTRA_ANSWER, Globals.C_CODE)
+                .putExtra(Globals.EXTRA_QUESTION_ID, id)
+                .putExtra(Globals.EXTRA_CORRECT, correctArray[2]);
 
         // Create the pending intents
         PendingIntent aPIntent = PendingIntent.getActivity(context, 0, aIntent, PendingIntent.FLAG_CANCEL_CURRENT);

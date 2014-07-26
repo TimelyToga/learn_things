@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Launch Notification"
-        android:id="@+id/notif_button"
+        android:id="@+id/fr_notif_button"
         android:onClick="notify"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -23,15 +23,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/resultText"
-        android:layout_below="@+id/questionResult"
+        android:id="@+id/fr_resultText"
+        android:layout_below="@+id/fr_questionResult"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/timer"
+        android:id="@+id/fr_timer"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -40,23 +40,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/success_icn"
-        android:id="@+id/questionResult"
-        android:layout_below="@+id/notif_button"
+        android:id="@+id/fr_questionResult"
+        android:layout_below="@+id/fr_notif_button"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Correct"
-        android:id="@+id/correctButton"
+        android:id="@+id/fr_correctButton"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/resultText" />
+        android:layout_toLeftOf="@+id/fr_resultText"
+        android:onClick="correctClick"/>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Incorrect"
-        android:id="@+id/incorrectButton"
+        android:id="@+id/fr_incorrectButton"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/resultText" />
+        android:layout_toRightOf="@+id/fr_resultText"
+        android:onClick="incorrectClick"/>
 </RelativeLayout>

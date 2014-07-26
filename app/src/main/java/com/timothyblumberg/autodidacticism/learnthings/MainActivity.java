@@ -20,8 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.timothyblumberg.autodidacticism.learnthings.common.Util;
+import com.timothyblumberg.autodidacticism.learnthings.common.QuestionFactory;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -33,25 +32,10 @@ import java.util.Calendar;
 
 public class MainActivity extends Activity {
 
-    public static final int DEFAULT_NOTIFICATIONS_CODE = 98;
+    private CountDownTimer waitTimer;
 
-    public CountDownTimer waitTimer;
-
-    public static final String ANSWER_FR = "ANSWER_FR";
-    public static final String ANSWER_A = "ANSWER_A";
-    public static final String ANSWER_B = "ANSWER_B";
-    public static final String ANSWER_C = "ANSWER_C";
-
-
-    public static final int A_CODE = 0;
-    public static final int B_CODE = 1;
-    public static final int C_CODE = 2;
 
     private final String TAG = MainActivity.class.getSimpleName();
-    public static final String EXTRA_ANSWER = "EXTRA_ANSWER";
-    public static final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
-    public static final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
-    public static final String EXTRA_IS_FR = "EXTRA_IS_FR"; // true FR, false MC
     public static App sApp;
     public static TextView wordTextView;
     public static TextView timerTextView;
@@ -66,63 +50,36 @@ public class MainActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            boolean isFR = extras.getBoolean(EXTRA_IS_FR);
-            String question_id = extras.getString(EXTRA_QUESTION_ID);
+            boolean isFR = extras.getBoolean(Globals.EXTRA_IS_FR);
+            String question_id = extras.getString(Globals.EXTRA_QUESTION_ID);
             Question question = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
 
-            if(isFR){
-                timerLength = Globals.FR_COUNTDOWN_LENGTH;
+            timerLength = Globals.TIMER_COUNTDOWN_LENGTH;
 
-                setContentView(R.layout.activity_main_freeanswer);
-                // Get important references
-                wordTextView = (TextView)findViewById(R.id.resultText);
-                timerTextView = (TextView)findViewById(R.id.timer);
-                questionResult = (ImageView)findViewById(R.id.questionResult);
-                sApp = App.getInstance();
+            setContentView(R.layout.activity_main);
+            // Get important references
+            wordTextView = (TextView)findViewById(R.id.resultText);
+            timerTextView = (TextView)findViewById(R.id.timer);
+            questionResult = (ImageView)findViewById(R.id.questionResult);
+            sApp = App.getInstance();
 
-            } else {
-                timerLength = Globals.MC_COUNTDOWN_LENGTH;
+            int answer_code = extras.getInt(Globals.EXTRA_ANSWER);
+            boolean correct = extras.getBoolean(Globals.EXTRA_CORRECT);
 
-                setContentView(R.layout.activity_main);
-                // Get important references
-                wordTextView = (TextView)findViewById(R.id.resultText);
-                timerTextView = (TextView)findViewById(R.id.timer);
-                questionResult = (ImageView)findViewById(R.id.questionResult);
-                sApp = App.getInstance();
+            question.setOutcome(correct);
+            setViewResult(answer_code, correct);
 
-                int answer_code = extras.getInt(EXTRA_ANSWER);
-                boolean correct = extras.getBoolean(EXTRA_CORRECT);
-
-                question.setOutcome(correct);
-
-                switch(answer_code){
-                    case A_CODE:
-                        wordTextView.setText("Answered A");
-                        break;
-                    case B_CODE:
-                        wordTextView.setText("Answered B");
-                        break;
-                    case C_CODE:
-                        wordTextView.setText("Answered C");
-                        break;
-                }
-                if(correct){
-                    questionResult.setImageResource(R.drawable.success_icn);
-                } else {
-                    questionResult.setImageResource(R.drawable.failure_icn);
-                }
-
-                if(Globals.DEBUG){
-                    wordTextView.append("\nViews: " + question.numberAsks);
-                    Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
-                    for(Question q : qList){
-                        if(q.numberAsks > 0){
-                            wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
-                        }
+            if(Globals.DEBUG){
+                wordTextView.append("\nViews: " + question.numberAsks);
+                Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
+                for(Question q : qList){
+                    if(q.numberAsks > 0){
+                        wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
                     }
                 }
             }
+
 
         }  else if(Globals.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
@@ -130,7 +87,7 @@ public class MainActivity extends Activity {
 
         NotificationManager notificationManager = (NotificationManager)
                 App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(DEFAULT_NOTIFICATIONS_CODE);
+        notificationManager.cancel(Globals.DEFAULT_NOTIFICATIONS_CODE);
 
 
         waitTimer = new CountDownTimer(timerLength, 1000) {
@@ -147,7 +104,7 @@ public class MainActivity extends Activity {
 
         // initialization
         if(QuestionDAO.getNumberOfQuestions() == 0){
-            createQuestions();
+            QuestionFactory.createQuestions();
         }
         try{
             Globals.curUser = UserDAO.testUserExistence();
@@ -207,19 +164,19 @@ public class MainActivity extends Activity {
         // Creates an explicit intent for an Activity in your app
         Intent aIntent = new Intent(this, MainActivity.class)
                 .setAction("answer_a")
-                .putExtra(EXTRA_ANSWER, A_CODE)
-                .putExtra(EXTRA_QUESTION_ID, id)
-                .putExtra(EXTRA_CORRECT, correctArray[0]);
+                .putExtra(Globals.EXTRA_ANSWER, Globals.A_CODE)
+                .putExtra(Globals.EXTRA_QUESTION_ID, id)
+                .putExtra(Globals.EXTRA_CORRECT, correctArray[0]);
         Intent bIntent = new Intent(this, MainActivity.class)
                 .setAction("answer_b")
-                .putExtra(EXTRA_ANSWER, B_CODE)
-                .putExtra(EXTRA_QUESTION_ID, id)
-                .putExtra(EXTRA_CORRECT, correctArray[1]);        ;
+                .putExtra(Globals.EXTRA_ANSWER, Globals.B_CODE)
+                .putExtra(Globals.EXTRA_QUESTION_ID, id)
+                .putExtra(Globals.EXTRA_CORRECT, correctArray[1]);        ;
         Intent cIntent = new Intent(this, MainActivity.class)
                 .setAction("answer_c")
-                .putExtra(EXTRA_ANSWER, C_CODE)
-                .putExtra(EXTRA_QUESTION_ID, id)
-                .putExtra(EXTRA_CORRECT, correctArray[2]);
+                .putExtra(Globals.EXTRA_ANSWER, Globals.C_CODE)
+                .putExtra(Globals.EXTRA_QUESTION_ID, id)
+                .putExtra(Globals.EXTRA_CORRECT, correctArray[2]);
 
         // Create the pending intents
         PendingIntent aPIntent = PendingIntent.getActivity(this, 0, aIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -285,34 +242,12 @@ public class MainActivity extends Activity {
         // mId allows you to update the notification later on.
 
         Notification notif = mBuilder.build();
-        mNotificationManager.notify(DEFAULT_NOTIFICATIONS_CODE, notif);
+        mNotificationManager.notify(Globals.DEFAULT_NOTIFICATIONS_CODE, notif);
 
 //        createQuestions();
     }
 
-    public void createQuestions(){
-        String[] array = {"#North", "@South", "#East"};
-        Question q1 = Question.createMC("Which direction is generally down on a map?", array);
-        String[] answers = {"@San Francisco", "#Durham", "#Gray"};
-        String[] answers2 = {"@Paris", "#Toulouse", "#Orleans"};
-        String[] answers3 = {"@IKEA", "#Grand Furniture", "#Zack's Furniture"};
-        String[] answers4 = {"@Santa Claus", "#Easter Bunny", "#Father Time"};
-        Question q5 = Question.createMC("What is the capital of France?", answers2);
-        Question q2 = Question.createMC("What city is the best city?", answers);
-        Question q3 = Question.createMC("Where is cheap furniture bought from?", answers3);
-        Question q4 = Question.createMC("Who comes down the chimney on Christmas?", answers4);
 
-        // FR Questions
-        Question freeQuestion = Question.createFR("What time is it?");
-        Util.readCSV();
-    }
-
-    public Question createQuestionfromJson(String json){
-        final Gson gson = new Gson();
-        Question q = gson.fromJson(json, Question.class);
-        Toast.makeText(this, "Your questions have been saved.", Toast.LENGTH_SHORT).show();
-        return q;
-    }
 
 
     @Override
@@ -337,6 +272,25 @@ public class MainActivity extends Activity {
         alarmManager.set(AlarmManager.RTC_WAKEUP,
                 Calendar.getInstance().getTimeInMillis() + timeUntilNextNotif,
                 alarmIntent);
+    }
+
+    private void setViewResult(int answer_code, boolean correct) {
+        switch (answer_code) {
+            case Globals.A_CODE:
+                wordTextView.setText("Answered A");
+                break;
+            case Globals.B_CODE:
+                wordTextView.setText("Answered B");
+                break;
+            case Globals.C_CODE:
+                wordTextView.setText("Answered C");
+                break;
+        }
+        if (correct) {
+            questionResult.setImageResource(R.drawable.success_icn);
+        } else {
+            questionResult.setImageResource(R.drawable.failure_icn);
+        }
     }
 
 }
