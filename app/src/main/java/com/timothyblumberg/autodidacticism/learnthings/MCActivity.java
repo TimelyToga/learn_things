@@ -1,7 +1,5 @@
 package com.timothyblumberg.autodidacticism.learnthings;
 
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,49 +8,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.timothyblumberg.autodidacticism.learnthings.common.QuestionFactory;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
-import com.timothyblumberg.autodidacticism.learnthings.user.User;
-import com.timothyblumberg.autodidacticism.learnthings.user.UserDAO;
-
-import java.util.Calendar;
 
 
-public class MainActivity extends Activity {
+public class MCActivity extends BaseActivity{
 
-    private CountDownTimer waitTimer;
-
-
-    private final String TAG = MainActivity.class.getSimpleName();
+    private final String TAG = MCActivity.class.getSimpleName();
     public static App sApp;
     public static TextView wordTextView;
     public static TextView timerTextView;
     public static ImageView questionResult;
-
-    private static int timerLength;
+    private static RelativeLayout mainLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mc);
 
         // Get important references
         wordTextView = (TextView)findViewById(R.id.resultText);
         timerTextView = (TextView)findViewById(R.id.timer);
         questionResult = (ImageView)findViewById(R.id.questionResult);
+        mainLayout = (RelativeLayout)findViewById(R.id.mc_layout);
         sApp = App.getInstance();
 
         Bundle extras = getIntent().getExtras();
@@ -88,31 +78,10 @@ public class MainActivity extends Activity {
                 App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(Globals.DEFAULT_NOTIFICATIONS_CODE);
 
-
-        waitTimer = new CountDownTimer(Globals.TIMER_COUNTDOWN_LENGTH, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
-            }
-
-            @Override
-            public void onFinish() {
-                finish();
-            }
-        }.start();
-
-        // initialization
-        if(QuestionDAO.getNumberOfQuestions() == 0){
-            QuestionFactory.createQuestions();
-        }
-        try{
-            Globals.curUser = UserDAO.testUserExistence();
-        } catch (CursorIndexOutOfBoundsException e){
-            // If nothing is found, createMC the user
-            Log.d(TAG, "\n\n\nCreating user\n\n\n");
-            Globals.curUser = User.create();
-        }
-
+        // Initialization in BaseActivity
+        setLayoutTouchListener(mainLayout);
+        waitTimer = makeTimer(timerTextView).start();
+        initQuestionsAndUser();
         scheduleNotif();
     }
 
@@ -161,17 +130,17 @@ public class MainActivity extends Activity {
         }
 
         // Creates an explicit intent for an Activity in your app
-        Intent aIntent = new Intent(this, MainActivity.class)
+        Intent aIntent = new Intent(this, MCActivity.class)
                 .setAction("answer_a")
                 .putExtra(Globals.EXTRA_ANSWER, Globals.A_CODE)
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
                 .putExtra(Globals.EXTRA_CORRECT, correctArray[0]);
-        Intent bIntent = new Intent(this, MainActivity.class)
+        Intent bIntent = new Intent(this, MCActivity.class)
                 .setAction("answer_b")
                 .putExtra(Globals.EXTRA_ANSWER, Globals.B_CODE)
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
                 .putExtra(Globals.EXTRA_CORRECT, correctArray[1]);        ;
-        Intent cIntent = new Intent(this, MainActivity.class)
+        Intent cIntent = new Intent(this, MCActivity.class)
                 .setAction("answer_c")
                 .putExtra(Globals.EXTRA_ANSWER, Globals.C_CODE)
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
@@ -207,7 +176,7 @@ public class MainActivity extends Activity {
                 .show();
 
         // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, MainActivity.class);
+        Intent resultIntent = new Intent(this, MCActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, resultIntent, 0);
 
         Question rand_q;
@@ -227,7 +196,7 @@ public class MainActivity extends Activity {
         // your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addParentStack(MCActivity.class);
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
@@ -244,33 +213,6 @@ public class MainActivity extends Activity {
         mNotificationManager.notify(Globals.DEFAULT_NOTIFICATIONS_CODE, notif);
 
 //        createQuestions();
-    }
-
-
-
-
-    @Override
-    public void finish(){
-        if(waitTimer != null) {
-            waitTimer.cancel();
-            waitTimer = null;
-        }
-
-        super.finish();
-    }
-
-    /**
-     * Sets the time
-     */
-    private void scheduleNotif() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        int timeUntilNextNotif = Globals.TIME_UNTIL_NEXT_NOTIFICATION +
-                Globals.rgen.nextInt(Globals.TIME_UNTIL_NEXT_NOTIFICATION);
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                Calendar.getInstance().getTimeInMillis() + timeUntilNextNotif,
-                alarmIntent);
     }
 
     private void setViewResult(int answer_code, boolean correct) {

@@ -1,4 +1,4 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.common;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,6 +12,10 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.timothyblumberg.autodidacticism.learnthings.App;
+import com.timothyblumberg.autodidacticism.learnthings.FRActivity;
+import com.timothyblumberg.autodidacticism.learnthings.MCActivity;
+import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -51,9 +55,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder = null;
         if (rand_q.multipleChoice){
             // Creates an explicit intent for an Activity in your app
-            Intent mcIntent = new Intent(App.getAppContext(), MainActivity.class);
+            Intent mcIntent = new Intent(App.getAppContext(), MCActivity.class);
 
-            stackBuilder.addParentStack(MainActivity.class);
+            stackBuilder.addParentStack(MCActivity.class);
             stackBuilder.addNextIntent(mcIntent);
             mBuilder = createMCBuilder(rand_q);
         } else {
@@ -114,17 +118,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         // Creates an explicit intent for an Activity in your app
-        Intent aIntent = new Intent(context, MainActivity.class)
+        Intent aIntent = new Intent(context, MCActivity.class)
                 .setAction(Globals.ANSWER_A)
                 .putExtra(Globals.EXTRA_ANSWER, Globals.A_CODE)
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
                 .putExtra(Globals.EXTRA_CORRECT, correctArray[0]);
-        Intent bIntent = new Intent(context, MainActivity.class)
+        Intent bIntent = new Intent(context, MCActivity.class)
                 .setAction(Globals.ANSWER_B)
                 .putExtra(Globals.EXTRA_ANSWER, Globals.B_CODE)
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
                 .putExtra(Globals.EXTRA_CORRECT, correctArray[1]);
-        Intent cIntent = new Intent(context, MainActivity.class)
+        Intent cIntent = new Intent(context, MCActivity.class)
                 .setAction(Globals.ANSWER_C)
                 .putExtra(Globals.EXTRA_ANSWER, Globals.C_CODE)
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)

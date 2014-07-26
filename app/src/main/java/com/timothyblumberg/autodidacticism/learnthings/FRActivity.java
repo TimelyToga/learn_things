@@ -1,49 +1,46 @@
 package com.timothyblumberg.autodidacticism.learnthings;
 
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.timothyblumberg.autodidacticism.learnthings.common.QuestionFactory;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
-import com.timothyblumberg.autodidacticism.learnthings.user.User;
-import com.timothyblumberg.autodidacticism.learnthings.user.UserDAO;
 
-import java.util.Calendar;
+public class FRActivity extends BaseActivity {
 
-public class FRActivity extends Activity {
+    private final String TAG = FRActivity.class.getSimpleName();
+    private static RelativeLayout frLayout;
+    private static TextView wordTextView;
+    private static TextView timerTextView;
+    private static ImageView questionResult;
 
-    private CountDownTimer waitTimer;
-
-    public static TextView wordTextView;
-    public static TextView timerTextView;
-    public static ImageView questionResult;
-    public static App sApp;
+    private static App sApp;
 
     public static Question curQuestion;
 
-    private final String TAG = FRActivity.class.getSimpleName();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fr);
+
+        // Get important references
+        frLayout = (RelativeLayout)findViewById(R.id.fr_layout);
+        wordTextView = (TextView)findViewById(R.id.fr_resultText);
+        timerTextView = (TextView)findViewById(R.id.fr_timer);
+        questionResult = (ImageView)findViewById(R.id.fr_questionResult);
+        sApp = App.getInstance();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -52,16 +49,7 @@ public class FRActivity extends Activity {
             curQuestion = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
 
-            if(isFR){
-
-                setContentView(R.layout.activity_fr);
-                // Get important references
-                wordTextView = (TextView)findViewById(R.id.fr_resultText);
-                timerTextView = (TextView)findViewById(R.id.fr_timer);
-                questionResult = (ImageView)findViewById(R.id.fr_questionResult);
-                sApp = App.getInstance();
-
-            }
+            wordTextView.setText(getText(R.string.answer));
 
         }  else if(Globals.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
@@ -72,30 +60,11 @@ public class FRActivity extends Activity {
         notificationManager.cancel(Globals.DEFAULT_NOTIFICATIONS_CODE);
 
 
-        waitTimer = new CountDownTimer(Globals.TIMER_COUNTDOWN_LENGTH, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
-            }
-
-            @Override
-            public void onFinish() {
-                finish();
-            }
-        };
-
-        // initialization
-        if(QuestionDAO.getNumberOfQuestions() == 0){
-            QuestionFactory.createQuestions();
-        }
-        try{
-            Globals.curUser = UserDAO.testUserExistence();
-        } catch (CursorIndexOutOfBoundsException e){
-            // If nothing is found, createMC the user
-            Log.d(TAG, "\n\n\nCreating user\n\n\n");
-            Globals.curUser = User.create();
-        }
-
+        // Initialization in BaseActivity
+        setLayoutTouchListener(frLayout);
+        waitTimer = makeTimer(timerTextView).start();
+        initQuestionsAndUser();
+        scheduleNotif();
     }
 
 
@@ -118,6 +87,7 @@ public class FRActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void correctClick(View v){
         waitTimer.start();
         curQuestion.setOutcome(true);
@@ -131,17 +101,6 @@ public class FRActivity extends Activity {
         curQuestion.setOutcome(false);
         wordTextView.setText("Don't worry, we'll ask you again later.");
         scheduleNotif();
-    }
-
-    private void scheduleNotif() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        int timeUntilNextNotif = Globals.TIME_UNTIL_NEXT_NOTIFICATION +
-                Globals.rgen.nextInt(Globals.TIME_UNTIL_NEXT_NOTIFICATION);
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                Calendar.getInstance().getTimeInMillis() + timeUntilNextNotif,
-                alarmIntent);
     }
 
 }

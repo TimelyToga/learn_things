@@ -5,8 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
 import com.timothyblumberg.autodidacticism.learnthings.App;
-import com.timothyblumberg.autodidacticism.learnthings.MainActivity;
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.ByteArrayDeserializer;
+import com.timothyblumberg.autodidacticism.learnthings.MCActivity;
 
 import java.util.Date;
 
@@ -20,7 +19,7 @@ import dagger.Provides;
  */
 @Module(
         injects = {
-                MainActivity.class,
+                MCActivity.class,
                 App.class,
         },
         staticInjections = {

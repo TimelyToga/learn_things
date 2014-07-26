@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".MCActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmReceiver" >
+        <receiver android:name=".common.AlarmReceiver" >
             <intent-filter>
                 <action android:name="com.example.android.receivers.NOTIFICATION_ALARM" />
             </intent-filter>
@@ -27,6 +27,14 @@
         <activity
             android:name=".FRActivity"
             android:label="@string/title_activity_fr" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".BaseActivity"
+            android:label="@string/title_activity_base" >
         </activity>
     </application>
 
