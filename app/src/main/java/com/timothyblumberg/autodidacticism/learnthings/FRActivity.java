@@ -82,7 +82,7 @@ public class FRActivity extends Activity {
             public void onFinish() {
                 finish();
             }
-        }.start();
+        };
 
         // initialization
         if(QuestionDAO.getNumberOfQuestions() == 0){
@@ -96,7 +96,6 @@ public class FRActivity extends Activity {
             Globals.curUser = User.create();
         }
 
-        scheduleNotif();
     }
 
 
@@ -123,12 +122,15 @@ public class FRActivity extends Activity {
         waitTimer.start();
         curQuestion.setOutcome(true);
         wordTextView.setText("YAY! Correct!");
+        scheduleNotif();
+
     }
 
     public void incorrectClick(View v){
         waitTimer.start();
         curQuestion.setOutcome(false);
         wordTextView.setText("Don't worry, we'll ask you again later.");
+        scheduleNotif();
     }
 
     private void scheduleNotif() {

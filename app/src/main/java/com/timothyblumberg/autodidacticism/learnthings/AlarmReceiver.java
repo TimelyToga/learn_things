@@ -35,9 +35,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 Toast.LENGTH_SHORT)
                 .show();
 
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(App.getAppContext(), MainActivity.class);
-
         Question rand_q;
         try{
             rand_q = QuestionDAO.getRandomQuestion();
@@ -47,29 +44,35 @@ public class AlarmReceiver extends BroadcastReceiver {
             rand_q = QuestionDAO.getQuestionList(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
         }
 
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(App.getAppContext());
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
 
         // Create the notification builder of the correct type
         NotificationCompat.Builder mBuilder = null;
         if (rand_q.multipleChoice){
+            // Creates an explicit intent for an Activity in your app
+            Intent mcIntent = new Intent(App.getAppContext(), MainActivity.class);
+
+            stackBuilder.addParentStack(MainActivity.class);
+            stackBuilder.addNextIntent(mcIntent);
             mBuilder = createMCBuilder(rand_q);
         } else {
+            // Creates an explicit intent for an Activity in your app
+            Intent frIntent = new Intent(App.getAppContext(), FRActivity.class)
+                    .setAction(Globals.ANSWER_FR)
+                    .putExtra(Globals.EXTRA_QUESTION_ID, rand_q.question_id)
+                    .putExtra(Globals.EXTRA_IS_FR, !rand_q.multipleChoice);
+
+            stackBuilder.addParentStack(FRActivity.class);
+            stackBuilder.addNextIntent(frIntent);
             mBuilder = createFRBuilder(rand_q);
 
             // Assign the correct intent for click through
-            resultIntent.setAction(Globals.ANSWER_FR)
+            frIntent.setAction(Globals.ANSWER_FR)
                         .putExtra(Globals.EXTRA_IS_FR, true);
             PendingIntent pIntent = PendingIntent.getActivity(App.getAppContext(),
                                                                 0,
-                                                                resultIntent,
+                                                                frIntent,
                                                                 PendingIntent.FLAG_CANCEL_CURRENT);
             mBuilder.setContentIntent(pIntent);
         }

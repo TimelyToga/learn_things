@@ -11,7 +11,7 @@ public class Globals {
 
     final public static String NEW_QUESTION = "New Q!";
     public static final boolean DEBUG = false;
-    public static final int TIMER_COUNTDOWN_LENGTH = 1600;
+    public static final int TIMER_COUNTDOWN_LENGTH = 2000;
     public static final int DEFAULT_NOTIFICATIONS_CODE = 98;
     public static final String ANSWER_FR = "ANSWER_FR";
     public static final String ANSWER_A = "ANSWER_A";

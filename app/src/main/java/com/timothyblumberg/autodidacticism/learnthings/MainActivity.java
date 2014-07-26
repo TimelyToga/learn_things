@@ -47,6 +47,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Get important references
+        wordTextView = (TextView)findViewById(R.id.resultText);
+        timerTextView = (TextView)findViewById(R.id.timer);
+        questionResult = (ImageView)findViewById(R.id.questionResult);
+        sApp = App.getInstance();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -54,15 +61,6 @@ public class MainActivity extends Activity {
             String question_id = extras.getString(Globals.EXTRA_QUESTION_ID);
             Question question = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
-
-            timerLength = Globals.TIMER_COUNTDOWN_LENGTH;
-
-            setContentView(R.layout.activity_main);
-            // Get important references
-            wordTextView = (TextView)findViewById(R.id.resultText);
-            timerTextView = (TextView)findViewById(R.id.timer);
-            questionResult = (ImageView)findViewById(R.id.questionResult);
-            sApp = App.getInstance();
 
             int answer_code = extras.getInt(Globals.EXTRA_ANSWER);
             boolean correct = extras.getBoolean(Globals.EXTRA_CORRECT);
@@ -81,8 +79,9 @@ public class MainActivity extends Activity {
             }
 
 
-        }  else if(Globals.DEBUG){
-            Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
+        }  else {
+            if(Globals.DEBUG) Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
+            wordTextView.setText("Welcome to LearnThings!");
         }
 
         NotificationManager notificationManager = (NotificationManager)
@@ -90,10 +89,10 @@ public class MainActivity extends Activity {
         notificationManager.cancel(Globals.DEFAULT_NOTIFICATIONS_CODE);
 
 
-        waitTimer = new CountDownTimer(timerLength, 1000) {
+        waitTimer = new CountDownTimer(Globals.TIMER_COUNTDOWN_LENGTH, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-//                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
+                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
             }
 
             @Override
