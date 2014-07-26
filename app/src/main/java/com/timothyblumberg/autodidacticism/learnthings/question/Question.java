@@ -12,9 +12,13 @@ public class Question {
     public long _id; // required by cupboard
     public String question_id;
     public String qText;
-    public String answers_a;
-    public String answers_b;
-    public String answers_c;
+
+    public String mcAnswerA;
+    public String mcAnswerB;
+    public String mcAnswerC;
+
+    public String frAnswerText;
+
     public int numberAsks = 0;
     public int num_correct = 0;
     public int num_incorrect = 0;
@@ -23,12 +27,13 @@ public class Question {
     public long lastAsked;
     public boolean multipleChoice; // True for MC, False for free response
 
-    public static Question createFR(String qText){
+    public static Question createFR(String qText, String questionAnswer){
 
         final Question question = new Question();
         question.question_id = UUID.randomUUID().toString();
         question._id = Util.getLongFromUUIDString(question.question_id);
         question.qText = qText;
+        question.frAnswerText = questionAnswer;
         question.numberAsks = 0;
         question.num_correct = 0;
         question.num_incorrect = 0;
@@ -53,9 +58,9 @@ public class Question {
         question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
         question.multipleChoice = true;
 
-        question.answers_a = answers[0];
-        question.answers_b = answers[1];
-        question.answers_c = answers[2];
+        question.mcAnswerA = answers[0];
+        question.mcAnswerB = answers[1];
+        question.mcAnswerC = answers[2];
 
         QuestionDAO.save(question);
         return question;
@@ -88,7 +93,7 @@ public class Question {
      * @return randomized string array of answers
      */
     public String[] getAnswers(){
-        String[] temp = {answers_a, answers_b, answers_c};
+        String[] temp = {mcAnswerA, mcAnswerB, mcAnswerC};
         Util.shuffle(temp);
         return temp;
     }

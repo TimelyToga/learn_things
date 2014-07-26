@@ -16,7 +16,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
     private static final String TAG = "App";
 
     private static App instance;
-    private static DBHelper sDbHelper;
+    public static DBHelper sDbHelper;
     private ObjectGraph objectGraph;
 
     @Override

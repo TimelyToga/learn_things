@@ -49,7 +49,7 @@ public class FRActivity extends BaseActivity {
             curQuestion = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
 
-            wordTextView.setText(getText(R.string.answer));
+            wordTextView.setText(getText(R.string.answer) + curQuestion.frAnswerText);
 
         }  else if(Globals.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
@@ -62,9 +62,8 @@ public class FRActivity extends BaseActivity {
 
         // Initialization in BaseActivity
         setLayoutTouchListener(frLayout);
-        waitTimer = makeTimer(timerTextView).start();
+        waitTimer = makeTimer(timerTextView);
         initQuestionsAndUser();
-        scheduleNotif();
     }
 
 
@@ -90,6 +89,7 @@ public class FRActivity extends BaseActivity {
 
     public void correctClick(View v){
         waitTimer.start();
+        questionResult.setImageResource(R.drawable.success_icn);
         curQuestion.setOutcome(true);
         wordTextView.setText("YAY! Correct!");
         scheduleNotif();
@@ -98,6 +98,7 @@ public class FRActivity extends BaseActivity {
 
     public void incorrectClick(View v){
         waitTimer.start();
+        questionResult.setImageResource(R.drawable.failure_icn);
         curQuestion.setOutcome(false);
         wordTextView.setText("Don't worry, we'll ask you again later.");
         scheduleNotif();

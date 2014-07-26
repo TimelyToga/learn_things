@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 public class BaseActivity extends Activity {
 
-    private final String TAG = MCActivity.class.getSimpleName();
+    private static final String TAG = MCActivity.class.getSimpleName();
     protected CountDownTimer waitTimer;
 
 
@@ -64,7 +64,7 @@ public class BaseActivity extends Activity {
         });
     }
 
-    protected void initQuestionsAndUser(){
+    public static void initQuestionsAndUser(){
         // Initialize questions and User obj
         if(QuestionDAO.getNumberOfQuestions() == 0){
             QuestionFactory.createQuestions();

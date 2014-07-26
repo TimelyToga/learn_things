@@ -27,4 +27,16 @@
         android:max="100"
         android:progress="1" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear DB"
+        android:id="@+id/clear_db_button"
+        android:onClick="clearDB"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/seekBar"
+        android:layout_alignEnd="@+id/seekBar" />
+
 </RelativeLayout>

@@ -24,7 +24,8 @@ public class Globals {
     public static final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
     public static final String EXTRA_IS_FR = "EXTRA_IS_FR"; // true FR, false MC
     public static final String ANSWER_C = "ANSWER_C";
-    public static int TIME_UNTIL_NEXT_NOTIFICATION = 1000;
+    public static int TIME_UNTIL_NEXT_NOTIFICATION = 2000;
+    public static final String COMMENT_STRING = "//";
 
     public final static Random rgen = new Random();
     public static User curUser;

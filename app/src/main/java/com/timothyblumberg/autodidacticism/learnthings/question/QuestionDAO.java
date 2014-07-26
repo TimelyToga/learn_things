@@ -3,8 +3,10 @@ package com.timothyblumberg.autodidacticism.learnthings.question;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
+import com.timothyblumberg.autodidacticism.learnthings.BaseActivity;
 
 import java.util.Random;
 
@@ -94,6 +96,14 @@ public class QuestionDAO {
         }
 
         return qArray;
+    }
+
+    public static void resetDB(){
+        cupboard().withDatabase(App.getWritableDB()).dropAllTables();
+        cupboard().withDatabase(App.getWritableDB()).createTables();
+        BaseActivity.initQuestionsAndUser();
+        
+        Toast.makeText(App.getAppContext(), "Reset DB", Toast.LENGTH_SHORT).show();
     }
 
     // Private Methods

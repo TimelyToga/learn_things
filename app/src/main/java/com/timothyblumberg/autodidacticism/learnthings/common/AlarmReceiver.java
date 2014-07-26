@@ -34,6 +34,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public void publishNotif(){
+        // Don't try to make a new notifacation without any questions
+        if(QuestionDAO.getNumberOfQuestions() == 0) return;
+
         if(Globals.DEBUG) Toast.makeText(App.getAppContext(),
                 String.valueOf(QuestionDAO.getNumberOfQuestions()),
                 Toast.LENGTH_SHORT)

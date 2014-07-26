@@ -33,13 +33,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/fr_timer"
         android:layout_alignTop="@+id/fr_notif_button"
-        android:layout_alignRight="@+id/fr_resultText"
-        android:layout_alignEnd="@+id/fr_resultText" />
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_alignEnd="@+id/linearLayout" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/success_icn"
         android:id="@+id/fr_questionResult"
         android:layout_below="@+id/fr_notif_button"
         android:layout_centerHorizontal="true" />
@@ -47,7 +46,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout">
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

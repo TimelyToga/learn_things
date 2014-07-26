@@ -1,17 +1,21 @@
 package com.timothyblumberg.autodidacticism.learnthings;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.timothyblumberg.autodidacticism.learnthings.R;
+import android.view.View;
 
-public class SettingsActivity extends Activity {
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
+
+public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        initQuestionsAndUser();
+        scheduleNotif();
     }
 
 
@@ -32,5 +36,10 @@ public class SettingsActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void clearDB(View v){
+        QuestionDAO.resetDB();
+        scheduleNotif();
     }
 }
