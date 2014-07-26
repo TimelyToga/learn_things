@@ -27,6 +27,11 @@ public class Globals {
     public static int TIME_UNTIL_NEXT_NOTIFICATION = 2000;
     public static final String COMMENT_STRING = "//";
 
+    public static final long[] VIBRATE_PATTERN = {0, 75, 100, 75, 150, 300};
+
+    // Notification Frequency variables and constants
+    public static final int MILLISECONDS_IN_DAY = 3600*24000;
+
     public final static Random rgen = new Random();
     public static User curUser;
 }

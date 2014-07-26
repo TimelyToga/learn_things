@@ -8,6 +8,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -157,7 +159,10 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .addAction(R.drawable.c_icn, "", cPIntent)
                 .setContentTitle(context.getString(R.string.new_q))
                 .setContentText(curQText)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setVibrate(Globals.VIBRATE_PATTERN)
+                .setLights(Color.argb(1,30, 223, 152), 500, 300)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
     }
 
     public NotificationCompat.Builder createFRBuilder(Question question){
@@ -176,6 +181,9 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.notif_pic)
                 .setContentTitle(context.getString(R.string.new_q))
                 .setContentText(curQText)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setVibrate(Globals.VIBRATE_PATTERN)
+                .setLights(Color.argb(1, 30, 223, 152), 500, 300)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
     }
 }
