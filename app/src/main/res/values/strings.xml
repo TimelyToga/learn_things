@@ -5,10 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="new_q">New Q!</string>
-    <string name="title_activity_fr">FRActivity</string>
+    <string name="question_activity_title">Learn Things</string>
     <string name="answer">"Answer: "</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_settings">Learn Things Settings</string>
 
     <!--SettingsActivity-->
     <string name="questions_per_day">"Questions per day: "</string>

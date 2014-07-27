@@ -51,7 +51,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/clear_db_button"
-        android:choiceMode="singleChoice" />
+        android:choiceMode="singleChoice"/>
 
     <Button
         android:layout_width="wrap_content"
