@@ -66,6 +66,13 @@ public class UserDAO {
 
     }
 
+    public static void updateNotifTime(User user, int newTime){
+        ContentValues values = new ContentValues();
+        values.put("TIME_UNTIL_NEXT_NOTIFICATION", newTime);
+
+        cupboard().withDatabase(App.getWritableDB())
+                .update(User.class, values, "user_id = ?", user.getUserId());
+    }
 
     // Private Methods
     private static DatabaseCompartment.QueryBuilder<User> getQueryBuilder() {

@@ -13,4 +13,8 @@
     <!--SettingsActivity-->
     <string name="questions_per_day">"Questions per day: "</string>
 
+    <string name="light">Light</string> // 5 times per day
+    <string name="Medium">Medium</string> // 15 times per day
+    <string name="Heavy">Heavy</string> // 30 times per day
+
 </resources>

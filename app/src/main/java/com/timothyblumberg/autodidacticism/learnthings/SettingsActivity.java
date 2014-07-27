@@ -1,10 +1,14 @@
 package com.timothyblumberg.autodidacticism.learnthings;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.NumberPicker;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +20,13 @@ public class SettingsActivity extends BaseActivity {
 
     private static SeekBar freqencyBar;
     private static TextView frequencyTextView;
-    private static NumberPicker minutesUntilNext;
+    private static ListView frequencyIntensity;
+    private static ArrayAdapter<String> adapter;
+
+    public static void launch(Activity activity){
+        Intent intent = new Intent(activity, SettingsActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +36,12 @@ public class SettingsActivity extends BaseActivity {
         //Init values
         frequencyTextView = (TextView)findViewById(R.id.frequencyTextView);
         freqencyBar = (SeekBar)findViewById(R.id.frequencyBar);
-        minutesUntilNext = (NumberPicker)findViewById(R.id.minutesUntilNext);
+
+        // List View
+        setUpListView();
 
         frequencyTextView.append("" + freqencyBar.getProgress());
         setUpFrequencyBar();
-        setUpNumberPicker();
 
         initQuestionsAndUser();
         scheduleNotif();
@@ -61,15 +72,18 @@ public class SettingsActivity extends BaseActivity {
         scheduleNotif();
     }
 
+
     private void setUpFrequencyBar(){
+        int i = ((Globals.MILLISECONDS_IN_DAY / Globals.TIME_UNTIL_NEXT_NOTIFICATION))/1000;
+        freqencyBar.setProgress(i);
+        frequencyTextView.setText(getString(R.string.questions_per_day) + i*1000);
         freqencyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int x = progress;
-                int y = (int) (((x*x)/200)*Math.log10(x));
+                int y = progress*1000;
                 frequencyTextView.setText(getString(R.string.questions_per_day) + y);
                 // Update time_until next
-                Globals.TIME_UNTIL_NEXT_NOTIFICATION = Globals.MILLISECONDS_IN_DAY / (y + 1);
+                Globals.curUser.updateNotifTime(Globals.MILLISECONDS_IN_DAY / (y + 1));
             }
 
             @Override
@@ -82,6 +96,7 @@ public class SettingsActivity extends BaseActivity {
                 int bigSec = new Integer(Globals.TIME_UNTIL_NEXT_NOTIFICATION) / 1000;
                 int minutes = bigSec/60;
                 int seconds = bigSec - minutes*60;
+                scheduleNotif();
                 Toast.makeText(App.getAppContext(),
                         "Time until next question: " + minutes + "m " + seconds + "s",
                         Toast.LENGTH_SHORT).show();
@@ -89,12 +104,20 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    private void setUpNumberPicker(){
-        minutesUntilNext.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+    private void setUpListView(){
+        frequencyIntensity = (ListView)findViewById(R.id.intensityListView);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, Globals.listNames);
+        frequencyIntensity.setAdapter(adapter);
+        frequencyIntensity.setItemChecked(0, true);
+        frequencyIntensity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Globals.TIME_UNTIL_NEXT_NOTIFICATION = newVal*60000;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                Globals.curUser.updateNotifTime(Globals.listDef[position]);
+                view.setActivated(true);
             }
         });
     }
+
 }

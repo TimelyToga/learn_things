@@ -31,6 +31,30 @@ public class Globals {
 
     // Notification Frequency variables and constants
     public static final int MILLISECONDS_IN_DAY = 3600*24000;
+    public static final int FREQUENCY_TPD5 = MILLISECONDS_IN_DAY / 5;
+    public static final int FREQUENCY_TPD10 = MILLISECONDS_IN_DAY / 10;
+    public static final int FREQUENCY_TPD25 = MILLISECONDS_IN_DAY / 25;
+    public static final int FREQUENCY_50 = MILLISECONDS_IN_DAY / 50;
+
+    public static final int FREQUENCY_MIN15 = MILLISECONDS_IN_DAY / 96;
+    public static final int FREQUENCY_MIN30 = MILLISECONDS_IN_DAY / 48;
+    public static final int FREQUENCY_HOURLY = MILLISECONDS_IN_DAY / 24;
+    public static final int FREQUENCY_HOURLY2 = MILLISECONDS_IN_DAY / 12;
+    public static final int FREQUENCY_HOURLY6 = MILLISECONDS_IN_DAY / 4;
+    public static final int FREQUENCY_DAILY = MILLISECONDS_IN_DAY;
+    public static final int FREQUENCY_DAILY2 = MILLISECONDS_IN_DAY * 2;
+
+
+
+
+    public static final String[] listNames = {"5 times per day", "10 times per day", "25 times per day",
+            "50 times per day", "Every 15 minutes", "Every 30 minutes", "Every hour", "Every two hours",
+            "Every 6 hours", "Daily", "Every two days"};
+    public static final int[] listDef = {FREQUENCY_TPD5, FREQUENCY_TPD10, FREQUENCY_TPD25,
+            FREQUENCY_50, FREQUENCY_MIN15, FREQUENCY_MIN30, FREQUENCY_HOURLY, FREQUENCY_HOURLY2,
+            FREQUENCY_HOURLY6, FREQUENCY_DAILY, FREQUENCY_DAILY, FREQUENCY_DAILY2};
+
+
 
     public final static Random rgen = new Random();
     public static User curUser;
