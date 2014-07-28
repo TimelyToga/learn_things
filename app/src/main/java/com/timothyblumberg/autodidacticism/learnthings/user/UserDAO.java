@@ -6,7 +6,7 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.text.TextUtils;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 
 import nl.qbusict.cupboard.DatabaseCompartment;
 

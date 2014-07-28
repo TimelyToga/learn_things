@@ -1,4 +1,4 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.activities;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionFactory;
 import com.timothyblumberg.autodidacticism.learnthings.user.User;

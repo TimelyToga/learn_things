@@ -9,11 +9,11 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MCActivity"
+            android:name=".activities.MCActivity"
             android:label="@string/question_activity_title" >
         </activity>
         <activity
-            android:name=".FRActivity"
+            android:name=".activities.FRActivity"
             android:label="@string/question_activity_title" >
         </activity>
         <receiver android:name=".common.AlarmReceiver" >
@@ -22,7 +22,7 @@
             </intent-filter>
         </receiver>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BaseActivity"
+            android:name=".activities.BaseActivity"
             android:label="@string/question_activity_title" >
         </activity>
     </application>

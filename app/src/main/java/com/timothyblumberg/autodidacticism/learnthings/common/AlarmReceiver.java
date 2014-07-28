@@ -15,10 +15,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
-import com.timothyblumberg.autodidacticism.learnthings.FRActivity;
-import com.timothyblumberg.autodidacticism.learnthings.MCActivity;
+import com.timothyblumberg.autodidacticism.learnthings.activities.FRActivity;
+import com.timothyblumberg.autodidacticism.learnthings.activities.MCActivity;
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -198,5 +197,23 @@ public class AlarmReceiver extends BroadcastReceiver {
         String message = String.format(App.getAppContext().getString(R.string.toast_time_till_next),
                 minutes, seconds);
         Toast.makeText(App.getAppContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Created by Tim on 7/26/14.
+     */
+    public static class Frequency {
+
+        public int millisecondsTillNext;
+        public String itemName;
+        public boolean isSelected;
+
+        public Frequency(int millisecondsTillNext, String itemName){
+            this.millisecondsTillNext = millisecondsTillNext;
+            this.itemName = itemName;
+            this.isSelected = false;
+        }
+
+
     }
 }

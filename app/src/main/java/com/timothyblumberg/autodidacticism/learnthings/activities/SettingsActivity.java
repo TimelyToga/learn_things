@@ -1,4 +1,4 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 public class SettingsActivity extends BaseActivity {

@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
-import com.timothyblumberg.autodidacticism.learnthings.BaseActivity;
+import com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity;
 
 import java.util.Random;
 

@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
 import com.timothyblumberg.autodidacticism.learnthings.App;
-import com.timothyblumberg.autodidacticism.learnthings.MCActivity;
+import com.timothyblumberg.autodidacticism.learnthings.activities.MCActivity;
 
 import java.util.Date;
 

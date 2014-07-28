@@ -6,7 +6,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 
 import java.io.BufferedReader;
 import java.io.File;

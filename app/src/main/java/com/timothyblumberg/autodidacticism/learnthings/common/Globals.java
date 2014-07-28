@@ -1,4 +1,4 @@
-package com.timothyblumberg.autodidacticism.learnthings.dirtywork;
+package com.timothyblumberg.autodidacticism.learnthings.common;
 
 import com.timothyblumberg.autodidacticism.learnthings.user.User;
 

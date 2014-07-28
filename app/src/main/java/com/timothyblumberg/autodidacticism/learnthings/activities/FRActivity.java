@@ -1,7 +1,6 @@
-package com.timothyblumberg.autodidacticism.learnthings;
+package com.timothyblumberg.autodidacticism.learnthings.activities;
 
 import android.app.NotificationManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.App;
+import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -56,7 +57,7 @@ public class FRActivity extends BaseActivity {
         }
 
         NotificationManager notificationManager = (NotificationManager)
-                App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                App.getAppContext().getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(Globals.DEFAULT_NOTIFICATIONS_CODE);
 
 
