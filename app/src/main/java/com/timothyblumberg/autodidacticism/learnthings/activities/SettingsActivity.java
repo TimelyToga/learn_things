@@ -30,6 +30,9 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // Set Action Bar title to different from app launcher label
+        getActionBar().setTitle(getString(R.string.title_activity_settings));
+
         // List View
         setUpListView();
 
