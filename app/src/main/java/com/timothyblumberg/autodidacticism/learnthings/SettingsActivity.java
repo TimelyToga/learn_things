@@ -9,17 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 public class SettingsActivity extends BaseActivity {
 
-    private static SeekBar freqencyBar;
-    private static TextView frequencyTextView;
     private static ListView frequencyIntensity;
     private static ArrayAdapter<String> adapter;
 
@@ -33,18 +29,12 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        //Init values
-        frequencyTextView = (TextView)findViewById(R.id.frequencyTextView);
-        freqencyBar = (SeekBar)findViewById(R.id.frequencyBar);
-
         // List View
         setUpListView();
 
-        frequencyTextView.append("" + freqencyBar.getProgress());
-        setUpFrequencyBar();
-
+        // General initialization
         initQuestionsAndUser();
-        scheduleNotif();
+        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
 
 
@@ -69,39 +59,7 @@ public class SettingsActivity extends BaseActivity {
 
     public void resetDB(View v){
         QuestionDAO.resetDB();
-        scheduleNotif();
-    }
-
-
-    private void setUpFrequencyBar(){
-        int i = ((Globals.MILLISECONDS_IN_DAY / Globals.TIME_UNTIL_NEXT_NOTIFICATION))/1000;
-        freqencyBar.setProgress(i);
-        frequencyTextView.setText(getString(R.string.questions_per_day) + i*1000);
-        freqencyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int y = progress*1000;
-                frequencyTextView.setText(getString(R.string.questions_per_day) + y);
-                // Update time_until next
-                Globals.curUser.updateNotifTime(Globals.MILLISECONDS_IN_DAY / (y + 1));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int bigSec = new Integer(Globals.TIME_UNTIL_NEXT_NOTIFICATION) / 1000;
-                int minutes = bigSec/60;
-                int seconds = bigSec - minutes*60;
-                scheduleNotif();
-                Toast.makeText(App.getAppContext(),
-                        "Time until next question: " + minutes + "m " + seconds + "s",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
 
     private void setUpListView(){
@@ -114,8 +72,12 @@ public class SettingsActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
-                Globals.curUser.updateNotifTime(Globals.listDef[position]);
                 view.setActivated(true);
+
+                int newTime = Globals.listDef[position];
+                Globals.curUser.updateNotifTime(newTime);
+                AlarmReceiver.reportTimeToNextNotif();
+                scheduleNotif(newTime);
             }
         });
     }

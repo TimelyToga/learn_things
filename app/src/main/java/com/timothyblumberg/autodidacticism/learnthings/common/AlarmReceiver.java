@@ -66,6 +66,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             stackBuilder.addNextIntent(mcIntent);
             mBuilder = createMCBuilder(rand_q);
         } else {
+
             // Creates an explicit intent for an Activity in your app
             Intent frIntent = new Intent(App.getAppContext(), FRActivity.class)
                     .setAction(Globals.ANSWER_FR)
@@ -126,15 +127,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent aIntent = new Intent(context, MCActivity.class)
                 .setAction(Globals.ANSWER_A)
                 .putExtra(Globals.EXTRA_ANSWER, Globals.A_CODE)
+                .putExtra(Globals.EXTRA_YOUR_ANSWER, answers[0])
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
                 .putExtra(Globals.EXTRA_CORRECT, correctArray[0]);
         Intent bIntent = new Intent(context, MCActivity.class)
                 .setAction(Globals.ANSWER_B)
                 .putExtra(Globals.EXTRA_ANSWER, Globals.B_CODE)
+                .putExtra(Globals.EXTRA_YOUR_ANSWER, answers[1])
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
                 .putExtra(Globals.EXTRA_CORRECT, correctArray[1]);
         Intent cIntent = new Intent(context, MCActivity.class)
                 .setAction(Globals.ANSWER_C)
+                .putExtra(Globals.EXTRA_YOUR_ANSWER, answers[2])
                 .putExtra(Globals.EXTRA_ANSWER, Globals.C_CODE)
                 .putExtra(Globals.EXTRA_QUESTION_ID, id)
                 .putExtra(Globals.EXTRA_CORRECT, correctArray[2]);
@@ -185,5 +189,14 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setVibrate(Globals.VIBRATE_PATTERN)
                 .setLights(Color.argb(1, 30, 223, 152), 500, 300)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+    }
+
+    public static void reportTimeToNextNotif(){
+        int bigSec = Globals.curUser.TIME_UNTIL_NEXT_NOTIFICATION / 1000;
+        int minutes = bigSec/60;
+        int seconds = bigSec - minutes*60;
+        String message = String.format(App.getAppContext().getString(R.string.toast_time_till_next),
+                minutes, seconds);
+        Toast.makeText(App.getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

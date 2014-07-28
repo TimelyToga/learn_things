@@ -20,9 +20,9 @@ public class FRActivity extends BaseActivity {
 
     private final String TAG = FRActivity.class.getSimpleName();
     private static RelativeLayout frLayout;
-    private static TextView wordTextView;
-    private static TextView timerTextView;
-    private static ImageView questionResult;
+    private static TextView correctnessText;
+    private static TextView answerText;
+    private static ImageView resultImage;
 
     private static App sApp;
 
@@ -37,9 +37,9 @@ public class FRActivity extends BaseActivity {
 
         // Get important references
         frLayout = (RelativeLayout)findViewById(R.id.fr_layout);
-        wordTextView = (TextView)findViewById(R.id.fr_resultText);
-        timerTextView = (TextView)findViewById(R.id.fr_timer);
-        questionResult = (ImageView)findViewById(R.id.fr_questionResult);
+        correctnessText = (TextView)findViewById(R.id.fr_correctnessText);
+        resultImage = (ImageView)findViewById(R.id.mc_correctnessImg);
+        answerText = (TextView)findViewById(R.id.fr_answerText);
         sApp = App.getInstance();
 
         Bundle extras = getIntent().getExtras();
@@ -49,7 +49,7 @@ public class FRActivity extends BaseActivity {
             curQuestion = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
 
-            wordTextView.setText(getText(R.string.answer) + curQuestion.frAnswerText);
+            correctnessText.setText(getText(R.string.answer) + curQuestion.frAnswerText);
 
         }  else if(Globals.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
@@ -62,7 +62,7 @@ public class FRActivity extends BaseActivity {
 
         // Initialization in BaseActivity
         setLayoutTouchListener(frLayout);
-        waitTimer = makeTimer(timerTextView);
+        waitTimer = makeTimer();
         initQuestionsAndUser();
     }
 
@@ -90,19 +90,21 @@ public class FRActivity extends BaseActivity {
 
     public void correctClick(View v){
         waitTimer.start();
-        questionResult.setImageResource(R.drawable.success_icn);
+        resultImage.setImageResource(R.drawable.success_icn);
         curQuestion.setOutcome(true);
-        wordTextView.setText("YAY! Correct!");
-        scheduleNotif();
+        correctnessText.setText("YAY! Correct!");
+        answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
+        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
 
     }
 
     public void incorrectClick(View v){
         waitTimer.start();
-        questionResult.setImageResource(R.drawable.failure_icn);
+        resultImage.setImageResource(R.drawable.failure_icn);
         curQuestion.setOutcome(false);
-        wordTextView.setText("Don't worry, we'll ask you again later.");
-        scheduleNotif();
+        answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
+        correctnessText.setText("Don't worry, we'll ask you again later.");
+        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
 
 }

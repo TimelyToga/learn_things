@@ -1,5 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings.question;
 
+import com.timothyblumberg.autodidacticism.learnthings.App;
+import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
 import java.util.UUID;
@@ -116,5 +118,23 @@ public class Question {
         } else {
             this.correctlyAnswered = "F";
         }
+    }
+
+    /**
+     * Returns the correct answer (without '@')
+     * @return String of correct answer (no '@')
+     */
+    public String getCorrectAnswer(){
+        if(!this.multipleChoice){
+            return this.frAnswerText;
+        }
+        String[] answers = getAnswers();
+        for(String s : answers){
+            if(s.startsWith("@")){
+                return s.substring(1);
+            }
+        }
+        // SHOULD BE UNREACHABLE.
+        return App.getAppContext().getString(R.string.error_malformed_answer);
     }
 }

@@ -10,7 +10,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.dirtywork.Globals;
@@ -30,22 +29,22 @@ public class BaseActivity extends Activity {
     /**
      * Sets the time
      */
-    protected void scheduleNotif() {
+    protected void scheduleNotif(int timeUntilNextNotif) {
+        if(timeUntilNextNotif < 0){
+            timeUntilNextNotif = Globals.curUser.TIME_UNTIL_NEXT_NOTIFICATION;
+        }
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        int timeUntilNextNotif = Globals.TIME_UNTIL_NEXT_NOTIFICATION +
-                Globals.rgen.nextInt(Globals.TIME_UNTIL_NEXT_NOTIFICATION);
         alarmManager.set(AlarmManager.RTC_WAKEUP,
                 Calendar.getInstance().getTimeInMillis() + timeUntilNextNotif,
                 alarmIntent);
     }
 
-    protected CountDownTimer makeTimer(final TextView ttView){
+    protected CountDownTimer makeTimer(){
         return new CountDownTimer(Globals.TIMER_COUNTDOWN_LENGTH, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                ttView.setText(String.valueOf(millisUntilFinished / 1000));
             }
 
             @Override

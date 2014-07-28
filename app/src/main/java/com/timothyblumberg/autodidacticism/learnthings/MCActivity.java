@@ -27,10 +27,12 @@ public class MCActivity extends BaseActivity{
 
     private final String TAG = MCActivity.class.getSimpleName();
     public static App sApp;
-    public static TextView wordTextView;
-    public static TextView timerTextView;
+    public static TextView correctnessText;
+    public static TextView answerText;
     public static ImageView questionResult;
     private static RelativeLayout mainLayout;
+
+    private static Question curQuestion;
 
 
     @Override
@@ -39,9 +41,9 @@ public class MCActivity extends BaseActivity{
         setContentView(R.layout.activity_mc);
 
         // Get important references
-        wordTextView = (TextView)findViewById(R.id.resultText);
-        timerTextView = (TextView)findViewById(R.id.timer);
-        questionResult = (ImageView)findViewById(R.id.questionResult);
+        correctnessText = (TextView)findViewById(R.id.mc_correctnessText);
+        answerText = (TextView)findViewById(R.id.mc_answerText);
+        questionResult = (ImageView)findViewById(R.id.mc_resultImg);
         mainLayout = (RelativeLayout)findViewById(R.id.mc_layout);
         sApp = App.getInstance();
 
@@ -49,21 +51,22 @@ public class MCActivity extends BaseActivity{
         if (extras != null) {
             boolean isFR = extras.getBoolean(Globals.EXTRA_IS_FR);
             String question_id = extras.getString(Globals.EXTRA_QUESTION_ID);
-            Question question = QuestionDAO.getQuestionById(question_id);
+            curQuestion = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
 
             int answer_code = extras.getInt(Globals.EXTRA_ANSWER);
             boolean correct = extras.getBoolean(Globals.EXTRA_CORRECT);
+            String yourAnswer = extras.getString(Globals.EXTRA_YOUR_ANSWER);
 
-            question.setOutcome(correct);
-            setViewResult(answer_code, correct);
+            curQuestion.setOutcome(correct);
+            setViewResult(answer_code, correct, yourAnswer);
 
             if(Globals.DEBUG){
-                wordTextView.append("\nViews: " + question.numberAsks);
+                correctnessText.append("\nViews: " + curQuestion.numberAsks);
                 Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
                 for(Question q : qList){
                     if(q.numberAsks > 0){
-                        wordTextView.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
+                        correctnessText.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
                     }
                 }
             }
@@ -71,7 +74,7 @@ public class MCActivity extends BaseActivity{
 
         }  else {
             if(Globals.DEBUG) Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
-            wordTextView.setText("Welcome to LearnThings!");
+            correctnessText.setText("Welcome to LearnThings!");
         }
 
         NotificationManager notificationManager = (NotificationManager)
@@ -80,9 +83,9 @@ public class MCActivity extends BaseActivity{
 
         // Initialization in BaseActivity
         setLayoutTouchListener(mainLayout);
-        waitTimer = makeTimer(timerTextView).start();
+        waitTimer = makeTimer().start();
         initQuestionsAndUser();
-        scheduleNotif();
+        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
 
 
@@ -216,22 +219,31 @@ public class MCActivity extends BaseActivity{
 //        createQuestions();
     }
 
-    private void setViewResult(int answer_code, boolean correct) {
+    /**
+     * Prepares the view with the conditions of a question's answering
+     * @param answer_code
+     * @param correct
+     */
+    private void setViewResult(int answer_code, boolean correct, String yourAnswer) {
+        // Sets the answer you gave without the leading character
         switch (answer_code) {
             case Globals.A_CODE:
-                wordTextView.setText("Answered A");
+                correctnessText.setText(String.format(getString(R.string.you_answered), "A", yourAnswer));
                 break;
             case Globals.B_CODE:
-                wordTextView.setText("Answered B");
+                correctnessText.setText(String.format(getString(R.string.you_answered), "B", yourAnswer));
                 break;
             case Globals.C_CODE:
-                wordTextView.setText("Answered C");
+                correctnessText.setText(String.format(getString(R.string.you_answered), "C", yourAnswer));
                 break;
         }
+
         if (correct) {
             questionResult.setImageResource(R.drawable.success_icn);
         } else {
             questionResult.setImageResource(R.drawable.failure_icn);
+            answerText.setText(String.format(getString(R.string.answer_),
+                    curQuestion.getCorrectAnswer()));
         }
     }
 
