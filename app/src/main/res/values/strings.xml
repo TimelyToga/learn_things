@@ -20,7 +20,7 @@
     <string name="question_frequency">Question Frequency:</string>
 
     <!--Toast Messages-->
-    <string name="toast_time_till_next" formatted="false">Time until next question: %sm %ss</string>
+    <string name="toast_time_till_next" formatted="false">Time until next question: %s</string>
     <string name="toast_times_per_day">Times per day: %d</string>
 
     <string name="light">Light</string> // 5 times per day

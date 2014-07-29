@@ -45,12 +45,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/mc_answerText"
         android:maxWidth="200dp"
-        android:layout_alignBottom="@+id/mc_card"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
         android:textColor="@color/border_color"
         style="@style/answerTextStyle"
-        />
+        android:layout_below="@+id/mc_resultImg"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

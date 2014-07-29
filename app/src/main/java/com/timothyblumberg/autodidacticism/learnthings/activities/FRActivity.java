@@ -1,11 +1,14 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +27,9 @@ public class FRActivity extends BaseActivity {
     private static TextView correctnessText;
     private static TextView answerText;
     private static ImageView resultImage;
+    private static ObjectAnimator backgroundAnimator;
+
+    private static ViewGroup mViewGroup;
 
     private static App sApp;
 
@@ -42,6 +48,8 @@ public class FRActivity extends BaseActivity {
         resultImage = (ImageView)findViewById(R.id.mc_correctnessImg);
         answerText = (TextView)findViewById(R.id.fr_answerText);
         sApp = App.getInstance();
+
+        mViewGroup = frLayout;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -88,24 +96,76 @@ public class FRActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+/*
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mc_correctnessImg"
+        android:padding="5dp"
+        android:layout_below="@+id/fr_correctnessText"
+        android:layout_centerHorizontal="true" />
+ */
     public void correctClick(View v){
         waitTimer.start();
-        resultImage.setImageResource(R.drawable.success_icn);
+        runBackgroundAnimation(true);
         curQuestion.setOutcome(true);
         correctnessText.setText("YAY! Correct!");
         answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
+        ImageView im = setUpImageView(true);
+        mViewGroup.addView(im);
 
     }
 
     public void incorrectClick(View v){
         waitTimer.start();
-        resultImage.setImageResource(R.drawable.failure_icn);
+        runBackgroundAnimation(false);
+//        resultImage.setImageResource(R.drawable.failure_icn);
         curQuestion.setOutcome(false);
         answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
         correctnessText.setText("Don't worry, we'll ask you again later.");
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
+        ImageView im = setUpImageView(false);
+        mViewGroup.addView(im);
+    }
+
+    private void runBackgroundAnimation(boolean correct){
+        if(correct){
+            backgroundAnimator = ObjectAnimator.ofObject(frLayout,
+                    "backgroundColor",
+                    new ArgbEvaluator(),
+                    getResources().getColor(R.color.light_background_blue),
+                    getResources().getColor(R.color.light_background_green));
+        }
+        else{
+            backgroundAnimator = ObjectAnimator.ofObject(frLayout,
+                    "backgroundColor",
+                    new ArgbEvaluator(),
+                    getResources().getColor(R.color.light_background_blue),
+                    getResources().getColor(R.color.light_background_red));
+        }
+
+        // start
+        backgroundAnimator.setDuration(Globals.COLOR_FADE_TIME);
+        backgroundAnimator.start();
+    }
+
+    private ImageView setUpImageView(boolean correct){
+        ImageView im = new ImageView(App.getAppContext());
+        if(correct){
+            im.setImageResource(R.drawable.success_icn);
+        } else {
+            im.setImageResource(R.drawable.failure_icn);
+        }
+        im.setPadding(5, 5, 5, 5);
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        p.addRule(RelativeLayout.BELOW, R.id.fr_correctnessText);
+        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        im.setLayoutParams(p);
+
+        return im;
     }
 
 }

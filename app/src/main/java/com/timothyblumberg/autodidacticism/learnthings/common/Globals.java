@@ -11,7 +11,7 @@ public class Globals {
 
     final public static String NEW_QUESTION = "New Q!";
     public static final boolean DEBUG = false;
-    public static final int TIMER_COUNTDOWN_LENGTH = 2000;
+    public static final int TIMER_COUNTDOWN_LENGTH = 2400;
     public static final int DEFAULT_NOTIFICATIONS_CODE = 98;
     public static final String ANSWER_FR = "ANSWER_FR";
     public static final String ANSWER_A = "ANSWER_A";
@@ -49,17 +49,24 @@ public class Globals {
     public static final int FREQUENCY_DAILY2 = MILLISECONDS_IN_DAY * 2;
 
     public static final int SCHEDULE_NOTIF_DEFAULT_TIME = -1;
+    public static final int COLOR_FADE_TIME = 600;
 
-
-
-
-    public static final String[] listNames = {"Every 3 Seconds", "5 times per day", "10 times per day", "25 times per day",
-            "50 times per day", "Every 15 minutes", "Every 30 minutes", "Every hour", "Every two hours",
-            "Every 6 hours", "Daily", "Every two days"};
-    public static final int[] listDef = {FREQUENCY_SEC3, FREQUENCY_TPD5, FREQUENCY_TPD10, FREQUENCY_TPD25,
-            FREQUENCY_50, FREQUENCY_MIN15, FREQUENCY_MIN30, FREQUENCY_HOURLY, FREQUENCY_HOURLY2,
-            FREQUENCY_HOURLY6, FREQUENCY_DAILY, FREQUENCY_DAILY, FREQUENCY_DAILY2};
-
+    public static final String[] listNames = {"Every 3 Seconds",
+            "Every 15 minutes",
+            "Every 30 minutes",
+            "Every hour",
+            "Every two hours",
+            "Every 6 hours",
+            "Daily",
+            "Every two days"};
+    public static final int[] listDef = {FREQUENCY_SEC3,
+            FREQUENCY_MIN15,
+            FREQUENCY_MIN30,
+            FREQUENCY_HOURLY,
+            FREQUENCY_HOURLY2,
+            FREQUENCY_HOURLY6,
+            FREQUENCY_DAILY,
+            FREQUENCY_DAILY2};
 
 
     public final static Random rgen = new Random();

@@ -193,9 +193,14 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static void reportTimeToNextNotif(){
         int bigSec = Globals.curUser.TIME_UNTIL_NEXT_NOTIFICATION / 1000;
         int minutes = bigSec/60;
+        int hours = minutes / 60;
         int seconds = bigSec - minutes*60;
+        String units;
+        if(hours > 0) units = hours + "h";
+        else if(minutes > 0) units = minutes + "m";
+        else units = seconds + "s";
         String message = String.format(App.getAppContext().getString(R.string.toast_time_till_next),
-                minutes, seconds);
+                units);
         Toast.makeText(App.getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 

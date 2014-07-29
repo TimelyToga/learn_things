@@ -4,6 +4,10 @@
     <color name="default_color">#ffffff</color>
     <color name="background_red">#E09292</color>
     <color name="border_color">#132B50</color>
-    <color name="light_background_red">#E0B3B3</color>
     <color name="light_blue">#D3DEE9</color>
+
+    <!--background color-->
+    <color name="light_background_red">#E0B3B3</color>
+    <color name="light_background_green">#B1DDB4</color>
+    <color name="light_background_blue">#A3BBE5</color>
 </resources>
