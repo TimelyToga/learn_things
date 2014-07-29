@@ -49,7 +49,7 @@
         android:textColor="@color/border_color"
         style="@style/answerTextStyle"
         android:layout_alignBottom="@+id/mc_card"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/answer_from_bottom"
         android:layout_centerHorizontal="true" />
 
 

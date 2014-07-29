@@ -54,25 +54,17 @@
         android:maxWidth="200dp"
         style="@style/resultTextStyle"/>
 
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/fr_correctnessImg"-->
-        <!--android:padding="5dp"-->
-        <!--android:layout_below="@+id/fr_correctnessText"-->
-        <!--android:layout_centerHorizontal="true" />-->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="200dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/fr_answerText"
-        android:layout_marginBottom="30dp"
-        android:layout_alignBottom="@+id/card"
-        android:layout_centerHorizontal="true"
         android:textColor="@color/border_color"
-        style="@style/answerTextStyle"/>
+        android:layout_marginBottom="@dimen/answer_from_bottom"
+        android:layout_alignBottom="@id/card"
+        style="@style/answerTextStyle"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>
