@@ -4,7 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +26,6 @@ public class FRActivity extends BaseActivity {
     private static RelativeLayout frLayout;
     private static TextView correctnessText;
     private static TextView answerText;
-    private static ImageView resultImage;
     private static ObjectAnimator backgroundAnimator;
 
     private static ViewGroup mViewGroup;
@@ -45,7 +44,6 @@ public class FRActivity extends BaseActivity {
         // Get important references
         frLayout = (RelativeLayout)findViewById(R.id.fr_layout);
         correctnessText = (TextView)findViewById(R.id.fr_correctnessText);
-        resultImage = (ImageView)findViewById(R.id.mc_correctnessImg);
         answerText = (TextView)findViewById(R.id.fr_answerText);
         sApp = App.getInstance();
 
@@ -53,12 +51,8 @@ public class FRActivity extends BaseActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            boolean isFR = extras.getBoolean(Globals.EXTRA_IS_FR);
             String question_id = extras.getString(Globals.EXTRA_QUESTION_ID);
             curQuestion = QuestionDAO.getQuestionById(question_id);
-            Log.d(TAG, "FR: " + String.valueOf(isFR));
-
-            correctnessText.setText(getText(R.string.answer) + curQuestion.frAnswerText);
 
         }  else if(Globals.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
@@ -71,6 +65,7 @@ public class FRActivity extends BaseActivity {
 
         // Initialization in BaseActivity
         setLayoutTouchListener(frLayout);
+        makeAnimateTimer().start();
         waitTimer = makeTimer();
         initQuestionsAndUser();
     }
@@ -96,15 +91,6 @@ public class FRActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-/*
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mc_correctnessImg"
-        android:padding="5dp"
-        android:layout_below="@+id/fr_correctnessText"
-        android:layout_centerHorizontal="true" />
- */
     public void correctClick(View v){
         waitTimer.start();
         runBackgroundAnimation(true);
@@ -112,7 +98,7 @@ public class FRActivity extends BaseActivity {
         correctnessText.setText("YAY! Correct!");
         answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
-        ImageView im = setUpImageView(true);
+        ImageView im = setUpImageView(true, true);
         mViewGroup.addView(im);
 
     }
@@ -120,13 +106,18 @@ public class FRActivity extends BaseActivity {
     public void incorrectClick(View v){
         waitTimer.start();
         runBackgroundAnimation(false);
-//        resultImage.setImageResource(R.drawable.failure_icn);
         curQuestion.setOutcome(false);
         answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
         correctnessText.setText("Don't worry, we'll ask you again later.");
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
-        ImageView im = setUpImageView(false);
+        ImageView im = setUpImageView(false, true);
         mViewGroup.addView(im);
+    }
+
+    public void initViewForAnimation(){
+        TextView t = new TextView(App.getAppContext());
+        mViewGroup.addView(t);
+        correctnessText.setText(getText(R.string.answer) + curQuestion.frAnswerText);
     }
 
     private void runBackgroundAnimation(boolean correct){
@@ -150,22 +141,17 @@ public class FRActivity extends BaseActivity {
         backgroundAnimator.start();
     }
 
-    private ImageView setUpImageView(boolean correct){
-        ImageView im = new ImageView(App.getAppContext());
-        if(correct){
-            im.setImageResource(R.drawable.success_icn);
-        } else {
-            im.setImageResource(R.drawable.failure_icn);
-        }
-        im.setPadding(5, 5, 5, 5);
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+    private CountDownTimer makeAnimateTimer(){
+        return new CountDownTimer(Globals.ANIMATION_TIMER_LENGTH, Globals.ANIMATION_TIMER_LENGTH) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
 
-        p.addRule(RelativeLayout.BELOW, R.id.fr_correctnessText);
-        p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        im.setLayoutParams(p);
-
-        return im;
+            @Override
+            public void onFinish() {
+                initViewForAnimation();
+            }
+        };
     }
 
 }

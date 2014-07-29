@@ -48,20 +48,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/fr_correctnessText"
         android:layout_marginTop="31dp"
-        android:text="Don't worry, we'll ask you again later"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="@color/border_color"
         android:maxWidth="200dp"
         style="@style/resultTextStyle"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mc_correctnessImg"
-        android:padding="5dp"
-        android:layout_below="@+id/fr_correctnessText"
-        android:layout_centerHorizontal="true" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/fr_correctnessImg"-->
+        <!--android:padding="5dp"-->
+        <!--android:layout_below="@+id/fr_correctnessText"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,7 +68,7 @@
         android:maxWidth="200dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/fr_answerText"
-        android:layout_marginBottom="38dp"
+        android:layout_marginBottom="30dp"
         android:layout_alignBottom="@+id/card"
         android:layout_centerHorizontal="true"
         android:textColor="@color/border_color"

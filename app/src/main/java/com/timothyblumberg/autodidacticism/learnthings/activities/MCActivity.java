@@ -1,10 +1,14 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,11 +27,14 @@ public class MCActivity extends BaseActivity{
     public static App sApp;
     public static TextView correctnessText;
     public static TextView answerText;
-    public static ImageView questionResult;
     private static RelativeLayout mainLayout;
-
     private static Question curQuestion;
+    private ViewGroup mViewGroup;
 
+    // extras
+    private static boolean correct;
+    private static int answer_code;
+    private static String yourAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +44,8 @@ public class MCActivity extends BaseActivity{
         // Get important references
         correctnessText = (TextView)findViewById(R.id.mc_correctnessText);
         answerText = (TextView)findViewById(R.id.mc_answerText);
-        questionResult = (ImageView)findViewById(R.id.mc_resultImg);
         mainLayout = (RelativeLayout)findViewById(R.id.mc_layout);
+        mViewGroup = mainLayout;
         sApp = App.getInstance();
 
         Bundle extras = getIntent().getExtras();
@@ -48,12 +55,11 @@ public class MCActivity extends BaseActivity{
             curQuestion = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
 
-            int answer_code = extras.getInt(Globals.EXTRA_ANSWER);
-            boolean correct = extras.getBoolean(Globals.EXTRA_CORRECT);
-            String yourAnswer = extras.getString(Globals.EXTRA_YOUR_ANSWER);
+            answer_code = extras.getInt(Globals.EXTRA_ANSWER);
+            correct = extras.getBoolean(Globals.EXTRA_CORRECT);
+            yourAnswer = extras.getString(Globals.EXTRA_YOUR_ANSWER);
 
             curQuestion.setOutcome(correct);
-            setViewResult(answer_code, correct, yourAnswer);
 
             if(Globals.DEBUG){
                 correctnessText.append("\nViews: " + curQuestion.numberAsks);
@@ -77,11 +83,11 @@ public class MCActivity extends BaseActivity{
 
         // Initialization in BaseActivity
         setLayoutTouchListener(mainLayout);
+        makeAnimateTimer().start();
         waitTimer = makeTimer().start();
         initQuestionsAndUser();
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,16 +127,52 @@ public class MCActivity extends BaseActivity{
                 correctnessText.setText(String.format(getString(R.string.you_answered), "C", yourAnswer));
                 break;
         }
+        ImageView im = setUpImageView(correct, false); // false because mc not fr
+        mViewGroup.addView(im);
 
         if (correct) {
-            mainLayout.setBackgroundColor(getResources().getColor(R.color.light_background_green));
-            questionResult.setImageResource(R.drawable.success_icn);
+//            mainLayout.setBackgroundColor(getResources().getColor(R.color.light_background_green));
         } else {
-            mainLayout.setBackgroundColor(getResources().getColor(R.color.light_background_red));
-            questionResult.setImageResource(R.drawable.failure_icn);
+//            mainLayout.setBackgroundColor(getResources().getColor(R.color.light_background_red));
             answerText.setText(String.format(getString(R.string.answer_),
                     curQuestion.getCorrectAnswer()));
         }
+    }
+
+    private void runBackgroundAnimation(boolean correct){
+        ObjectAnimator backgroundAnimator;
+        if(correct){
+            backgroundAnimator = ObjectAnimator.ofObject(mainLayout,
+                    "backgroundColor",
+                    new ArgbEvaluator(),
+                    getResources().getColor(R.color.light_background_blue),
+                    getResources().getColor(R.color.light_background_green));
+        }
+        else{
+            backgroundAnimator = ObjectAnimator.ofObject(mainLayout,
+                    "backgroundColor",
+                    new ArgbEvaluator(),
+                    getResources().getColor(R.color.light_background_blue),
+                    getResources().getColor(R.color.light_background_red));
+        }
+
+        // start
+        backgroundAnimator.setDuration(Globals.COLOR_FADE_TIME);
+        backgroundAnimator.start();
+    }
+
+    private CountDownTimer makeAnimateTimer(){
+        return new CountDownTimer(Globals.ANIMATION_TIMER_LENGTH, Globals.ANIMATION_TIMER_LENGTH) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                setViewResult(answer_code, correct, yourAnswer);
+                runBackgroundAnimation(correct);
+            }
+        };
     }
 
 }
