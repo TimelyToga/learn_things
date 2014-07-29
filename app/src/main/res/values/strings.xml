@@ -9,22 +9,34 @@
     <string name="answer">"Answer: "</string>
     <string name="title_activity_settings">Learn Things Settings</string>
 
-    <!--MCActivity-->
-    <string formatted="false" name="you_answered">Answered %s: %s</string>
+    <!-- MCActivity -->
+    <string name="you_answered" formatted="false">Answered %s: %s</string>
     <string name="answer:">Answer: %s</string>
     <string name="error_malformed_answer">Error, malformed answers.</string>
 
-    <!--SettingsActivity-->
+    <!-- SettingsActivity -->
     <string name="questions_per_day">"Questions per day: "</string>
-    <string name="clear_db">Clear DB</string>
+    <string name="reset_db">Reset DB</string>
     <string name="question_frequency">Question Frequency:</string>
+    <string name="add_questions">Add Questions</string>
 
-    <!--Toast Messages-->
+    <!-- Toast Messages -->
     <string name="toast_time_till_next" formatted="false">Time until next question: %s</string>
     <string name="toast_times_per_day">Times per day: %d</string>
+    <string name="light">Light</string>
+    <string name="incorrect_add_question">Fill either the first answer field for a Free Response question, or all three answer fields for a multiple choice</string>
+    <string name="no_question_add_question">Please provide a question</string>
 
-    <string name="light">Light</string> // 5 times per day
-    <string name="Medium">Medium</string> // 15 times per day
-    <string name="Heavy">Heavy</string> // 30 times per day
+    <!--AddQuestionActivity-->
+    <string name="question_text_hint">Add question text here&#8230;</string>
+    <string name="question_answer_hint1">Add correct question answer here&#8230;</string>
+    <string name="question_answer2_hint">Continue here for MC question&#8230;</string>
+    <string name="question_answer3_hint">Once more for MC question&#8230;</string>
+    <string name="save_question_button_title">Save Question</string>
+
+
+    // 5 times per day    <string name="Medium">Medium</string>
+ // 15 times per day    <string name="Heavy">Heavy</string>
+ // 30 times per day    <string name="title_activity_add_question">AddQuestionActivity</string>
 
 </resources>

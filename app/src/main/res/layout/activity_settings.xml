@@ -32,19 +32,31 @@
         style="@style/resultTextStyle"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/intensityListLabel"
-        android:layout_above="@+id/clear_db_button" />
+        android:layout_above="@+id/linearLayout" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/clear_db"
-        android:id="@+id/clear_db_button"
-        android:onClick="resetDB"
-
+        android:id="@+id/linearLayout"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:paddingTop="2dp">
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_db"
+            android:id="@+id/clear_db_button"
+            android:onClick="resetDB"
+            android:layout_weight="1"/>
+
+        <Button
+            android:text="@string/add_questions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="launchAddQuestions"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

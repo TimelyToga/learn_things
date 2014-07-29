@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:animateLayoutChanges="true"
+    tools:context="com.timothyblumberg.autodidacticism.learnthings.activities.AddQuestionActivity">
+
+    <com.timothyblumberg.autodidacticism.learnthings.dirtywork.ActionEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ad_question_text"
+        android:imeActionLabel="Next"
+        android:hint="@string/question_text_hint"
+        android:textSize="16pt"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:imeOptions="actionNext"
+        />
+
+    <com.timothyblumberg.autodidacticism.learnthings.dirtywork.ActionEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+        android:ems="10"
+        android:minLines="2"
+        android:maxLines="3"
+        android:hint="@string/question_answer_hint1"
+        android:id="@+id/ad_question_answer1"
+        android:layout_below="@+id/ad_question_text"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/ad_question_text"
+        android:imeOptions="actionNext"
+        />
+
+    <com.timothyblumberg.autodidacticism.learnthings.dirtywork.ActionEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+        android:ems="10"
+        android:minLines="3"
+        android:hint="@string/question_answer2_hint"
+        android:id="@+id/ad_question_answer2"
+        android:layout_below="@+id/ad_question_answer1"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/ad_question_answer1"
+        android:imeOptions="actionNext"
+        />
+
+    <com.timothyblumberg.autodidacticism.learnthings.dirtywork.ActionEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+        android:scrollHorizontally="false"
+        android:ems="10"
+        android:minLines="3"
+        android:hint="@string/question_answer3_hint"
+        android:id="@+id/ad_question_answer3"
+        android:layout_below="@+id/ad_question_answer2"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/ad_question_answer2"
+        android:imeOptions="actionDone"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_question_button_title"
+        android:id="@+id/saveQuestionButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/ad_question_answer3"
+        android:layout_alignParentStart="true"
+        android:onClick="saveQuestion"
+        />
+
+</RelativeLayout>

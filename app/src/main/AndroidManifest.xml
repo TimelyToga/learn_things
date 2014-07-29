@@ -16,23 +16,35 @@
             android:name=".activities.FRActivity"
             android:label="@string/question_activity_title" >
         </activity>
+
         <receiver android:name=".common.AlarmReceiver" >
             <intent-filter>
                 <action android:name="com.example.android.receivers.NOTIFICATION_ALARM" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/question_activity_title">
-            <!--android:label="@string/title_activity_settings"-->
+            android:label="@string/question_activity_title" >
+
+            <!-- android:label="@string/title_activity_settings" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.BaseActivity"
             android:label="@string/question_activity_title" >
+        </activity>
+        <activity
+            android:name=".activities.AddQuestionActivity"
+            android:label="@string/question_activity_title"
+            android:parentActivityName=".activities.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
         </activity>
     </application>
 

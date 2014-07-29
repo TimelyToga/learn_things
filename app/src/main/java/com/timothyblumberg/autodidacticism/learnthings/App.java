@@ -6,10 +6,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import com.timothyblumberg.autodidacticism.learnthings.dirtywork.AppModule;
 import com.timothyblumberg.autodidacticism.learnthings.common.DBHelper;
+import com.timothyblumberg.autodidacticism.learnthings.dirtywork.AppModule;
 
 import dagger.ObjectGraph;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
 
@@ -22,6 +23,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
     @Override
     public void onCreate() {
         super.onCreate();
+        CalligraphyConfig.initDefault("fonts/GothamRnd-Book.otf", R.attr.fontPath);
         instance = this;
 
         objectGraph = ObjectGraph.create(new AppModule(this));

@@ -44,4 +44,10 @@ public class Util{
         return UUID.fromString(uuid).getMostSignificantBits();
     }
 
+    public static boolean isNotEmpty(String s){
+        if(s.isEmpty() || s.equals("")){
+            return false;
+        } else return true;
+    }
+
 }

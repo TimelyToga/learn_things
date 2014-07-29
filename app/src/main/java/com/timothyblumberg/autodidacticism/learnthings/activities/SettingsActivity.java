@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,6 +20,9 @@ import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class SettingsActivity extends BaseActivity {
 
     private static ListView frequencyIntensity;
@@ -32,9 +36,14 @@ public class SettingsActivity extends BaseActivity {
         activity.startActivity(intent);
     }
 
+    @Override protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CalligraphyConfig.initDefault(R.attr.fontPath);
         setContentView(R.layout.activity_settings);
 
         // Set Action Bar title to different from app launcher label
@@ -81,9 +90,15 @@ public class SettingsActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // @onClick Reset DB
     public void resetDB(View v){
         QuestionDAO.resetDB();
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
+    }
+
+    // @onClick Add Questions Button
+    public void launchAddQuestions(View v){
+        AddQuestionActivity.launch(this);
     }
 
     private void setUpListView(){

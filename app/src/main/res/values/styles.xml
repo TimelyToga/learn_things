@@ -15,13 +15,12 @@
     </style>
 
     <style name="answerTextStyle">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="fontPath">fonts/GothamRnd-Medium.otf</item>
         <item name="android:textSize">11pt</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="resultTextStyle">
-        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">8pt</item>
         <item name="android:gravity">center</item>
 
