@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -50,20 +50,20 @@ public class MCActivity extends BaseActivity{
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            boolean isFR = extras.getBoolean(Globals.EXTRA_IS_FR);
-            String question_id = extras.getString(Globals.EXTRA_QUESTION_ID);
+            boolean isFR = extras.getBoolean(G.EXTRA_IS_FR);
+            String question_id = extras.getString(G.EXTRA_QUESTION_ID);
             curQuestion = QuestionDAO.getQuestionById(question_id);
             Log.d(TAG, "FR: " + String.valueOf(isFR));
 
-            answer_code = extras.getInt(Globals.EXTRA_ANSWER);
-            correct = extras.getBoolean(Globals.EXTRA_CORRECT);
-            yourAnswer = extras.getString(Globals.EXTRA_YOUR_ANSWER);
+            answer_code = extras.getInt(G.EXTRA_ANSWER);
+            correct = extras.getBoolean(G.EXTRA_CORRECT);
+            yourAnswer = extras.getString(G.EXTRA_YOUR_ANSWER);
 
             curQuestion.setOutcome(correct);
 
-            if(Globals.DEBUG){
+            if(G.DEBUG){
                 correctnessText.append("\nViews: " + curQuestion.numberAsks);
-                Question[] qList = QuestionDAO.getQuestionList(QuestionDAO.RATIO_QUERY_FORMAT, 5);
+                Question[] qList = QuestionDAO.getQuestionArray(QuestionDAO.RATIO_QUERY_FORMAT, 5);
                 for(Question q : qList){
                     if(q.numberAsks > 0){
                         correctnessText.append(q.qText + " -- " + ((double) q.num_correct / (double) (q.num_incorrect + 1)) + "\n");
@@ -73,20 +73,20 @@ public class MCActivity extends BaseActivity{
 
 
         }  else {
-            if(Globals.DEBUG) Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
+            if(G.DEBUG) Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
             correctnessText.setText("Welcome to LearnThings!");
         }
 
         NotificationManager notificationManager = (NotificationManager)
                 App.getAppContext().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(Globals.DEFAULT_NOTIFICATIONS_CODE);
+        notificationManager.cancel(G.DEFAULT_NOTIFICATIONS_CODE);
 
         // Initialization in BaseActivity
         setLayoutTouchListener(mainLayout);
         makeAnimateTimer().start();
         waitTimer = makeTimer().start();
         initQuestionsAndUser();
-        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
+        scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
 
     @Override
@@ -117,13 +117,13 @@ public class MCActivity extends BaseActivity{
     private void setViewResult(int answer_code, boolean correct, String yourAnswer) {
         // Sets the answer you gave without the leading character
         switch (answer_code) {
-            case Globals.A_CODE:
+            case G.A_CODE:
                 correctnessText.setText(String.format(getString(R.string.you_answered), "A", yourAnswer));
                 break;
-            case Globals.B_CODE:
+            case G.B_CODE:
                 correctnessText.setText(String.format(getString(R.string.you_answered), "B", yourAnswer));
                 break;
-            case Globals.C_CODE:
+            case G.C_CODE:
                 correctnessText.setText(String.format(getString(R.string.you_answered), "C", yourAnswer));
                 break;
         }
@@ -156,12 +156,12 @@ public class MCActivity extends BaseActivity{
         }
 
         // start
-        backgroundAnimator.setDuration(Globals.COLOR_FADE_TIME);
+        backgroundAnimator.setDuration(G.COLOR_FADE_TIME);
         backgroundAnimator.start();
     }
 
     private CountDownTimer makeAnimateTimer(){
-        return new CountDownTimer(Globals.ANIMATION_TIMER_LENGTH, Globals.ANIMATION_TIMER_LENGTH) {
+        return new CountDownTimer(G.ANIMATION_TIMER_LENGTH, G.ANIMATION_TIMER_LENGTH) {
             @Override
             public void onTick(long millisUntilFinished) {
             }

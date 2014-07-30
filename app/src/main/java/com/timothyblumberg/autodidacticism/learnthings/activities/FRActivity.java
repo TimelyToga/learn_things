@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -47,16 +47,16 @@ public class FRActivity extends BaseActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String question_id = extras.getString(Globals.EXTRA_QUESTION_ID);
+            String question_id = extras.getString(G.EXTRA_QUESTION_ID);
             curQuestion = QuestionDAO.getQuestionById(question_id);
 
-        }  else if(Globals.DEBUG){
+        }  else if(G.DEBUG){
             Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
         }
 
         NotificationManager notificationManager = (NotificationManager)
                 App.getAppContext().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(Globals.DEFAULT_NOTIFICATIONS_CODE);
+        notificationManager.cancel(G.DEFAULT_NOTIFICATIONS_CODE);
 
 
         // Initialization in BaseActivity
@@ -110,7 +110,7 @@ public class FRActivity extends BaseActivity {
         runBackgroundAnimation(correct);
         curQuestion.setOutcome(correct);
 
-        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
+        scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
         ImageView im = setUpImageView(correct, true);
         mViewGroup.removeView(findViewById(R.id.mc_resultImg));
         im.setId(R.id.mc_resultImg);
@@ -151,7 +151,7 @@ public class FRActivity extends BaseActivity {
         }
 
         // start
-        backgroundAnimator.setDuration(Globals.COLOR_FADE_TIME);
+        backgroundAnimator.setDuration(G.COLOR_FADE_TIME);
         backgroundAnimator.start();
     }
 
@@ -161,7 +161,7 @@ public class FRActivity extends BaseActivity {
      * @return
      */
     private CountDownTimer makeAnimateTimer(){
-        return new CountDownTimer(Globals.ANIMATION_TIMER_LENGTH, Globals.ANIMATION_TIMER_LENGTH) {
+        return new CountDownTimer(G.ANIMATION_TIMER_LENGTH, G.ANIMATION_TIMER_LENGTH) {
             @Override
             public void onTick(long millisUntilFinished) {
             }

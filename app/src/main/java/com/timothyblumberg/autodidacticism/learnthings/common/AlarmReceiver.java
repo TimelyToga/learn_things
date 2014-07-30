@@ -36,10 +36,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public void publishNotif(){
         // Don't try to make a new notifacation without any questions
-        if(QuestionDAO.getNumberOfQuestions() == 0) return;
+        if(QuestionDAO.getTotalNumberOfQuestions() == 0) return;
 
-        if(Globals.DEBUG) Toast.makeText(App.getAppContext(),
-                String.valueOf(QuestionDAO.getNumberOfQuestions()),
+        if(G.DEBUG) Toast.makeText(App.getAppContext(),
+                String.valueOf(QuestionDAO.getTotalNumberOfQuestions()),
                 Toast.LENGTH_SHORT)
                 .show();
 
@@ -49,7 +49,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         } catch(CursorIndexOutOfBoundsException e) {
             //TODO: Figure out what to do when all questions have been correctly answered
             Log.d("", "All questions have been correctly answered");
-            rand_q = QuestionDAO.getQuestionList(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
+            rand_q = QuestionDAO.getQuestionArray(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
         }
 
 
@@ -68,17 +68,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             // Creates an explicit intent for an Activity in your app
             Intent frIntent = new Intent(App.getAppContext(), FRActivity.class)
-                    .setAction(Globals.ANSWER_FR)
-                    .putExtra(Globals.EXTRA_QUESTION_ID, rand_q.question_id)
-                    .putExtra(Globals.EXTRA_IS_FR, !rand_q.multipleChoice);
+                    .setAction(G.ANSWER_FR)
+                    .putExtra(G.EXTRA_QUESTION_ID, rand_q.question_id)
+                    .putExtra(G.EXTRA_IS_FR, !rand_q.multipleChoice);
 
             stackBuilder.addParentStack(FRActivity.class);
             stackBuilder.addNextIntent(frIntent);
             mBuilder = createFRBuilder(rand_q);
 
             // Assign the correct intent for click through
-            frIntent.setAction(Globals.ANSWER_FR)
-                        .putExtra(Globals.EXTRA_IS_FR, true);
+            frIntent.setAction(G.ANSWER_FR)
+                        .putExtra(G.EXTRA_IS_FR, true);
             PendingIntent pIntent = PendingIntent.getActivity(App.getAppContext(),
                                                                 0,
                                                                 frIntent,
@@ -91,7 +91,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 (NotificationManager) App.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification notif = mBuilder.build();
-        mNotificationManager.notify(Globals.DEFAULT_NOTIFICATIONS_CODE, notif);
+        mNotificationManager.notify(G.DEFAULT_NOTIFICATIONS_CODE, notif);
 
     }
 
@@ -124,23 +124,23 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Creates an explicit intent for an Activity in your app
         Intent aIntent = new Intent(context, MCActivity.class)
-                .setAction(Globals.ANSWER_A)
-                .putExtra(Globals.EXTRA_ANSWER, Globals.A_CODE)
-                .putExtra(Globals.EXTRA_YOUR_ANSWER, answers[0])
-                .putExtra(Globals.EXTRA_QUESTION_ID, id)
-                .putExtra(Globals.EXTRA_CORRECT, correctArray[0]);
+                .setAction(G.ANSWER_A)
+                .putExtra(G.EXTRA_ANSWER, G.A_CODE)
+                .putExtra(G.EXTRA_YOUR_ANSWER, answers[0])
+                .putExtra(G.EXTRA_QUESTION_ID, id)
+                .putExtra(G.EXTRA_CORRECT, correctArray[0]);
         Intent bIntent = new Intent(context, MCActivity.class)
-                .setAction(Globals.ANSWER_B)
-                .putExtra(Globals.EXTRA_ANSWER, Globals.B_CODE)
-                .putExtra(Globals.EXTRA_YOUR_ANSWER, answers[1])
-                .putExtra(Globals.EXTRA_QUESTION_ID, id)
-                .putExtra(Globals.EXTRA_CORRECT, correctArray[1]);
+                .setAction(G.ANSWER_B)
+                .putExtra(G.EXTRA_ANSWER, G.B_CODE)
+                .putExtra(G.EXTRA_YOUR_ANSWER, answers[1])
+                .putExtra(G.EXTRA_QUESTION_ID, id)
+                .putExtra(G.EXTRA_CORRECT, correctArray[1]);
         Intent cIntent = new Intent(context, MCActivity.class)
-                .setAction(Globals.ANSWER_C)
-                .putExtra(Globals.EXTRA_YOUR_ANSWER, answers[2])
-                .putExtra(Globals.EXTRA_ANSWER, Globals.C_CODE)
-                .putExtra(Globals.EXTRA_QUESTION_ID, id)
-                .putExtra(Globals.EXTRA_CORRECT, correctArray[2]);
+                .setAction(G.ANSWER_C)
+                .putExtra(G.EXTRA_YOUR_ANSWER, answers[2])
+                .putExtra(G.EXTRA_ANSWER, G.C_CODE)
+                .putExtra(G.EXTRA_QUESTION_ID, id)
+                .putExtra(G.EXTRA_CORRECT, correctArray[2]);
 
         // Create the pending intents
         PendingIntent aPIntent = PendingIntent.getActivity(context, 0, aIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -163,7 +163,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentTitle(context.getString(R.string.new_q))
                 .setContentText(curQText)
                 .setAutoCancel(true)
-                .setVibrate(Globals.VIBRATE_PATTERN)
+                .setVibrate(G.VIBRATE_PATTERN)
                 .setLights(Color.argb(1,30, 223, 152), 500, 300)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
     }
@@ -185,13 +185,13 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentTitle(context.getString(R.string.new_q))
                 .setContentText(curQText)
                 .setAutoCancel(true)
-                .setVibrate(Globals.VIBRATE_PATTERN)
+                .setVibrate(G.VIBRATE_PATTERN)
                 .setLights(Color.argb(1, 30, 223, 152), 500, 300)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
     }
 
     public static void reportTimeToNextNotif(){
-        int bigSec = Globals.curUser.TIME_UNTIL_NEXT_NOTIFICATION / 1000;
+        int bigSec = G.curUser.TIME_UNTIL_NEXT_NOTIFICATION / 1000;
         int minutes = bigSec/60;
         int hours = minutes / 60;
         int seconds = bigSec - minutes*60;

@@ -6,7 +6,7 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.text.TextUtils;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 
 import nl.qbusict.cupboard.DatabaseCompartment;
 
@@ -44,13 +44,13 @@ public class UserDAO {
     }
 
     public static String getCurTrue(){
-        return cupboard().withDatabase(App.getWritableDB()).get(Globals.curUser).curTrue;
+        return cupboard().withDatabase(App.getWritableDB()).get(G.curUser).curTrue;
     }
 
     public static void setCurTrue(String curTrue){
         ContentValues values = new ContentValues(1);
         values.put("curTrue", curTrue);
-        cupboard().withDatabase(App.getWritableDB()).update(User.class, values, "user_id = ?", Globals.curUser.getUserId());
+        cupboard().withDatabase(App.getWritableDB()).update(User.class, values, "user_id = ?", G.curUser.getUserId());
     }
 
 

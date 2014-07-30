@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -59,7 +59,7 @@ public class AddQuestionActivity extends BaseActivity {
             // Could be a valid FR question
             if(isNewQuestionFR()){
                 // Valid FR, create question obj
-                newQuestion = Question.createFR(qText, ans1, Globals.QPACK_USER_CREATED);
+                newQuestion = Question.createFR(qText, ans1, G.QPACK_USER_CREATED);
             } else {
                 if(isNewQuestionValidMC(ans1, ans2, ans3)){
                     // Valid MC, create question obj

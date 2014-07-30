@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 
 import java.util.Random;
 
@@ -34,8 +35,7 @@ public class QuestionDAO {
         if (TextUtils.isEmpty(questionId)) {
             return null;
         } else {
-            final String selectionStr = "question_id = ?";
-            return getQueryBuilder().withSelection(selectionStr, questionId).get();
+            return getQueryBuilder().withSelection(G.SELECT_QUESTION_ID, questionId).get();
         }
     }
 
@@ -67,24 +67,34 @@ public class QuestionDAO {
     }
 
     public static void deleteQuestion(Question question) {
-
-        // Delete LeoGroup in DB
+        // Delete Question in DB
         cupboard().withDatabase(App.getWritableDB()).delete(question);
     }
 
-    public static int getNumberOfQuestions(){
+    public static int getTotalNumberOfQuestions(){
         Cursor c = cupboard().withDatabase(App.getWritableDB()).query(Question.class).getCursor();
         return c.getCount();
     }
 
-    public static Question[] getQuestionList(String query, int num_qs) {
+    /**
+     * Gives the number of Questions in a specified QuestionPack
+     * @param qPackID
+     * @return
+     */
+    public static int qPackQuestionCount(String qPackID){
+        Cursor c = cupboard().withDatabase(App.getWritableDB()).query(Question.class)
+                .withSelection(G.SELECT_QUESTION_PACK_ID, qPackID).getCursor();
+        return c.getCount();
+    }
+
+    public static Question[] getQuestionArray(String query, int num_qs) {
         Cursor c = App.getWritableDB().rawQuery(String.format(query, num_qs), null);
         Question[] qArray = new Question[num_qs];
         int i = 0;
         int qTextCol = c.getColumnIndex("qText");
 
         c.moveToFirst();
-        while (c.isAfterLast() == false) {
+        while ( !c.isAfterLast() ) {
             // Get question
             int question_idCol = c.getColumnIndex("question_id");
             String question_id = c.getString(question_idCol);

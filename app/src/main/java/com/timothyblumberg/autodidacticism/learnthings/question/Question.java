@@ -14,7 +14,7 @@ public class Question {
     public long _id; // required by cupboard
     public String question_id;
     public String qText;
-    public String questionPack;
+    public String qpack_id;
 
     public String mcAnswerA;
     public String mcAnswerB;
@@ -44,7 +44,7 @@ public class Question {
         question.correctlyAnswered = "F";
         question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
         question.multipleChoice = false;
-        question.questionPack = questionPack;
+        question.qpack_id = questionPack;
 
         QuestionDAO.save(question);
         return question;

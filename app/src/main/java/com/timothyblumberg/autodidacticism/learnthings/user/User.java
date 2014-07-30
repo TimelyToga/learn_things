@@ -4,8 +4,8 @@ import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 import java.util.UUID;
@@ -33,8 +33,8 @@ public class User {
         User user = new User();
         user.user_id = UUID.randomUUID().toString();
         user._id = Util.getLongFromUUIDString(user.user_id);
-        user.total_questions = QuestionDAO.getNumberOfQuestions();
-        user.TIME_UNTIL_NEXT_NOTIFICATION = Globals.INITIAL_TIME_FOR_NOTIF;
+        user.total_questions = QuestionDAO.getTotalNumberOfQuestions();
+        user.TIME_UNTIL_NEXT_NOTIFICATION = G.INITIAL_TIME_FOR_NOTIF;
         user.curTrue = "F";
         UserDAO.save(user);
 
@@ -47,7 +47,7 @@ public class User {
 
         // Report
         String message = String.format(App.getAppContext().getString(R.string.toast_times_per_day),
-                Globals.MILLISECONDS_IN_DAY/newTime);
+                G.MILLISECONDS_IN_DAY/newTime);
         Toast.makeText(App.getAppContext(), message, Toast.LENGTH_SHORT).show();
     }
 

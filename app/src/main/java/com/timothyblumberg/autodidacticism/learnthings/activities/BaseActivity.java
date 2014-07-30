@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionFactory;
@@ -52,7 +52,7 @@ public class BaseActivity extends Activity {
          */
     protected void scheduleNotif(int timeUntilNextNotif) {
         if(timeUntilNextNotif < 0){
-            timeUntilNextNotif = Globals.curUser.TIME_UNTIL_NEXT_NOTIFICATION;
+            timeUntilNextNotif = G.curUser.TIME_UNTIL_NEXT_NOTIFICATION;
         }
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -63,7 +63,7 @@ public class BaseActivity extends Activity {
     }
 
     protected CountDownTimer makeTimer(){
-        return new CountDownTimer(Globals.TIMER_COUNTDOWN_LENGTH, 1000) {
+        return new CountDownTimer(G.TIMER_COUNTDOWN_LENGTH, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
             }
@@ -89,15 +89,15 @@ public class BaseActivity extends Activity {
 
     public static void initQuestionsAndUser(){
         // Initialize questions and User obj
-        if(QuestionDAO.getNumberOfQuestions() == 0){
+        if(QuestionDAO.getTotalNumberOfQuestions() == 0){
             QuestionFactory.createQuestions();
         }
         try{
-            Globals.curUser = UserDAO.testUserExistence();
+            G.curUser = UserDAO.testUserExistence();
         } catch (CursorIndexOutOfBoundsException e){
             // If nothing is found, createMC the user
             Log.d(TAG, "\n\n\nCreating user\n\n\n");
-            Globals.curUser = User.create();
+            G.curUser = User.create();
         }
     }
 

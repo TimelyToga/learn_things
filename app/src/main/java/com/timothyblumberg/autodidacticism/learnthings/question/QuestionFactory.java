@@ -6,7 +6,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -60,7 +60,7 @@ public class QuestionFactory {
             br = new BufferedReader(new InputStreamReader(is));
             while ((line = br.readLine()) != null) {
                 // Skip commented lines
-                if(line.startsWith(Globals.COMMENT_STRING)){
+                if(line.startsWith(G.COMMENT_STRING)){
                     continue;
                 }
                 // use comma as separator
@@ -73,7 +73,7 @@ public class QuestionFactory {
                     curQ = Question.createMC(qArray[0], answers);
                 } else {
                     // Must be a free response,
-                    curQ = Question.createFR(qArray[0], qArray[1].substring(1), Globals.QPACK_STARTING);
+                    curQ = Question.createFR(qArray[0], qArray[1].substring(1), G.QPACK_STARTING);
                 }
                 // Add newly created question to list for output to JSON
                 questionArrayList.add(curQ);

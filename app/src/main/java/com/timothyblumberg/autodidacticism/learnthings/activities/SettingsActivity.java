@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
-import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -65,7 +65,7 @@ public class SettingsActivity extends BaseActivity {
 
         // General initialization
         initQuestionsAndUser();
-        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
+        scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
 
 
@@ -91,7 +91,7 @@ public class SettingsActivity extends BaseActivity {
     // @onClick Reset DB
     public void resetDB(View v){
         QuestionDAO.resetDB();
-        scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
+        scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
     }
 
     // @onClick Add Questions Button
@@ -102,7 +102,7 @@ public class SettingsActivity extends BaseActivity {
     private void setUpListView(){
         frequencyIntensity = (ListView)findViewById(R.id.intensityListView);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, Globals.listNames);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, G.listNames);
         frequencyIntensity.setAdapter(adapter);
         frequencyIntensity.setItemChecked(0, true);
                 frequencyIntensity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -112,8 +112,8 @@ public class SettingsActivity extends BaseActivity {
                         view.setActivated(true);
                         runBackgroundAnimation();
 
-                        int newTime = Globals.listDef[position];
-                        Globals.curUser.updateNotifTime(newTime);
+                        int newTime = G.listDef[position];
+                        G.curUser.updateNotifTime(newTime);
                         AlarmReceiver.reportTimeToNextNotif();
                         scheduleNotif(newTime);
                     }
@@ -121,7 +121,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void runBackgroundAnimation(){
-        backgroundAnimator.setDuration(Globals.COLOR_FADE_TIME/2);
+        backgroundAnimator.setDuration(G.COLOR_FADE_TIME/2);
         reverseAnimator.setDuration(backgroundAnimator.getDuration());
         backgroundAnimator.addListener(new Animator.AnimatorListener() {
             @Override
