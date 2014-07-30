@@ -28,16 +28,15 @@
     <string name="incorrect_add_question">Fill either the first answer field for a Free Response question, or all three answer fields for a multiple choice</string>
     <string name="no_question_add_question">Please provide a question</string>
 
-    <!--AddQuestionActivity-->
-    <string name="question_text_hint">Add question text here&#8230;</string>
-    <string name="question_answer_hint1">Add correct question answer here&#8230;</string>
-    <string name="question_answer2_hint">Continue here for MC question&#8230;</string>
-    <string name="question_answer3_hint">Once more for MC question&#8230;</string>
+    <!-- AddQuestionActivity -->
+    <string name="question_text_hint">Add question text here…</string>
+    <string name="question_answer_hint1">Add correct question answer here…</string>
+    <string name="question_answer2_hint">Continue here for MC question…</string>
+    <string name="question_answer3_hint">Once more for MC question…</string>
     <string name="save_question_button_title">Save Question</string>
-
-
-    // 5 times per day    <string name="Medium">Medium</string>
- // 15 times per day    <string name="Heavy">Heavy</string>
- // 30 times per day    <string name="title_activity_add_question">AddQuestionActivity</string>
+    // 5 times per day        <string name="Medium">Medium</string>
+ // 15 times per day        <string name="Heavy">Heavy</string>
+ // 30 times per day        <string name="title_activity_add_question">AddQuestionActivity</string>
+    <string name="title_activity_generic_question_result">GenericQuestionResultActivity</string>
 
 </resources>

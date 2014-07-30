@@ -46,6 +46,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
         </activity>
+        <activity
+            android:name=".activities.GenericQuestionResultActivity"
+            android:label="@string/title_activity_generic_question_result" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

@@ -19,7 +19,7 @@ import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
-public class FRActivity extends BaseActivity {
+public class FRActivity extends GenericQuestionResultActivity {
 
     private final String TAG = FRActivity.class.getSimpleName();
     private static RelativeLayout mainLayout;
@@ -112,8 +112,8 @@ public class FRActivity extends BaseActivity {
 
         scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
         ImageView im = setUpImageView(correct, true);
-        mViewGroup.removeView(findViewById(R.id.mc_resultImg));
-        im.setId(R.id.mc_resultImg);
+        mViewGroup.removeView(findViewById(R.id.fr_resultImg));
+        im.setId(R.id.fr_resultImg);
 
         // ADD / REMOVE VIEWS
         mViewGroup.addView(im);

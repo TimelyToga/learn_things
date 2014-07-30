@@ -20,7 +20,7 @@ import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 
-public class MCActivity extends BaseActivity{
+public class MCActivity extends GenericQuestionResultActivity {
 
     private final String TAG = MCActivity.class.getSimpleName();
     public static App sApp;

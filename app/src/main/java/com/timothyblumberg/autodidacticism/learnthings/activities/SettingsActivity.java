@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,8 +19,6 @@ import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 public class SettingsActivity extends BaseActivity {
 
     private static ListView frequencyIntensity;
@@ -35,9 +32,6 @@ public class SettingsActivity extends BaseActivity {
         activity.startActivity(intent);
     }
 
-    @Override protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
