@@ -1,4 +1,4 @@
-package com.timothyblumberg.autodidacticism.learnthings.dirtywork;
+package com.timothyblumberg.autodidacticism.learnthings.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

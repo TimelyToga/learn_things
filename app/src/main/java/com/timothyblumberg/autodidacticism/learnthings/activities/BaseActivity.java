@@ -6,10 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -17,6 +19,7 @@ import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionFactory;
 import com.timothyblumberg.autodidacticism.learnthings.user.User;
@@ -24,15 +27,29 @@ import com.timothyblumberg.autodidacticism.learnthings.user.UserDAO;
 
 import java.util.Calendar;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class BaseActivity extends Activity {
 
     private static final String TAG = MCActivity.class.getSimpleName();
     protected CountDownTimer waitTimer;
+    protected ViewGroup mViewGroup;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        CalligraphyConfig.initDefault("fonts/RobotoSlab-Light.ttf", R.attr.fontPath);
+    }
+
+    @Override protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
 
     /**
-     * Sets the time
-     */
+         * Sets the time
+         */
     protected void scheduleNotif(int timeUntilNextNotif) {
         if(timeUntilNextNotif < 0){
             timeUntilNextNotif = Globals.curUser.TIME_UNTIL_NEXT_NOTIFICATION;
@@ -63,6 +80,9 @@ public class BaseActivity extends Activity {
             @Override
             public void onClick(View v) {
                 waitTimer.cancel();
+                Button exitButton = (Button)findViewById(R.id.exit_button);
+                exitButton.setVisibility(View.VISIBLE);
+                ToastUtil.showShort("Auto-exit paused");
             }
         });
     }
@@ -89,6 +109,10 @@ public class BaseActivity extends Activity {
         }
 
         super.finish();
+    }
+
+    public void exitView(View v){
+        finish();
     }
 
     protected ImageView setUpImageView(boolean correct, boolean fromFR){

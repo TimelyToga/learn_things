@@ -32,14 +32,6 @@
         android:textColor="@color/border_color"
         style="@style/resultTextStyle"/>
 
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/mc_resultImg"-->
-        <!--android:layout_below="@+id/mc_correctnessText"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:padding="5dp"/>-->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,6 +43,17 @@
         android:layout_alignBottom="@+id/mc_card"
         android:layout_marginBottom="@dimen/answer_from_bottom"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit_button"
+        android:layout_alignParentBottom="true"
+        style="@android:style/Widget.Holo.Button"
+        android:visibility="invisible"
+        android:id="@+id/exit_button"
+        android:onClick="exitView"
+        />
 
 
 </RelativeLayout>

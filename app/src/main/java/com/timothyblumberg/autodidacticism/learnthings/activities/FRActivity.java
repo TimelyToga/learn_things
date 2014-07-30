@@ -8,7 +8,6 @@ import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,8 +26,6 @@ public class FRActivity extends BaseActivity {
     private static TextView correctnessText;
     private static TextView answerText;
     private static ObjectAnimator backgroundAnimator;
-
-    private static ViewGroup mViewGroup;
 
     private static App sApp;
 
@@ -64,7 +61,6 @@ public class FRActivity extends BaseActivity {
 
 
         // Initialization in BaseActivity
-        setLayoutTouchListener(frLayout);
         makeAnimateTimer().start();
         waitTimer = makeTimer();
         initQuestionsAndUser();
@@ -92,26 +88,39 @@ public class FRActivity extends BaseActivity {
     }
 
     public void correctClick(View v){
+        // Set up timer Business
+        setLayoutTouchListener(frLayout);
         waitTimer.start();
+
         runBackgroundAnimation(true);
         curQuestion.setOutcome(true);
         correctnessText.setText("YAY! Correct!");
         answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
         ImageView im = setUpImageView(true, true);
-        mViewGroup.addView(im);
 
+        // ADD / REMOVE VIEWS
+        mViewGroup.addView(im);
+        findViewById(R.id.fr_correctButton).setVisibility(View.INVISIBLE);
+        findViewById(R.id.fr_incorrectButton).setVisibility(View.INVISIBLE);
     }
 
     public void incorrectClick(View v){
+        // Set up timer Business
+        setLayoutTouchListener(frLayout);
         waitTimer.start();
+
         runBackgroundAnimation(false);
         curQuestion.setOutcome(false);
         answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
         correctnessText.setText("Don't worry, we'll ask you again later.");
         scheduleNotif(Globals.SCHEDULE_NOTIF_DEFAULT_TIME);
         ImageView im = setUpImageView(false, true);
+
+        // ADD / REMOVE VIEWS
         mViewGroup.addView(im);
+        findViewById(R.id.fr_correctButton).setVisibility(View.INVISIBLE);
+        findViewById(R.id.fr_incorrectButton).setVisibility(View.INVISIBLE);
     }
 
     public void initViewForAnimation(){

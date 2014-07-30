@@ -20,7 +20,6 @@ import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SettingsActivity extends BaseActivity {
@@ -43,7 +42,6 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CalligraphyConfig.initDefault(R.attr.fontPath);
         setContentView(R.layout.activity_settings);
 
         // Set Action Bar title to different from app launcher label

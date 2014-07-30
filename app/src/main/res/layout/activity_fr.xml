@@ -23,7 +23,9 @@
             android:text="Correct"
             android:id="@+id/fr_correctButton"
             android:onClick="correctClick"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="@android:style/Widget.Holo.Button"
+            />
 
         <Button
             android:layout_width="fill_parent"
@@ -31,7 +33,9 @@
             android:text="Incorrect"
             android:id="@+id/fr_incorrectButton"
             android:onClick="incorrectClick"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="@android:style/Widget.Holo.Button"
+            />
         </LinearLayout>
 
     <ImageView
@@ -65,6 +69,17 @@
         android:layout_alignBottom="@id/card"
         style="@style/answerTextStyle"
         android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit_button"
+        android:layout_alignParentBottom="true"
+        style="@android:style/Widget.Holo.Button"
+        android:visibility="invisible"
+        android:id="@+id/exit_button"
+        android:onClick="exitView"
+        />
 
 
 </RelativeLayout>

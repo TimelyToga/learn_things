@@ -15,8 +15,8 @@
     </style>
 
     <style name="answerTextStyle">
-        <item name="fontPath">fonts/GothamRnd-Medium.otf</item>
-        <item name="android:textSize">11pt</item>
+        <item name="fontPath">fonts/RobotoSlab-Light.ttf</item>
+        <item name="android:textSize">10pt</item>
         <item name="android:gravity">center</item>
     </style>
 

@@ -8,6 +8,7 @@
     <string name="question_activity_title">Learn Things</string>
     <string name="answer">"Answer: "</string>
     <string name="title_activity_settings">Learn Things Settings</string>
+    <string name="exit_button">Exit</string>
 
     <!-- MCActivity -->
     <string name="you_answered" formatted="false">Answered %s: %s</string>

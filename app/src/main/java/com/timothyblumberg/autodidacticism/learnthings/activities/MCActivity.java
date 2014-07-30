@@ -8,7 +8,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +28,6 @@ public class MCActivity extends BaseActivity{
     public static TextView answerText;
     private static RelativeLayout mainLayout;
     private static Question curQuestion;
-    private ViewGroup mViewGroup;
 
     // extras
     private static boolean correct;
@@ -130,10 +128,7 @@ public class MCActivity extends BaseActivity{
         ImageView im = setUpImageView(correct, false); // false because mc not fr
         mViewGroup.addView(im);
 
-        if (correct) {
-//            mainLayout.setBackgroundColor(getResources().getColor(R.color.light_background_green));
-        } else {
-//            mainLayout.setBackgroundColor(getResources().getColor(R.color.light_background_red));
+        if (!correct) {
             answerText.setText(String.format(getString(R.string.answer_),
                     curQuestion.getCorrectAnswer()));
         }

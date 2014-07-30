@@ -19,7 +19,7 @@ import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
-public class AddQuestionActivity extends Activity {
+public class AddQuestionActivity extends BaseActivity {
 
     public static EditText questionTextForm;
     public static EditText questionAnswer1Form;

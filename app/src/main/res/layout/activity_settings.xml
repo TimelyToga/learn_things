@@ -48,14 +48,18 @@
             android:text="@string/reset_db"
             android:id="@+id/clear_db_button"
             android:onClick="resetDB"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="@android:style/Widget.Holo.Button"
+            />
 
         <Button
             android:text="@string/add_questions"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="launchAddQuestions"/>
+            android:onClick="launchAddQuestions"
+            style="@android:style/Widget.Holo.Button"
+            />
     </LinearLayout>
 
 
