@@ -9,6 +9,7 @@
     <dimen name="card_margin_sides">30dp</dimen>
     <dimen name="card_margin_bottom">30dp</dimen>
     <dimen name="card_width">250dp</dimen>
+    <dimen name="card_width_plus_padding">300dp</dimen>
     <dimen name="card_height">320dp</dimen>
     <dimen name="card_base_paddings">6dp</dimen>
     <dimen name="card_bottom_text_top_paddings">20dp</dimen>

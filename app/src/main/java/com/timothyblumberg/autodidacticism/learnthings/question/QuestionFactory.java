@@ -73,7 +73,7 @@ public class QuestionFactory {
                     curQ = Question.createMC(qArray[0], answers);
                 } else {
                     // Must be a free response,
-                    curQ = Question.createFR(qArray[0], qArray[1].substring(1));
+                    curQ = Question.createFR(qArray[0], qArray[1].substring(1), Globals.QPACK_STARTING);
                 }
                 // Add newly created question to list for output to JSON
                 questionArrayList.add(curQ);

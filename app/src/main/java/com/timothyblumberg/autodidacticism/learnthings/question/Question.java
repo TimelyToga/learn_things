@@ -14,22 +14,24 @@ public class Question {
     public long _id; // required by cupboard
     public String question_id;
     public String qText;
+    public String questionPack;
 
     public String mcAnswerA;
     public String mcAnswerB;
     public String mcAnswerC;
 
     public String frAnswerText;
+    public boolean multipleChoice; // True for MC, False for free response
 
     public int numberAsks = 0;
     public int num_correct = 0;
     public int num_incorrect = 0;
+    public long lastAsked;
+
     public String correctlyAnswered = "F"; // Has the question ever been answered correctly?
     public String lastAnswerCorrect = "F"; // Answered correctly last time answered?
-    public long lastAsked;
-    public boolean multipleChoice; // True for MC, False for free response
 
-    public static Question createFR(String qText, String questionAnswer){
+    public static Question createFR(String qText, String questionAnswer, String questionPack){
 
         final Question question = new Question();
         question.question_id = UUID.randomUUID().toString();
@@ -42,6 +44,7 @@ public class Question {
         question.correctlyAnswered = "F";
         question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
         question.multipleChoice = false;
+        question.questionPack = questionPack;
 
         QuestionDAO.save(question);
         return question;

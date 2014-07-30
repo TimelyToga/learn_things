@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.common.Globals;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -49,26 +48,6 @@ public class AddQuestionActivity extends BaseActivity {
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add_question, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void saveQuestion(View v){
         String qText = questionTextForm.getText().toString();
         String ans1 = questionAnswer1Form.getText().toString();
@@ -80,7 +59,7 @@ public class AddQuestionActivity extends BaseActivity {
             // Could be a valid FR question
             if(isNewQuestionFR()){
                 // Valid FR, create question obj
-                newQuestion = Question.createFR(qText, ans1);
+                newQuestion = Question.createFR(qText, ans1, Globals.QPACK_USER_CREATED);
             } else {
                 if(isNewQuestionValidMC(ans1, ans2, ans3)){
                     // Valid MC, create question obj

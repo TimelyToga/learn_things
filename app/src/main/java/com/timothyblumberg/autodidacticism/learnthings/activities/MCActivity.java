@@ -27,6 +27,7 @@ public class MCActivity extends BaseActivity{
     public static TextView correctnessText;
     public static TextView answerText;
     private static RelativeLayout mainLayout;
+    private static RelativeLayout cardLayout;
     private static Question curQuestion;
 
     // extras
@@ -43,7 +44,8 @@ public class MCActivity extends BaseActivity{
         correctnessText = (TextView)findViewById(R.id.mc_correctnessText);
         answerText = (TextView)findViewById(R.id.mc_answerText);
         mainLayout = (RelativeLayout)findViewById(R.id.mc_layout);
-        mViewGroup = mainLayout;
+        cardLayout = (RelativeLayout)findViewById(R.id.mc_9_card);
+        mViewGroup = cardLayout;
         sApp = App.getInstance();
 
         Bundle extras = getIntent().getExtras();
@@ -126,6 +128,8 @@ public class MCActivity extends BaseActivity{
                 break;
         }
         ImageView im = setUpImageView(correct, false); // false because mc not fr
+        mViewGroup.removeView(findViewById(R.id.mc_resultImg));
+        im.setId(R.id.mc_resultImg);
         mViewGroup.addView(im);
 
         if (!correct) {

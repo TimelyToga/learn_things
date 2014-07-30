@@ -115,6 +115,15 @@ public class BaseActivity extends Activity {
         finish();
     }
 
+
+//    <!--<ImageView-->
+//    <!--android:layout_width="wrap_content"-->
+//    <!--android:layout_height="wrap_content"-->
+//    <!--android:background="@drawable/card_template"-->
+//    <!--android:id="@+id/card"-->
+//    <!--android:layout_alignParentTop="true"-->
+//    <!--android:layout_centerHorizontal="true" />-->
+
     protected ImageView setUpImageView(boolean correct, boolean fromFR){
         ImageView im = new ImageView(App.getAppContext());
         if(correct){
@@ -122,7 +131,7 @@ public class BaseActivity extends Activity {
         } else {
             im.setImageResource(R.drawable.failure_icn);
         }
-        im.setPadding(5, 5, 5, 5);
+        im.setPadding(5,5,5,5);
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 

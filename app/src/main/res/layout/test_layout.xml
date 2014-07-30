@@ -7,52 +7,53 @@
     android:id="@+id/mc_layout"
     >
 
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/card_template02"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="@dimen/card_margin_top"
-    android:layout_marginBottom="@dimen/card_margin_bottom"
-    android:layout_marginLeft="@dimen/card_margin_sides"
-    android:layout_marginRight="@dimen/card_margin_sides"
-    android:minWidth="@dimen/card_width"
-    android:minHeight="@dimen/card_height"
-
-    >
-
-    <TextView
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/mc_correctnessText"
-        android:maxWidth="@dimen/card_width"
-        android:textColor="@color/border_color"
-        android:padding="@dimen/card_base_paddings"
-        style="@style/resultTextStyle"/>
+        android:background="@drawable/card_template02"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/card_margin_top"
+        android:layout_marginBottom="@dimen/card_margin_bottom"
+        android:layout_marginLeft="@dimen/card_margin_sides"
+        android:layout_marginRight="@dimen/card_margin_sides"
+        android:minWidth="@dimen/card_width_plus_padding"
+        android:minHeight="@dimen/card_height"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/mc_correctnessText"
+            android:maxWidth="@dimen/card_width"
+            android:textColor="@color/border_color"
+            android:text="staoehusao ethusaoetnuhsa eotu hsa oetuasoetuha"
+            android:padding="@dimen/card_base_paddings"
+            style="@style/resultTextStyle"/>
 
         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mc_resultImg"
-        android:padding="@dimen/card_base_paddings"
-        android:layout_gravity="center_horizontal"
-        android:visibility="invisible"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/success_icn"
+            android:layout_below="@id/mc_correctnessText"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mc_resultImg"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mc_answerText"
-        android:maxWidth="@dimen/card_width"
-        android:textColor="@color/border_color"
-        style="@style/answerTextStyle"
-        android:paddingTop="@dimen/card_bottom_text_top_paddings"
-        android:paddingBottom="@dimen/card_base_paddings"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mc_answerText"
+            android:maxWidth="@dimen/card_width"
+            android:textColor="@color/border_color"
+            style="@style/answerTextStyle"
+            android:text="stehusatehusatoeh usatoehusatoehusoat"
+            android:paddingTop="@dimen/card_bottom_text_top_paddings"
+            android:paddingBottom="@dimen/card_base_paddings"
+            android:layout_below="@+id/mc_resultImg" />
 
-</LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:layout_width="fill_parent"

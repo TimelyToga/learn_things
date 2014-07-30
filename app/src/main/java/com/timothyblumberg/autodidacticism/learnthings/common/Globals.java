@@ -75,4 +75,7 @@ public class Globals {
 
     public final static Random rgen = new Random();
     public static User curUser;
+
+    public final static String QPACK_USER_CREATED = "001_USERCREATED";
+    public final static String QPACK_STARTING = "000_STARTPACK";
 }
