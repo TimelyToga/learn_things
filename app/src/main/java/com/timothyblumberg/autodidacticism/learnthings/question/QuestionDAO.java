@@ -9,6 +9,8 @@ import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import nl.qbusict.cupboard.DatabaseCompartment;
@@ -114,6 +116,19 @@ public class QuestionDAO {
         BaseActivity.initQuestionsAndUser();
         
         Toast.makeText(App.getAppContext(), "Reset DB", Toast.LENGTH_SHORT).show();
+    }
+
+    public static List<String> getQuestionPacks(){
+        List<String> qPackList = new ArrayList<String>();
+        Cursor c = App.getWritableDB().rawQuery("SELECT DISTINCT qpack_id FROM Question", null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            qPackList.add(c.getString(0));
+            c.moveToNext();
+        }
+
+
+        return qPackList;
     }
 
     // Private Methods

@@ -11,8 +11,11 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
@@ -103,6 +106,15 @@ public class BaseActivity extends Activity {
         }
 
         super.finish();
+    }
+
+    public View createDivider(){
+        View divider = new View(App.getAppContext());
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 4);
+        divider.setLayoutParams(p);
+        divider.setBackgroundColor(getResources().getColor(R.color.darker_gray));
+
+        return divider;
     }
 
 }

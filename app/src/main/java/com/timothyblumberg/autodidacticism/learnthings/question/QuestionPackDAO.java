@@ -45,7 +45,7 @@ public class QuestionPackDAO {
      * @return
      */
     public static List<QuestionPack> getQPackList() {
-        return getQueryBuilder().list();
+        return getQueryBuilder().distinct().list();
     }
 
 
