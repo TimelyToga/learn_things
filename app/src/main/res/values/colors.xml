@@ -10,4 +10,7 @@
     <color name="light_background_red">#E0B3B3</color>
     <color name="light_background_green">#B1DDB4</color>
     <color name="light_background_blue">#A3BBE5</color>
+
+    <!--UI Elements-->
+    <color name="darker_gray">#aaa</color>
 </resources>

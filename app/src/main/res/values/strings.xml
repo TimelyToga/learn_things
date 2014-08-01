@@ -17,13 +17,14 @@
 
     <!--FRActivity-->
     <string name="ask_again">"Don't worry, we'll ask you again later."</string>
-    <string name="yay_correct">"YAY! Correct!"</string>
+    <string name="yay_correct">"Excellent! You answered correctly!"</string>
 
     <!-- SettingsActivity -->
     <string name="questions_per_day">"Questions per day: "</string>
     <string name="reset_db">Reset DB</string>
     <string name="question_frequency">Question Frequency:</string>
     <string name="add_questions">Add Questions</string>
+    <string name="question_pack_list">Active Question Pack List:</string>
 
     <!-- Toast Messages -->
     <string name="toast_time_till_next" formatted="false">Time until next question: %s</string>

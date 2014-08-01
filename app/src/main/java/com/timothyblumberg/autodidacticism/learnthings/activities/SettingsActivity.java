@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
@@ -26,7 +29,6 @@ public class SettingsActivity extends BaseActivity {
     @Inject
     User curUser;
 
-    private static ListView frequencyIntensity;
     private static ArrayAdapter<String> adapter;
     private static ObjectAnimator backgroundAnimator;
     private static ObjectAnimator reverseAnimator;
@@ -64,7 +66,7 @@ public class SettingsActivity extends BaseActivity {
         scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
 
         // List View
-        setUpListView();
+        setupFrequencyList();
     }
 
 
@@ -81,28 +83,62 @@ public class SettingsActivity extends BaseActivity {
     }
 
     // @onClick Add Questions Button
-    public void launchAddQuestions(View v){
+    public void launchAddQuestions(View view){
         AddQuestionActivity.launch(this);
     }
 
-    private void setUpListView(){
-        frequencyIntensity = (ListView)findViewById(R.id.intensityListView);
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, G.listNames);
-        frequencyIntensity.setAdapter(adapter);
-        frequencyIntensity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setActivated(true);
-                G.curUser.setCurListPosition(position);
-                runBackgroundAnimation();
-
-                int newTime = G.listDef[position];
-                G.curUser.updateNotifTime(newTime);
-                AlarmReceiver.reportTimeToNextNotif();
-                scheduleNotif(newTime);
+    // @onClick frequency radio button
+    public void onQuestionFrequencySelected(View view){
+        int number = view.getId();
+        int position = 0;
+        //TODO: Ascertain list item position
+        for(int a = 0; a < G.questionFrequencyTimes.length; a++){
+            if( G.questionFrequencyTimes[a] == number){
+                position = a;
+                break;
             }
-        });
+        }
+
+        view.setActivated(true);
+        G.curUser.setCurListPosition(position);
+        runBackgroundAnimation();
+
+        int newTime = G.questionFrequencyTimes[position];
+        G.curUser.updateNotifTime(newTime);
+        AlarmReceiver.reportTimeToNextNotif();
+        scheduleNotif(newTime);
+    }
+
+
+    private void setupFrequencyList() {
+        RadioGroup askIntensityList = (RadioGroup)findViewById(R.id.askIntensityList);
+        int curPosition = 0;
+
+        for(int a = 0; a < G.questionFrequencyNames.length; a++){
+            String curFrequencyTitle = G.questionFrequencyNames[a];
+            int curFrequencyTime = G.questionFrequencyTimes[a];
+
+            // Create Views
+            RadioButton radioButton = (RadioButton)getLayoutInflater().inflate(R.layout.template_radio_button, null);
+            radioButton.setText(curFrequencyTitle);
+            radioButton.setId(curFrequencyTime);
+            View divider = new View(App.getAppContext());
+
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            divider.setLayoutParams(p);
+            divider.setBackgroundColor(getResources().getColor(R.color.darker_gray));
+
+            if(curPosition == G.curUser.curListPosition){
+                // should check the correct spot
+                radioButton.setSelected(true);
+            }
+
+            // Add the views
+            askIntensityList.addView(radioButton);
+            askIntensityList.addView(divider);
+
+            curPosition++;
+        }
 
     }
 

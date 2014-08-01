@@ -52,7 +52,7 @@ public class G {
     public static final int FREQUENCY_DAILY = MILLISECONDS_IN_DAY;
     public static final int FREQUENCY_DAILY2 = MILLISECONDS_IN_DAY * 2;
 
-    public static final String[] listNames = {"Every 3 Seconds",
+    public static final String[] questionFrequencyNames = {"Every 3 Seconds",
                                                 "Every 15 minutes",
                                                 "Every 30 minutes",
                                                 "Every hour",
@@ -60,7 +60,7 @@ public class G {
                                                 "Every 6 hours",
                                                 "Daily",
                                                 "Every two days"};
-    public static final int[] listDef = {FREQUENCY_SEC3,
+    public static final int[] questionFrequencyTimes = {FREQUENCY_SEC3,
                                                 FREQUENCY_MIN15,
                                                 FREQUENCY_MIN30,
                                                 FREQUENCY_HOURLY,

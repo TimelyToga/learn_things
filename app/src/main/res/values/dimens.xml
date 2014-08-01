@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="answer_from_bottom">22dp</dimen>
+    <dimen name="base_padding">5dp</dimen>
+    <dimen name="checkbox_vertical_padding">15dp</dimen>
 
     <!--Card Layout dimens-->
     <dimen name="card_margin_top">40dp</dimen>
