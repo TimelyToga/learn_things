@@ -5,8 +5,6 @@ import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -65,37 +63,16 @@ public class FRActivity extends GenericQuestionResultActivity {
         initQuestionsAndUser();
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.fr, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            SettingsActivity.launch(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void correctClick(View v){
         performGenericResultButtonClick(true);
-        correctnessText.setText("YAY! Correct!");
-        answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
+        correctnessText.setText(getString(R.string.yay_correct));
+        answerText.setText(String.format(getString(R.string.answer_), curQuestion.getCorrectAnswer()));
     }
 
     public void incorrectClick(View v){
         performGenericResultButtonClick(false);
-        answerText.setText(String.format(getString(R.string.answer_, curQuestion.getCorrectAnswer())));
-        correctnessText.setText("Don't worry, we'll ask you again later.");
+        answerText.setText(String.format(getString(R.string.answer_), curQuestion.getCorrectAnswer()));
+        correctnessText.setText(getString(R.string.ask_again));
     }
 
     /**
@@ -127,7 +104,7 @@ public class FRActivity extends GenericQuestionResultActivity {
     public void initViewForAnimation(){
         TextView t = new TextView(App.getAppContext());
         mViewGroup.addView(t);
-        correctnessText.setText(getText(R.string.answer) + curQuestion.frAnswerText);
+        correctnessText.setText(getText(R.string.answer) + curQuestion.getCorrectAnswer());
     }
 
     /**

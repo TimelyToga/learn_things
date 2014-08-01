@@ -24,6 +24,7 @@ public class User {
     public int total_questions;
     public int total_correct_questions;
     public int TIME_UNTIL_NEXT_NOTIFICATION;
+    public int curListPosition;
 
     /* User Information */
     public String name;
@@ -36,6 +37,7 @@ public class User {
         user.total_questions = QuestionDAO.getTotalNumberOfQuestions();
         user.TIME_UNTIL_NEXT_NOTIFICATION = G.INITIAL_TIME_FOR_NOTIF;
         user.curTrue = "F";
+        user.curListPosition = -1;
         UserDAO.save(user);
 
         return user;
@@ -49,6 +51,11 @@ public class User {
         String message = String.format(App.getAppContext().getString(R.string.toast_times_per_day),
                 G.MILLISECONDS_IN_DAY/newTime);
         Toast.makeText(App.getAppContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void setCurListPosition(int newListPos){
+        this.curListPosition = newListPos;
+        UserDAO.save(this);
     }
 
     public String getUserId(){

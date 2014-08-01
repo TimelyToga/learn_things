@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,8 +17,14 @@ import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
+import com.timothyblumberg.autodidacticism.learnthings.user.User;
+
+import javax.inject.Inject;
 
 public class SettingsActivity extends BaseActivity {
+
+    @Inject
+    User curUser;
 
     private static ListView frequencyIntensity;
     private static ArrayAdapter<String> adapter;
@@ -54,32 +59,19 @@ public class SettingsActivity extends BaseActivity {
                 getResources().getColor(R.color.light_background_green),
                 getResources().getColor(R.color.light_background_blue));
 
-        // List View
-        setUpListView();
-
         // General initialization
         initQuestionsAndUser();
         scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
+
+        // List View
+        setUpListView();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.settings, menu);
+        // Override BaseActivity and don't display options menu
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     // @onClick Reset DB
@@ -98,20 +90,20 @@ public class SettingsActivity extends BaseActivity {
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, G.listNames);
         frequencyIntensity.setAdapter(adapter);
-        frequencyIntensity.setItemChecked(0, true);
-                frequencyIntensity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        view.setSelected(true);
-                        view.setActivated(true);
-                        runBackgroundAnimation();
+        frequencyIntensity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setActivated(true);
+                G.curUser.setCurListPosition(position);
+                runBackgroundAnimation();
 
-                        int newTime = G.listDef[position];
-                        G.curUser.updateNotifTime(newTime);
-                        AlarmReceiver.reportTimeToNextNotif();
-                        scheduleNotif(newTime);
-                    }
-                });
+                int newTime = G.listDef[position];
+                G.curUser.updateNotifTime(newTime);
+                AlarmReceiver.reportTimeToNextNotif();
+                scheduleNotif(newTime);
+            }
+        });
+
     }
 
     private void runBackgroundAnimation(){

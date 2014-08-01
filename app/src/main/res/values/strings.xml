@@ -12,8 +12,12 @@
 
     <!-- MCActivity -->
     <string name="you_answered" formatted="false">Answered %s: %s</string>
-    <string name="answer:">Answer: %s</string>
+    <string name="answer_">Answer: %s</string>
     <string name="error_malformed_answer">Error, malformed answers.</string>
+
+    <!--FRActivity-->
+    <string name="ask_again">"Don't worry, we'll ask you again later."</string>
+    <string name="yay_correct">"YAY! Correct!"</string>
 
     <!-- SettingsActivity -->
     <string name="questions_per_day">"Questions per day: "</string>

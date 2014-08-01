@@ -9,6 +9,8 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
@@ -41,9 +43,31 @@ public class BaseActivity extends Activity {
         super.attachBaseContext(new CalligraphyContextWrapper(newBase));
     }
 
-    /**
-         * Sets the time
-         */
+    // <editor-fold desc="Options Menus">
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.base, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            SettingsActivity.launch(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //</editor-fold>
+
+
+
     protected void scheduleNotif(int timeUntilNextNotif) {
         if(timeUntilNextNotif < 0){
             timeUntilNextNotif = G.curUser.TIME_UNTIL_NEXT_NOTIFICATION;
@@ -63,6 +87,7 @@ public class BaseActivity extends Activity {
         }
         try{
             G.curUser = UserDAO.testUserExistence();
+            Log.d(TAG, "Got user: " + G.curUser.getUserId());
         } catch (CursorIndexOutOfBoundsException e){
             // If nothing is found, createMC the user
             Log.d(TAG, "\n\n\nCreating user\n\n\n");
