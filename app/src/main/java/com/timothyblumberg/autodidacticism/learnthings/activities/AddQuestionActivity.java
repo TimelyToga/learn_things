@@ -41,6 +41,7 @@ public class AddQuestionActivity extends BaseActivity {
         questionAnswer2Form = (EditText)findViewById(R.id.ad_question_answer2);
         questionAnswer3Form = (EditText)findViewById(R.id.ad_question_answer3);
 
+
         setImeListener(questionTextForm);
         setImeListener(questionAnswer1Form);
         setImeListener(questionAnswer2Form);
@@ -125,14 +126,34 @@ public class AddQuestionActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
-                if(actionId == EditorInfo.IME_ACTION_DONE){
-                    InputMethodManager imm = (InputMethodManager)getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                if(actionId == EditorInfo.IME_NULL || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    makeNextVisible();
                     handled = true;
                 }
+
                 return handled;
             }
         });
+
+    }
+
+    public void makeNextVisible(){
+        if(questionTextForm.hasFocus() && Util.isNotEmpty(questionTextForm.getText().toString())) {
+            questionAnswer1Form.setVisibility(View.VISIBLE);
+            questionAnswer1Form.requestFocus();
+            return;
+        }
+
+        if(questionAnswer1Form.hasFocus() && Util.isNotEmpty(questionAnswer1Form.getText().toString())) {
+            questionAnswer2Form.setVisibility(View.VISIBLE);
+            questionAnswer2Form.requestFocus();
+            return;
+        }
+
+        if(questionAnswer2Form.hasFocus() && Util.isNotEmpty(questionAnswer2Form.getText().toString())) {
+            questionAnswer3Form.setVisibility(View.VISIBLE);
+            questionAnswer3Form.requestFocus();
+        }
+
     }
 }
