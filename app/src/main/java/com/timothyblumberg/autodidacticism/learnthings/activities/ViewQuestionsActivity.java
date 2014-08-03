@@ -1,6 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,8 +59,32 @@ public class ViewQuestionsActivity extends BaseActivity {
                 }
             });
 
+            registerForContextMenu(questionListView);
         }
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info){
+        super.onCreateContextMenu(menu, view, info);
+
+        getMenuInflater().inflate(R.menu.view_questions_context, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                ToastUtil.showShort("Editing Question");
+                return true;
+            case R.id.action_delete:
+                ToastUtil.showShort("Deleting Question");
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
 
 
     @Override

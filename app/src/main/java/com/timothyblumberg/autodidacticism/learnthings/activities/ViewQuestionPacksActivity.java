@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPack;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPackDAO;
 
@@ -70,6 +72,30 @@ public class ViewQuestionPacksActivity extends BaseActivity {
 
             }
         });
+
+        registerForContextMenu(packView);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info){
+        super.onCreateContextMenu(menu, view, info);
+
+        getMenuInflater().inflate(R.menu.question_pack_context, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                ToastUtil.showShort("Editing Q Pack");
+                 return true;
+            case R.id.action_delete:
+                ToastUtil.showShort("Deleting Q Pack");
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
 

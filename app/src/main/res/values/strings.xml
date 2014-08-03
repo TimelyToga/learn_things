@@ -49,10 +49,11 @@
 
     <!-- Menu Strings -->
     <string name="menu_edit_question_pack">Edit Question Pack</string>
+    <string name="menu_edit_question">Edit Question</string>
     <string name="menu_delete_question_pack">Delete Question Pack</string>
-    <string name="title_activity_view_question_pack">ViewQuestionPackActivity</string>
+    <string name="menu_delete_question">Delete Question</string>
+    <string name="title_activity_view_question_pack">Question Packs</string>
     <string name="action_add_qpack">Add Question Pack</string>
-    <string name="title_activity_view_questions">ViewQuestionsActivity</string>
 
     <!--ViewQuestioPacksActivity-->
     <string name="view_question_packs_activity_title">View Question Packs</string>
