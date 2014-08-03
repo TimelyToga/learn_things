@@ -107,6 +107,8 @@ public class SettingsActivity extends BaseActivity {
             return true;
         } else if(id == R.id.action_add_qpack){
             ViewQuestionPacksActivity.launch(this);
+        } else if(id == R.id.action_add_question){
+            AddQuestionActivity.launch(this);
         }
         return super.onOptionsItemSelected(item);
     }

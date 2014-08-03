@@ -1,7 +1,6 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +37,6 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
     public static Spinner qPackSpinner;
     public static ArrayAdapter<String> adapter;
 
-    public static String selectedQPack;
     private static boolean userClick;
 
     public static void launch(Activity activity){
@@ -210,7 +207,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
             String selectedDisplayName = qPackSpinner.getItemAtPosition(position).toString();
             if(selectedDisplayName.equals(getString(R.string.create_new_question_pack))){
                 // Create new question pack
-                promptUserForQPackName();
+                showCreateQPackDialog();
             } else {
                 // Otherwise, set selection and allow question creation
                 QuestionPack qPack = QuestionPackDAO.getQPackByDisplayName(selectedDisplayName);
@@ -223,33 +220,11 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public void promptUserForQPackName(){
-        // Init dialog
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(getString(R.string.create_new_question_pack));
-        alert.setMessage(getString(R.string.create_question_pack_dialog_message));
-
-        // Set an EditText view to get user input
-        final EditText qPackName = (EditText)getLayoutInflater().inflate(R.layout.template_edit_text, null);
-        qPackName.setHint(R.string.create_question_dialog_qpack_name);
-        final EditText qPackDesc = (EditText)getLayoutInflater().inflate(R.layout.template_edit_text, null);
-        qPackDesc.setHint(R.string.create_question_dialog_qpack_desc);
-
-        // Create container view and add EditTexts
-        final LinearLayout container = new LinearLayout(this);
-        container.setOrientation(LinearLayout.VERTICAL);
-        container.addView(qPackName);
-        container.addView(qPackDesc);
-        alert.setView(container);
-
+    public void setUpAlertButtonActions(final EditText qPackText, final EditText qPackDesc){
         // Create and init dialog buttons
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String qPackNameText = qPackName.getText().toString();
+                String qPackNameText = qPackText.getText().toString();
                 String qPackDescText = qPackDesc.getText().toString();
                 String uuid = UUID.randomUUID().toString();
                 QuestionPack.createQuestionPack(uuid, qPackNameText, qPackDescText, QuestionPack.THIS_USER_CREATED);
@@ -267,11 +242,9 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
                 // Canceled.
             }
         });
-
-        alert.show();
     }
 
-    private void setSelectedQPack(String newQPackID){
-        selectedQPack = newQPackID;
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

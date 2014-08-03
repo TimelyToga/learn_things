@@ -13,4 +13,7 @@
 
     <!--UI Elements-->
     <color name="darker_gray">#aaa</color>
+    <color name="gray">#B5B5B5</color>
+    <color name="light_gray">#D8D8D8</color>
+
 </resources>

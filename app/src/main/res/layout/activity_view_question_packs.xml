@@ -6,12 +6,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/light_background_blue"
     tools:context="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionPacksActivity">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/answerTextStyle"
+        android:gravity="left"
+        android:paddingBottom="@dimen/checkbox_vertical_padding"
+        android:text="@string/current_question_packs"
+        android:id="@+id/current_question_packs_title"
+        />
 
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/question_pack_list"
+        android:layout_below="@+id/current_question_packs_title"
+        android:background="@android:color/white"
         >
 
         </ListView>

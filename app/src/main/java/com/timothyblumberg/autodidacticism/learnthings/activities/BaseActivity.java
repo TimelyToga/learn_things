@@ -2,6 +2,7 @@ package com.timothyblumberg.autodidacticism.learnthings.activities;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
@@ -34,6 +36,8 @@ public class BaseActivity extends Activity {
     private static final String TAG = MCActivity.class.getSimpleName();
     protected CountDownTimer waitTimer;
     protected ViewGroup mViewGroup;
+    protected AlertDialog.Builder alert;
+    public static String selectedQPack;
 
 
     @Override
@@ -116,5 +120,44 @@ public class BaseActivity extends Activity {
 
         return divider;
     }
+
+    protected void showCreateQPackDialog(){
+        // Init dialog
+        alert = new AlertDialog.Builder(this);
+        alert.setTitle(getString(R.string.create_new_question_pack));
+        alert.setMessage(getString(R.string.create_question_pack_dialog_message));
+
+        // Set an EditText view to get user input
+        final EditText qPackName = (EditText)getLayoutInflater().inflate(R.layout.template_edit_text, null);
+        qPackName.setHint(R.string.create_question_dialog_qpack_name);
+        final EditText qPackDesc = (EditText)getLayoutInflater().inflate(R.layout.template_edit_text, null);
+        qPackDesc.setHint(R.string.create_question_dialog_qpack_desc);
+
+        // Create container view and add EditTexts
+        final LinearLayout container = new LinearLayout(this);
+        container.setOrientation(LinearLayout.VERTICAL);
+        container.addView(qPackName);
+        container.addView(qPackDesc);
+        alert.setView(container);
+
+        setUpAlertButtonActions(qPackName, qPackDesc);
+
+        alert.show();
+    }
+
+
+    public void setUpAlertButtonActions(final EditText qPackText, final EditText qPackDesc){
+
+    }
+
+    protected void setSelectedQPack(String newQPackID){
+        selectedQPack = newQPackID;
+    }
+
+
+
+
+
+
 
 }

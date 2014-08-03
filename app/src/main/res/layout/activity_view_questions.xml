@@ -9,11 +9,23 @@
     tools:context="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionsActivity"
     android:background="@color/light_background_blue">
 
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/answerTextStyle"
+        android:gravity="left"
+        android:paddingBottom="@dimen/checkbox_vertical_padding"
+        android:text="@string/current_questions"
+        android:id="@+id/current_questions_title"
+        />
+
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:id="@+id/question_list"
+        android:layout_below="@id/current_questions_title"
         >
         </ListView>
 
