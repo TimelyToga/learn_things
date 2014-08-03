@@ -1,5 +1,6 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class ViewQuestionPacksActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_question_packs);
+        ActionBar actionBar = getActionBar();
 
         // get view references
         packView = (ListView)findViewById(R.id.question_pack_list);

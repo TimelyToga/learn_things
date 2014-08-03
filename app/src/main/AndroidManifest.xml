@@ -41,8 +41,9 @@
         <activity
             android:name=".activities.AddQuestionActivity"
             android:label="@string/question_activity_title"
+            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".activities.BaseActivity"
-            android:windowSoftInputMode="adjustResize" >
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
@@ -53,11 +54,21 @@
         </activity>
         <activity
             android:name=".activities.ViewQuestionPacksActivity"
-            android:label="@string/title_activity_view_question_pack" >
+            android:label="@string/title_activity_view_question_pack"
+            android:parentActivityName=".activities.BaseActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
         </activity>
         <activity
             android:name=".activities.ViewQuestionsActivity"
-            android:label="@string/title_activity_view_questions" >
+            android:label="@string/title_activity_view_questions"
+            android:parentActivityName=".activities.ViewQuestionPacksActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionPacksActivity" />
         </activity>
     </application>
 
