@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+    android:id="@+id/question_list_question_item">
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            style="@style/answerTextStyle"
+            android:paddingTop="@dimen/base_padding"
+            android:paddingLeft="@dimen/base_padding"
+            android:paddingBottom="@dimen/base_padding"
+            android:gravity="left"
+            android:id="@+id/question_list_text"
+            android:text="This is the question?"
+            />
+    </TableRow>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/resultTextStyle"
+            android:id="@+id/question_list_answer"
+            android:paddingLeft="@dimen/question_list_left_padding"
+            android:paddingBottom="@dimen/base_padding"
+            android:gravity="left"
+            android:text="anwser: answer"
+            />
+    </TableRow>
+
+</TableLayout>

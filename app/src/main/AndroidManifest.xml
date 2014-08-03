@@ -52,8 +52,12 @@
             android:label="@string/title_activity_generic_question_result" >
         </activity>
         <activity
-            android:name=".activities.ViewQuestionPackActivity"
+            android:name=".activities.ViewQuestionPacksActivity"
             android:label="@string/title_activity_view_question_pack" >
+        </activity>
+        <activity
+            android:name=".activities.ViewQuestionsActivity"
+            android:label="@string/title_activity_view_questions" >
         </activity>
     </application>
 

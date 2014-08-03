@@ -23,6 +23,7 @@ public class G {
     // Notif codes
     public static final int DEFAULT_NOTIFICATIONS_CODE = 98;
     public static final String ANSWER_FR = "ANSWER_FR";
+    public static final String VIEW_QUESTIONS_IN_QUESTION_PACK = "VIEW_QUESTIONS_IN_QUESTION_PACK";
     public static final String ANSWER_A = "ANSWER_A";
     public static final String ANSWER_B = "ANSWER_B";
     public static final String ANSWER_C = "ANSWER_C";
@@ -36,6 +37,7 @@ public class G {
     public static final String EXTRA_CORRECT = "EXTRA_CORRECT"; // true if correct | false if incorrect
     public static final String EXTRA_IS_FR = "EXTRA_IS_FR"; // true FR, false MC
     public static final String EXTRA_YOUR_ANSWER = "EXTRA_YOUR_ANSWER";
+    public static final String EXTRA_QPACK_ID = "EXTRA_QPACK_ID";
 
     // Notification Frequency variables and constants
     public static final int MILLISECONDS_IN_DAY = 3600*24000;

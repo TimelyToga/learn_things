@@ -106,7 +106,7 @@ public class SettingsActivity extends BaseActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if(id == R.id.action_add_qpack){
-            ViewQuestionPackActivity.launch(this);
+            ViewQuestionPacksActivity.launch(this);
         }
         return super.onOptionsItemSelected(item);
     }

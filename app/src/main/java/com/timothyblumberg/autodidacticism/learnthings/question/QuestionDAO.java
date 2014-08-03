@@ -131,6 +131,10 @@ public class QuestionDAO {
         return qPackList;
     }
 
+    public static List<Question> getQuestionForQuestionPack(String qPackID){
+        return getQueryBuilder().withSelection(G.SELECT_QUESTION_PACK_ID, qPackID).list();
+    }
+
     // Private Methods
     private static DatabaseCompartment.QueryBuilder<Question> getQueryBuilder() {
         return cupboard().withDatabase(App.getWritableDB()).query(Question.class);

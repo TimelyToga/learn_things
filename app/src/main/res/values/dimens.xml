@@ -5,6 +5,7 @@
     <dimen name="answer_from_bottom">22dp</dimen>
     <dimen name="base_padding">5dp</dimen>
     <dimen name="checkbox_vertical_padding">15dp</dimen>
+    <dimen name="question_list_left_padding">40dp</dimen>
 
     <!--Card Layout dimens-->
     <dimen name="card_margin_top">40dp</dimen>
