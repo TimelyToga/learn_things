@@ -20,6 +20,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/q_pack_spinner">
+
+                </Spinner>
+
             <com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -31,6 +38,7 @@
                 android:layout_alignParentTop="true"
                 android:imeOptions="actionNext"
                 fontPath="fonts/RobotoSlab-Light.ttf"
+                android:visibility="invisible"
                 />
 
             <com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText

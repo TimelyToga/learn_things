@@ -15,7 +15,7 @@
     <string name="answer_">Answer: %s</string>
     <string name="error_malformed_answer">Error, malformed answers.</string>
 
-    <!--FRActivity-->
+    <!-- FRActivity -->
     <string name="ask_again">"Don't worry, we'll ask you again later."</string>
     <string name="yay_correct">"Excellent! You answered correctly!"</string>
 
@@ -32,6 +32,7 @@
     <string name="light">Light</string>
     <string name="incorrect_add_question">Fill either the first answer field for a Free Response question, or all three answer fields for a multiple choice</string>
     <string name="no_question_add_question">Please provide a question</string>
+    <string name="select_valid_question_pack">Please select a valid question pack.</string>
 
     <!-- AddQuestionActivity -->
     <string name="question_text_hint">Add question text here…</string>
@@ -39,9 +40,15 @@
     <string name="question_answer2_hint">Continue here for MC question…</string>
     <string name="question_answer3_hint">Once more for MC question…</string>
     <string name="save_question_button_title">Save Question</string>
-    // 5 times per day        <string name="Medium">Medium</string>
- // 15 times per day        <string name="Heavy">Heavy</string>
- // 30 times per day        <string name="title_activity_add_question">AddQuestionActivity</string>
+    // 5 times per day            <string name="Medium">Medium</string>
+ // 15 times per day            <string name="Heavy">Heavy</string>
+ // 30 times per day            <string name="title_activity_add_question">AddQuestionActivity</string>
     <string name="title_activity_generic_question_result">GenericQuestionResultActivity</string>
+    <string name="create_new_question_pack">Create a new Question Pack</string>
+
+    <!-- Menu Strings -->
+    <string name="menu_edit_question_pack">Edit Question Pack</string>
+    <string name="menu_delete_question_pack">Delete Question Pack</string>
+    <string name="title_activity_view_question_pack">ViewQuestionPackActivity</string>
 
 </resources>

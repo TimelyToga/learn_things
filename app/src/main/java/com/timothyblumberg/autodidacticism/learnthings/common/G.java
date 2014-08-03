@@ -85,6 +85,8 @@ public class G {
     public final static String SELECT_QUESTION_PACK_ID = "qpack_id = ?";
     public final static String SELECT_QUESTION_PACK_DISPLAY_NAME = "displayName = ?";
     public final static String SELECT_QUESTION_PACK_ACTIVE = "active = ?";
+    public final static String SELECT_QUESTION_PACK_USER_EDITABLE = "userEditable = ?";
+
 
     // MISC.
     public static final String COMMENT_STRING = "//";

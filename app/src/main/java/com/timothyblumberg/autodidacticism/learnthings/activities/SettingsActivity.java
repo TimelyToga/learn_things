@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
-import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPack;
@@ -43,6 +42,8 @@ public class SettingsActivity extends BaseActivity {
     private static ObjectAnimator backgroundAnimator;
     private static ObjectAnimator reverseAnimator;
     private static RelativeLayout settingsMainLayout;
+    private static LinearLayout qPackLayout;
+
 
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, SettingsActivity.class);
@@ -71,11 +72,14 @@ public class SettingsActivity extends BaseActivity {
                 getResources().getColor(R.color.light_background_green),
                 getResources().getColor(R.color.light_background_blue));
 
+        qPackLayout = (LinearLayout) findViewById(R.id.question_pack_select);
+
         // General initialization
         initQuestionsAndUser();
         scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
 
         // List View
+        registerForContextMenu(qPackLayout);
         setupFrequencyList();
     }
 
@@ -125,7 +129,6 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void setupQuestionPackList() {
-        LinearLayout qPackLayout = (LinearLayout) findViewById(R.id.question_pack_select);
         List<QuestionPack> qPackList = QuestionPackDAO.getQPackList();
 
         int numPacks = qPackList.size();
@@ -153,7 +156,6 @@ public class SettingsActivity extends BaseActivity {
                         }
                     });
                     View divider = createDivider();
-
                     // Add the view
                     qPackLayout.addView(checkBox);
                     qPackLayout.addView(divider);
@@ -162,14 +164,17 @@ public class SettingsActivity extends BaseActivity {
 
             // Set checks
             if(numPacks >= curChildIndex){
-                CheckBox curChild = (CheckBox)qPackLayout.getChildAt(curChildIndex);
-                Log.d(TAG, qPack.qpack_id + " should be checked: " + qPack.active);
-                if(qPack.active.equals(G.TRUE)){
-                    curChild.setChecked(true);
-                    Log.d(TAG, qPack.qpack_id + " is checked.");
-                } else {
-                    curChild.setChecked(false);
-                    Log.d(TAG, qPack.qpack_id + " is not checked.");
+                View curView= qPackLayout.getChildAt(curChildIndex);
+                if(curView.isClickable()){
+                    CheckBox curChild = (CheckBox)curView;
+                    Log.d(TAG, qPack.qpack_id + " should be checked: " + qPack.active);
+                    if(qPack.active.equals(G.TRUE)){
+                        curChild.setChecked(true);
+                        Log.d(TAG, qPack.qpack_id + " is checked.");
+                    } else {
+                        curChild.setChecked(false);
+                        Log.d(TAG, qPack.qpack_id + " is not checked.");
+                    }
                 }
                 curChildIndex += 2;
             }
@@ -200,8 +205,6 @@ public class SettingsActivity extends BaseActivity {
         QuestionPack questionPack = QuestionPackDAO.getQPackByDisplayName(displayName);
         questionPack.setActive(shouldBeChecked);
         QuestionPackDAO.save(questionPack);
-
-        ToastUtil.showShort("question saved");
     }
 
 
@@ -214,7 +217,6 @@ public class SettingsActivity extends BaseActivity {
             int curFrequencyTime = G.questionFrequencyTimes[a];
 
             // Create Views
-            //TODO: Make RadioButton views stretch all the way across the view
             RadioButton radioButton = (RadioButton) getLayoutInflater().inflate(R.layout.template_radio_button, null);
             radioButton.setText(curFrequencyTitle);
             radioButton.setId(curFrequencyTime);
@@ -226,7 +228,7 @@ public class SettingsActivity extends BaseActivity {
 
             if (curPosition == G.curUser.curListPosition) {
                 // should check the correct spot
-                radioButton.setSelected(true);
+                radioButton.setChecked(true);
             }
 
             // Add the views

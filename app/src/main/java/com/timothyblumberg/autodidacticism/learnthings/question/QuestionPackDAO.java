@@ -60,6 +60,10 @@ public class QuestionPackDAO {
         return getQueryBuilder().withSelection(G.SELECT_QUESTION_PACK_ACTIVE, G.TRUE).list();
     }
 
+    public static List<QuestionPack> getUserEditableQPackList(){
+        return getQueryBuilder().withSelection(G.SELECT_QUESTION_PACK_DISPLAY_NAME, G.TRUE).list();
+    }
+
 
     // Private Methods
     private static DatabaseCompartment.QueryBuilder<QuestionPack> getQueryBuilder() {

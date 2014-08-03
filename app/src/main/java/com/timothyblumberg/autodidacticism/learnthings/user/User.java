@@ -37,7 +37,7 @@ public class User {
         user.total_questions = QuestionDAO.getTotalNumberOfQuestions();
         user.TIME_UNTIL_NEXT_NOTIFICATION = G.INITIAL_TIME_FOR_NOTIF;
         user.curTrue = "F";
-        user.curListPosition = -1;
+        user.curListPosition = 0;
         UserDAO.save(user);
 
         return user;

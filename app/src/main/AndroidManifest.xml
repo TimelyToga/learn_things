@@ -42,8 +42,7 @@
             android:name=".activities.AddQuestionActivity"
             android:label="@string/question_activity_title"
             android:parentActivityName=".activities.BaseActivity"
-            android:windowSoftInputMode="adjustResize"
-            >
+            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
@@ -51,6 +50,10 @@
         <activity
             android:name=".activities.GenericQuestionResultActivity"
             android:label="@string/title_activity_generic_question_result" >
+        </activity>
+        <activity
+            android:name=".activities.ViewQuestionPackActivity"
+            android:label="@string/title_activity_view_question_pack" >
         </activity>
     </application>
 

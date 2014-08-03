@@ -24,6 +24,7 @@ public class QuestionPack {
     public int numQuestions;
     public int numAllCorrect;
     public String active; // booleanString
+    public String userEditable; // booleanString
 
     public static QuestionPack createQuestionPack(String qPackID, String qPackDisplayName,
                                                   String qPackDesc, int qPackSource) {
@@ -37,6 +38,13 @@ public class QuestionPack {
         qPack.numAllCorrect = 0;
         qPack.source = qPackSource;
         qPack.qPackDescription = qPackDesc;
+        if(qPackSource == 1){
+            // Created by this user
+            qPack.userEditable = G.TRUE;
+        } else {
+            // Another source
+            qPack.userEditable = G.FALSE;
+        }
 
         QuestionPackDAO.save(qPack);
         return qPack;

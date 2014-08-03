@@ -3,25 +3,40 @@ package com.timothyblumberg.autodidacticism.learnthings.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPack;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPackDAO;
 
-public class AddQuestionActivity extends BaseActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddQuestionActivity extends BaseActivity implements AdapterView.OnItemSelectedListener{
+
+    private final String TAG = AddQuestionActivity.class.getSimpleName();
 
     public static EditText questionTextForm;
     public static EditText questionAnswer1Form;
     public static EditText questionAnswer2Form;
     public static EditText questionAnswer3Form;
+    public static Spinner qPackSpinner;
+
+    public static String selectedQPack;
+    private static boolean userClick;
 
     public static void launch(Activity activity){
         Intent intent = new Intent(activity, AddQuestionActivity.class);
@@ -38,13 +53,31 @@ public class AddQuestionActivity extends BaseActivity {
         questionAnswer1Form = (EditText)findViewById(R.id.ad_question_answer1);
         questionAnswer2Form = (EditText)findViewById(R.id.ad_question_answer2);
         questionAnswer3Form = (EditText)findViewById(R.id.ad_question_answer3);
+        qPackSpinner = (Spinner)findViewById(R.id.q_pack_spinner);
 
 
         setImeListener(questionTextForm);
         setImeListener(questionAnswer1Form);
         setImeListener(questionAnswer2Form);
         setImeListener(questionAnswer3Form);
+        setUpSpinner();
+        userClick = false;
 
+    }
+
+    private void setUpSpinner() {
+        List<QuestionPack> qPackList = QuestionPackDAO.getQPackList();
+        List<String> qPackNames = new ArrayList<String>();
+        qPackNames.add(getString(R.string.create_new_question_pack));
+        for(QuestionPack qPack : qPackList){
+            qPackNames.add(qPack.displayName);
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+                qPackNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        qPackSpinner.setAdapter(adapter);
+        qPackSpinner.setOnItemSelectedListener(this);
     }
 
     public void saveQuestion(View v){
@@ -53,46 +86,56 @@ public class AddQuestionActivity extends BaseActivity {
         String ans2 = questionAnswer2Form.getText().toString();
         String ans3 = questionAnswer3Form.getText().toString();
 
-        if(Util.isNotEmpty(qText) && Util.isNotEmpty(ans1)){
-            Question newQuestion;
-            // Could be a valid FR question
-            if(isNewQuestionFR()){
-                // Valid FR, create question obj
-                newQuestion = Question.createFR(qText, ans1, G.QPACK_USER_CREATED);
-            } else {
-                if(isNewQuestionValidMC(ans1, ans2, ans3)){
-                    // Valid MC, create question obj
-                    String[] ans = {"@" + ans1, "#" + ans2, "#" + ans3};
-                    newQuestion = Question.createMC(qText, ans, G.QPACK_USER_CREATED);
+        if(!Util.isNotEmpty(selectedQPack)){
+
+            String message = getString(R.string.select_valid_question_pack);
+
+        } else {
+            if(Util.isNotEmpty(qText) && Util.isNotEmpty(ans1)){
+                Question newQuestion;
+                // Could be a valid FR question
+                if(isNewQuestionFR()){
+                    // Valid FR, create question obj
+                    newQuestion = Question.createFR(qText, ans1, selectedQPack);
                 } else {
-                    // Invalid question. Alert.
+                    if(isNewQuestionValidMC(ans1, ans2, ans3)){
+                        // Valid MC, create question obj
+                        String[] ans = {"@" + ans1, "#" + ans2, "#" + ans3};
+                        newQuestion = Question.createMC(qText, ans, selectedQPack);
+                    } else {
+                        // Invalid question. Alert.
+                        Toast.makeText(this,
+                                getString(R.string.incorrect_add_question),
+                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(this,
+                                getString(R.string.incorrect_add_question),
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+
+                // valid question. Save and clear fields.
+                QuestionDAO.save(newQuestion);
+                Toast.makeText(this, newQuestion.qText + " " + newQuestion.question_id, Toast.LENGTH_LONG).show();
+                clearFields();
+            } else {
+                if(!Util.isNotEmpty(qText)){
+                    // No question
+                    Toast.makeText(this,
+                            getString(R.string.no_question_add_question),
+                            Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    // No first answer
                     Toast.makeText(this,
                             getString(R.string.incorrect_add_question),
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-            }
 
-            // valid question. Save and clear fields.
-            QuestionDAO.save(newQuestion);
-            Toast.makeText(this, newQuestion.qText + " " + newQuestion.question_id, Toast.LENGTH_LONG).show();
-            clearFields();
-        } else {
-            if(!Util.isNotEmpty(qText)){
-                // No question
-                Toast.makeText(this,
-                        getString(R.string.no_question_add_question),
-                        Toast.LENGTH_LONG).show();
-                return;
-            } else {
-                // No first answer
-                Toast.makeText(this,
-                        getString(R.string.incorrect_add_question),
-                        Toast.LENGTH_LONG).show();
-                return;
             }
-
         }
+
     }
 
     private void clearFields(){
@@ -152,6 +195,30 @@ public class AddQuestionActivity extends BaseActivity {
             questionAnswer3Form.setVisibility(View.VISIBLE);
             questionAnswer3Form.requestFocus();
         }
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(userClick){
+            Log.d(TAG, "selected item");
+            String selectedDisplayName = qPackSpinner.getItemAtPosition(position).toString();
+            if(selectedDisplayName.equals(getString(R.string.create_new_question_pack))){
+                // Create new question pack
+                ToastUtil.showShort("Still working on this feature");
+                selectedQPack = "";
+            } else {
+                QuestionPack qPack = QuestionPackDAO.getQPackByDisplayName(selectedDisplayName);
+                selectedQPack = qPack.getQPackId();
+                questionTextForm.setVisibility(View.VISIBLE);
+            }
+        }
+        userClick = true;
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

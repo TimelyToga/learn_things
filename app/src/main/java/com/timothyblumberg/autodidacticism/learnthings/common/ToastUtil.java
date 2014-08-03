@@ -69,7 +69,7 @@ public final class ToastUtil {
     /* Private Methods */
 
     private static void showToast(String message, int duration) {
-        final Toast toast = Toast.makeText(App.getInstance(), message, duration);
+        final Toast toast = Toast.makeText(App.getAppContext(), message, duration);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
