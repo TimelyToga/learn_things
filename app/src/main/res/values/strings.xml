@@ -40,11 +40,13 @@
     <string name="question_answer2_hint">Continue here for MC question…</string>
     <string name="question_answer3_hint">Once more for MC question…</string>
     <string name="save_question_button_title">Save Question</string>
-    // 5 times per day            <string name="Medium">Medium</string>
- // 15 times per day            <string name="Heavy">Heavy</string>
- // 30 times per day            <string name="title_activity_add_question">AddQuestionActivity</string>
+    <string name="title_activity_add_question">AddQuestionActivity</string>
     <string name="title_activity_generic_question_result">GenericQuestionResultActivity</string>
-    <string name="create_new_question_pack">Create a new Question Pack</string>
+    <string name="create_new_question_pack">Create a new question pack</string>
+    <string name="create_question_pack_dialog_message">Specify the pack\'s name and description.</string>
+    <string name="create_question_dialog_qpack_name">Question pack name</string>
+    <string name="create_question_dialog_qpack_desc">Question pack desc</string>
+
 
     <!-- Menu Strings -->
     <string name="menu_edit_question_pack">Edit Question Pack</string>

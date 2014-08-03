@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+    android:minLines="2"
+    android:maxLines="3"
+    android:imeOptions="actionNext"
+    fontPath="fonts/RobotoSlab-Light.ttf"
+    >
+
+   </com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText>

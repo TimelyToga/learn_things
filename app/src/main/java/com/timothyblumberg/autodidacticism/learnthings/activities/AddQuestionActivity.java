@@ -1,6 +1,8 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +12,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -24,6 +26,7 @@ import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPackDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AddQuestionActivity extends BaseActivity implements AdapterView.OnItemSelectedListener{
 
@@ -34,6 +37,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
     public static EditText questionAnswer2Form;
     public static EditText questionAnswer3Form;
     public static Spinner qPackSpinner;
+    public static ArrayAdapter<String> adapter;
 
     public static String selectedQPack;
     private static boolean userClick;
@@ -73,11 +77,12 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
             qPackNames.add(qPack.displayName);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
                 qPackNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qPackSpinner.setAdapter(adapter);
         qPackSpinner.setOnItemSelectedListener(this);
+        qPackSpinner.setSelection(1);
     }
 
     public void saveQuestion(View v){
@@ -205,9 +210,9 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
             String selectedDisplayName = qPackSpinner.getItemAtPosition(position).toString();
             if(selectedDisplayName.equals(getString(R.string.create_new_question_pack))){
                 // Create new question pack
-                ToastUtil.showShort("Still working on this feature");
-                selectedQPack = "";
+                promptUserForQPackName();
             } else {
+                // Otherwise, set selection and allow question creation
                 QuestionPack qPack = QuestionPackDAO.getQPackByDisplayName(selectedDisplayName);
                 selectedQPack = qPack.getQPackId();
                 questionTextForm.setVisibility(View.VISIBLE);
@@ -220,5 +225,53 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void promptUserForQPackName(){
+        // Init dialog
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(getString(R.string.create_new_question_pack));
+        alert.setMessage(getString(R.string.create_question_pack_dialog_message));
+
+        // Set an EditText view to get user input
+        final EditText qPackName = (EditText)getLayoutInflater().inflate(R.layout.template_edit_text, null);
+        qPackName.setHint(R.string.create_question_dialog_qpack_name);
+        final EditText qPackDesc = (EditText)getLayoutInflater().inflate(R.layout.template_edit_text, null);
+        qPackDesc.setHint(R.string.create_question_dialog_qpack_desc);
+
+        // Create container view and add EditTexts
+        final LinearLayout container = new LinearLayout(this);
+        container.setOrientation(LinearLayout.VERTICAL);
+        container.addView(qPackName);
+        container.addView(qPackDesc);
+        alert.setView(container);
+
+        // Create and init dialog buttons
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String qPackNameText = qPackName.getText().toString();
+                String qPackDescText = qPackDesc.getText().toString();
+                String uuid = UUID.randomUUID().toString();
+                QuestionPack.createQuestionPack(uuid, qPackNameText, qPackDescText, QuestionPack.THIS_USER_CREATED);
+                adapter.add(qPackNameText);
+                adapter.notifyDataSetChanged();
+                int pos = adapter.getPosition(qPackNameText);
+                qPackSpinner.setAdapter(adapter);
+                qPackSpinner.setSelection(pos);
+                setSelectedQPack(uuid);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+    }
+
+    private void setSelectedQPack(String newQPackID){
+        selectedQPack = newQPackID;
     }
 }
