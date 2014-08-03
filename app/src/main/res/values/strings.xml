@@ -52,5 +52,6 @@
     <string name="menu_edit_question_pack">Edit Question Pack</string>
     <string name="menu_delete_question_pack">Delete Question Pack</string>
     <string name="title_activity_view_question_pack">ViewQuestionPackActivity</string>
+    <string name="action_add_qpack">Add Question Pack</string>
 
 </resources>
