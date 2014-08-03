@@ -86,7 +86,7 @@ public class BaseActivity extends Activity {
     public static void initQuestionsAndUser(){
         // Initialize questions and User obj
         if(QuestionDAO.getTotalNumberOfQuestions() == 0){
-            QuestionFactory.createQuestions();
+            QuestionFactory.initQuestionDBFromCSV();
         }
         try{
             G.curUser = UserDAO.testUserExistence();

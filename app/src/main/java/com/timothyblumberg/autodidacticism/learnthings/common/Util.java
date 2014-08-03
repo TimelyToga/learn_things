@@ -1,6 +1,8 @@
 package com.timothyblumberg.autodidacticism.learnthings.common;
 
 import android.app.Application;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.Random;
 import java.util.UUID;
@@ -48,6 +50,17 @@ public class Util{
         if(s.isEmpty() || s.equals("")){
             return false;
         } else return true;
+    }
+
+    public static boolean doesLayoutHaveChild(int childID, LinearLayout layout){
+        int numChildren = layout.getChildCount();
+        for(int a = 0; a < numChildren; a++){
+            View curChild = layout.getChildAt(a);
+            if(curChild.getId() == childID) return true;
+        }
+
+        // Child not found
+        return false;
     }
 
 }

@@ -25,20 +25,7 @@ public class QuestionFactory {
 
     private final static String TAG = QuestionFactory.class.getSimpleName();
 
-    public static void createQuestions(){
-//        String[] array = {"#North", "@South", "#East"};
-//        Question q1 = Question.createMC("Which direction is generally down on a map?", array);
-//        String[] answers = {"@San Francisco", "#Durham", "#Gray"};
-//        String[] answers2 = {"@Paris", "#Toulouse", "#Orleans"};
-//        String[] answers3 = {"@IKEA", "#Grand Furniture", "#Zack's Furniture"};
-//        String[] answers4 = {"@Santa Claus", "#Easter Bunny", "#Father Time"};
-//        Question q5 = Question.createMC("What is the capital of France?", answers2);
-//        Question q2 = Question.createMC("What city is the best city?", answers);
-//        Question q3 = Question.createMC("Where is cheap furniture bought from?", answers3);
-//        Question q4 = Question.createMC("Who comes down the chimney on Christmas?", answers4);
-//
-//        // FR Questions
-//        Question freeQuestion = Question.createFR("What time is it?", "About that time.");
+    public static void initQuestionDBFromCSV(){
         makeQuestionsFromCSVFile();
     }
 
@@ -53,7 +40,7 @@ public class QuestionFactory {
         String csvFile = "qs.csv";
         BufferedReader br = null;
         String line = "";
-        String cvsSplitBy = ",";
+        String CSV_SPLIT_BY_STRING = ",";
 
         try {
             InputStream is  = App.getAppContext().getResources().openRawResource(R.raw.qs);
@@ -63,21 +50,41 @@ public class QuestionFactory {
                 if(line.startsWith(G.COMMENT_STRING)){
                     continue;
                 }
-                // use comma as separator
-                String[] qArray = line.split(cvsSplitBy);
-                Question curQ = null;
-                if(qArray.length > 2){
-                    // MUST be a Multiple Choice Question
-                    String[] answers = {qArray[1], qArray[2], qArray[3]};
+                if(line.startsWith(G.QUESTION_PACK_STRING)){
+                    // This line must define a Question Pack
+                    String[] qPackArray = line.split(CSV_SPLIT_BY_STRING);
+                    String qPackID = qPackArray[0].trim().substring(3);
+                    String qPackDisplayName = qPackArray[1].trim();
+                    String qPackDesc = qPackArray[2].trim();
+                    int qPackSource = Integer.valueOf(qPackArray[3].trim());
 
-                    curQ = Question.createMC(qArray[0], answers);
+                    QuestionPack qPack = QuestionPack.createQuestionPack(qPackID, qPackDisplayName, qPackDesc,
+                            qPackSource);
+                    Log.d(TAG, "Created Question PACK: " + qPackID);
                 } else {
-                    // Must be a free response,
-                    curQ = Question.createFR(qArray[0], qArray[1].substring(1), G.QPACK_STARTING);
+                    // This line must be a question
+                    String[] qArray = line.split(CSV_SPLIT_BY_STRING);
+                    Question curQ = null;
+
+                    if(qArray.length > 3){
+                        // MUST be a Multiple Choice Question
+                        String qPackID = qArray[0].trim();
+                        String qText = qArray[1].trim();
+                        String[] answers = {qArray[2], qArray[3], qArray[4]};
+
+                        curQ = Question.createMC(qText, answers, qPackID);
+                    } else {
+                        // MUST be a free response question
+                        String qPackID = qArray[0].trim();
+                        String qText = qArray[1].trim();
+                        String qAnswer = qArray[2].trim().substring(1);
+
+                        curQ = Question.createFR(qText, qAnswer, qPackID);
+                    }
+
+                    // Add newly created question to list for output to JSON
+                    questionArrayList.add(curQ);
                 }
-                // Add newly created question to list for output to JSON
-                questionArrayList.add(curQ);
-                Log.d(TAG, "made question " + curQ.question_id + " MC: " + curQ.multipleChoice);
             }
 
         } catch (FileNotFoundException e) {

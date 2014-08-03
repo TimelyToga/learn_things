@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,7 +21,11 @@ import android.widget.RelativeLayout;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
+import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPack;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPackDAO;
 import com.timothyblumberg.autodidacticism.learnthings.user.User;
 
 import java.util.List;
@@ -121,29 +126,82 @@ public class SettingsActivity extends BaseActivity {
 
     private void setupQuestionPackList() {
         LinearLayout qPackLayout = (LinearLayout) findViewById(R.id.question_pack_select);
-        List<String> qPack = QuestionDAO.getQuestionPacks();
+        List<QuestionPack> qPackList = QuestionPackDAO.getQPackList();
 
-        int numPacks = QuestionDAO.getQuestionPacks().size() - 1;
+        int numPacks = qPackList.size();
+        Log.d(TAG, "" + numPacks);
         int layoutSize = qPackLayout.getChildCount() / 2;
         Log.d(TAG, "num_packs: " + numPacks + "layoutSize: " + layoutSize);
 
-        if(numPacks > layoutSize){
-            for(String s : qPack){
+        int curChildIndex = 0;
+        for(QuestionPack qPack : qPackList){
+            if(numPacks > layoutSize) {
                 // data validation
-                if(s == null) continue;
+                if(qPack == null) continue;
+                if(Util.doesLayoutHaveChild((int) qPack._id, qPackLayout)){
+                    // Don't create another checkbox if one already exists for this qPack
+                    Log.e(TAG, "didn't do shit.");
+                } else {
+                    // Make new checkbox
+                    final CheckBox checkBox = (CheckBox) getLayoutInflater().inflate(R.layout.template_checkbox, null);
+                    checkBox.setText(qPack.displayName);
+                    checkBox.setId((int) qPack._id);
+                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            handleCheckBoxClick(checkBox.getText().toString(), isChecked);
+                        }
+                    });
+                    View divider = createDivider();
 
-                CheckBox checkBox = (CheckBox) getLayoutInflater().inflate(R.layout.template_checkbox, null);
-                checkBox.setText(s);
-                View divider = createDivider();
+                    // Add the view
+                    qPackLayout.addView(checkBox);
+                    qPackLayout.addView(divider);
+                }
+            }
 
-                // Add the view
-                qPackLayout.addView(checkBox);
-                qPackLayout.addView(divider);
+            // Set checks
+            if(numPacks >= curChildIndex){
+                CheckBox curChild = (CheckBox)qPackLayout.getChildAt(curChildIndex);
+                Log.d(TAG, qPack.qpack_id + " should be checked: " + qPack.active);
+                if(qPack.active.equals(G.TRUE)){
+                    curChild.setChecked(true);
+                    Log.d(TAG, qPack.qpack_id + " is checked.");
+                } else {
+                    curChild.setChecked(false);
+                    Log.d(TAG, qPack.qpack_id + " is not checked.");
+                }
+                curChildIndex += 2;
             }
 
         }
 
 
+        for(int a = 0; a < layoutSize; a++){
+            View curChild = qPackLayout.getChildAt(a);
+            int curID = curChild.getId();
+            boolean foundID = false;
+            for(QuestionPack qPack : qPackList){
+                if((int)qPack._id == curID) foundID = true;
+            }
+            if(!foundID){
+                // Remove qPack that no longer exists in DB
+                qPackLayout.removeView(curChild);
+                Log.d(TAG, "Removing item " + curID);
+            } else {
+                Log.d(TAG, "Didn't remove " + curID);
+            }
+        }
+
+
+    }
+
+    private void handleCheckBoxClick(String displayName, boolean shouldBeChecked){
+        QuestionPack questionPack = QuestionPackDAO.getQPackByDisplayName(displayName);
+        questionPack.setActive(shouldBeChecked);
+        QuestionPackDAO.save(questionPack);
+
+        ToastUtil.showShort("question saved");
     }
 
 

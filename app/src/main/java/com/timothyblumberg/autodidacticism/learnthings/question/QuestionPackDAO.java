@@ -39,6 +39,14 @@ public class QuestionPackDAO {
         }
     }
 
+    public static QuestionPack getQPackByDisplayName(String displayName){
+        if (TextUtils.isEmpty(displayName)) {
+            return null;
+        } else {
+            return getQueryBuilder().withSelection(G.SELECT_QUESTION_PACK_DISPLAY_NAME, displayName).get();
+        }
+    }
+
     /**
      * Gives list of QuestionPacks
      *
@@ -46,6 +54,10 @@ public class QuestionPackDAO {
      */
     public static List<QuestionPack> getQPackList() {
         return getQueryBuilder().distinct().list();
+    }
+
+    public static List<QuestionPack> getActiveQPackList(){
+        return getQueryBuilder().withSelection(G.SELECT_QUESTION_PACK_ACTIVE, G.TRUE).list();
     }
 
 

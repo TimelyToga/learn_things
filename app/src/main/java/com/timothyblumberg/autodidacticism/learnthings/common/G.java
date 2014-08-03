@@ -60,6 +60,7 @@ public class G {
                                                 "Every 6 hours",
                                                 "Daily",
                                                 "Every two days"};
+
     public static final int[] questionFrequencyTimes = {FREQUENCY_SEC3,
                                                 FREQUENCY_MIN15,
                                                 FREQUENCY_MIN30,
@@ -82,8 +83,13 @@ public class G {
     // SELECTION STRINGS
     public final static String SELECT_QUESTION_ID = "question_id = ?";
     public final static String SELECT_QUESTION_PACK_ID = "qpack_id = ?";
+    public final static String SELECT_QUESTION_PACK_DISPLAY_NAME = "displayName = ?";
+    public final static String SELECT_QUESTION_PACK_ACTIVE = "active = ?";
 
     // MISC.
     public static final String COMMENT_STRING = "//";
+    public static final String QUESTION_PACK_STRING = "##";
     public static final long[] VIBRATE_PATTERN = {0, 75, 100, 75, 150, 300};
+
+
 }

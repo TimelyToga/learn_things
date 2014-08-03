@@ -1,16 +1,18 @@
-// FR Vocabulary questions
-What does abhor mean?,&hate
-What does bigot mean?,&narrow-minded or prejudiced person
-What does counterfeit mean?,&fake; false
-What does enfranchise mean?,&give voting rights
-What does hamper mean?,&hinder; obstruct
-What does kindle mean?,&to start a fire
-What does noxious mean?,&harmful; poisonous; lethal
-What does placid mean?,&calm; peaceful
-What does remuneration mean?,&payment for work done
-What does talisman mean?,&lucky charm
-What does abrasive mean?,&rough; coarse; harsh
-What does bilk mean?,&cheat; defraud
-What does covert mean?,&hidden; undercover
-What does engender mean?,&cause
-What does hangar mean?,&storage area (like garage) for plane
+// Define question pack 3 = came with app
+## 000_STARTPACK, Vocab Starter Pack, Free response vocabulary questions,3
+// Define questions
+000_STARTPACK, What does abhor mean?,&hate
+000_STARTPACK, What does bigot mean?,&narrow-minded or prejudiced person
+000_STARTPACK, What does counterfeit mean?,&fake; false
+000_STARTPACK, What does enfranchise mean?,&give voting rights
+000_STARTPACK, What does hamper mean?,&hinder; obstruct
+000_STARTPACK, What does kindle mean?,&to start a fire
+000_STARTPACK, What does noxious mean?,&harmful; poisonous; lethal
+000_STARTPACK, What does placid mean?,&calm; peaceful
+000_STARTPACK, What does remuneration mean?,&payment for work done
+000_STARTPACK, What does talisman mean?,&lucky charm
+000_STARTPACK, What does abrasive mean?,&rough; coarse; harsh
+000_STARTPACK, What does bilk mean?,&cheat; defraud
+000_STARTPACK, What does covert mean?,&hidden; undercover
+000_STARTPACK, What does engender mean?,&cause
+000_STARTPACK, What does hangar mean?,&storage area (like garage) for plane

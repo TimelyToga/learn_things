@@ -1,5 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings.question;
 
+import android.util.Log;
+
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
@@ -31,7 +33,7 @@ public class Question {
     public String correctlyAnswered = "F"; // Has the question ever been answered correctly?
     public String lastAnswerCorrect = "F"; // Answered correctly last time answered?
 
-    public static Question createFR(String qText, String questionAnswer, String questionPack){
+    public static Question createFR(String qText, String questionAnswer, String qPackID){
 
         final Question question = new Question();
         question.question_id = UUID.randomUUID().toString();
@@ -44,13 +46,15 @@ public class Question {
         question.correctlyAnswered = "F";
         question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
         question.multipleChoice = false;
-        question.qpack_id = questionPack;
+        question.qpack_id = qPackID;
 
+        QuestionPack.createQPackIfNecessary(qPackID);
         QuestionDAO.save(question);
+        Log.d(Question.class.getSimpleName(), "Creating FR Question" + question.qText);
         return question;
     }
 
-    public static Question createMC(String qText, String[] answers){
+    public static Question createMC(String qText, String[] answers, String qPackID){
 
         final Question question = new Question();
         question.question_id = UUID.randomUUID().toString();
@@ -62,12 +66,14 @@ public class Question {
         question.correctlyAnswered = "F";
         question.lastAsked = 0; // Should init at Unix epoch (1970) aka 0 BCE
         question.multipleChoice = true;
+        question.qpack_id = qPackID;
 
         question.mcAnswerA = answers[0];
         question.mcAnswerB = answers[1];
         question.mcAnswerC = answers[2];
 
         QuestionDAO.save(question);
+        Log.d(Question.class.getSimpleName(), "Creating MC Question" + question.qText);
         return question;
     }
 
@@ -140,4 +146,5 @@ public class Question {
         // SHOULD BE UNREACHABLE.
         return App.getAppContext().getString(R.string.error_malformed_answer);
     }
+
 }
