@@ -28,9 +28,9 @@ public class QuestionDAO {
     final public static String RANDOM_QUERY_FORMAT =  "SELECT * FROM Question ORDER BY RANDOM() LIMIT %s";
     final public static String RANDOM_QUERY =  "SELECT * FROM Question ORDER BY RANDOM() LIMIT 1";
     final public static String RAND_RATIO_QUERY = "SELECT *, (num_correct / (num_incorrect + 1) ) as ratio FROM (SELECT * FROM Question ORDER BY RANDOM() LIMIT 3) ORDER BY ratio LIMIT 1";
-    final public static String RAND_WRONG = "SELECT * FROM Question WHERE correctlyAnswered = 'F' ORDER BY RANDOM() LIMIT 1";
+    final public static String RAND_WRONG_FROM_ACTIVE = "SELECT * FROM Question WHERE correctlyAnswered = 'F' AND qpack_id IN %s ORDER BY RANDOM() LIMIT 1";
 
-    final public static String[] queryArray = {RAND_WRONG}; //RATIO_QUERY, RANDOM_QUERY, RAND_RATIO_QUERY
+    final public static String[] queryArray = {RAND_WRONG_FROM_ACTIVE}; //RATIO_QUERY, RANDOM_QUERY, RAND_RATIO_QUERY
 
 
     public static Question getQuestionById(String questionId) {
@@ -42,7 +42,7 @@ public class QuestionDAO {
     }
 
     public static Question getRandomQuestion() throws CursorIndexOutOfBoundsException{
-        Cursor c = App.getWritableDB().rawQuery(getRandomQuery(), null);
+        Cursor c = App.getWritableDB().rawQuery(buildRandWrongActiveQueryString(), null);
 
         // Move the cursor, grab question_id, convert to Question obj, return
         c.moveToFirst();
@@ -138,6 +138,11 @@ public class QuestionDAO {
     // Private Methods
     private static DatabaseCompartment.QueryBuilder<Question> getQueryBuilder() {
         return cupboard().withDatabase(App.getWritableDB()).query(Question.class);
+    }
+
+    private static String buildRandWrongActiveQueryString(){
+        String activePackList = QuestionPackDAO.getActivePackListString();
+        return String.format(RAND_WRONG_FROM_ACTIVE, activePackList);
     }
 
     private static String getRandomQuery(){

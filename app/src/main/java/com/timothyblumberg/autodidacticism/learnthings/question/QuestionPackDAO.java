@@ -72,6 +72,26 @@ public class QuestionPackDAO {
         return getQueryBuilder().withSelection(G.SELECT_QUESTION_PACK_ACTIVE, G.TRUE).list();
     }
 
+    /**
+     * Creates a list in correct format of all active qPackIDs
+     *
+     * ('qpackID0001', 'qpackID0002', ..., 'qpackIDXXX')
+     * @return
+     */
+    public static String getActivePackListString(){
+        String quotes = "'%s', ";
+        List<QuestionPack> questionPacks = getActiveQPackList();
+        StringBuilder builder = new StringBuilder();
+        builder.append("(");
+        for(QuestionPack qPack : questionPacks){
+            builder.append(String.format(quotes, qPack.qpack_id));
+        }
+        // Should delete last comma
+        builder.delete(builder.length() - 2, builder.length() - 1);
+        builder.append(")");
+        return builder.toString();
+    }
+
     public static List<QuestionPack> getUserEditableQPackList(){
         return getQueryBuilder().withSelection(G.SELECT_QUESTION_PACK_DISPLAY_NAME, G.TRUE).list();
     }

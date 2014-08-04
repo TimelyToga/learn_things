@@ -48,7 +48,8 @@ public class AlarmReceiver extends BroadcastReceiver {
             rand_q = QuestionDAO.getRandomQuestion();
         } catch(CursorIndexOutOfBoundsException e) {
             //TODO: Figure out what to do when all questions have been correctly answered
-            Log.d("", "All questions have been correctly answered");
+            Log.d("", "All questions from active packs have been correctly answered");
+            ToastUtil.showShort("All questions from active packs are correct. Should handle this better");
             rand_q = QuestionDAO.getQuestionArray(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
         }
 
