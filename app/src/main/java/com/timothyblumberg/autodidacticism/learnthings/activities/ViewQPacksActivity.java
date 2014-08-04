@@ -25,13 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ViewQuestionPacksActivity extends BaseActivity {
+public class ViewQPacksActivity extends BaseActivity {
 
     ListView packView;
     ArrayAdapter<String> qPackAdapter;
 
     public static void launch(Activity activity) {
-        Intent intent = new Intent(activity, ViewQuestionPacksActivity.class);
+        Intent intent = new Intent(activity, ViewQPacksActivity.class);
         activity.startActivity(intent);
     }
 
@@ -86,12 +86,18 @@ public class ViewQuestionPacksActivity extends BaseActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String curQPackDisplayName = qPackAdapter.getItem(info.position);
+        QuestionPack curQPack = QuestionPackDAO.getQPackByDisplayName(curQPackDisplayName);
         switch (item.getItemId()) {
             case R.id.action_edit:
                 ToastUtil.showShort("Editing Q Pack");
                  return true;
             case R.id.action_delete:
-                ToastUtil.showShort("Deleting Q Pack");
+                ToastUtil.showShort("Deleting Q Pack: " + curQPack.userEditable);
+                if(QuestionPackDAO.deleteQuestionPack(curQPack)){
+                    qPackAdapter.remove(curQPackDisplayName);
+                    qPackAdapter.notifyDataSetChanged();
+                };
                 return true;
             default:
                 return super.onContextItemSelected(item);

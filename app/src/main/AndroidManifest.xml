@@ -53,7 +53,7 @@
             android:label="@string/title_activity_generic_question_result" >
         </activity>
         <activity
-            android:name=".activities.ViewQuestionPacksActivity"
+            android:name=".activities.ViewQPacksActivity"
             android:label="@string/title_activity_view_question_pack"
             android:parentActivityName=".activities.BaseActivity"
             >
@@ -63,7 +63,7 @@
         </activity>
         <activity
             android:name=".activities.ViewQuestionsActivity"
-            android:parentActivityName=".activities.ViewQuestionPacksActivity"
+            android:parentActivityName=".activities.ViewQPacksActivity"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

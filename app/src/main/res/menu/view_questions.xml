@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
 
+    <item android:id="@+id/action_add_question"
+          android:orderInCategory="0"
+          android:title="@string/add_questions"
+          android:icon="@drawable/add_q"
+          android:showAsAction="always"/>
+
 </menu>

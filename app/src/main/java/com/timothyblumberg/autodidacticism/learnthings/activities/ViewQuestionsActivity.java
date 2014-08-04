@@ -52,10 +52,8 @@ public class ViewQuestionsActivity extends BaseActivity {
             questionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    String curQ = questionAdapter.getItem(position);
                     Question curQuestion = questionAdapter.getItem(position);
                     ToastUtil.showShort(curQuestion.getCorrectAnswer());
-//                    ToastUtil.showShort(curQ);
                 }
             });
 
@@ -73,12 +71,16 @@ public class ViewQuestionsActivity extends BaseActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Question curQuestion = questionAdapter.getItem(info.position);
         switch (item.getItemId()) {
             case R.id.action_edit:
                 ToastUtil.showShort("Editing Question");
                 return true;
             case R.id.action_delete:
-                ToastUtil.showShort("Deleting Question");
+                ToastUtil.showShort("Deleting Question: " + curQuestion.question_id);
+                questionAdapter.remove(curQuestion);
+                QuestionDAO.deleteQuestion(curQuestion);
+                questionAdapter.notifyDataSetChanged();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -101,6 +103,9 @@ public class ViewQuestionsActivity extends BaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_add_question){
+            AddQuestionActivity.launch(this, curQPack.displayName);
             return true;
         }
         return super.onOptionsItemSelected(item);

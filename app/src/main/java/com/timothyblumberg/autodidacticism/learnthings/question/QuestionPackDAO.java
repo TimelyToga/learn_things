@@ -47,6 +47,18 @@ public class QuestionPackDAO {
         }
     }
 
+    public static boolean deleteQuestionPack(QuestionPack qPack) {
+        if(qPack.userEditable.equals(G.TRUE)){
+            // Delete QuestionPack in DB only the user has the permission
+            cupboard().withDatabase(App.getWritableDB()).delete(qPack);
+            // Deleted
+            return true;
+        }
+
+        // Did not delete
+        return false;
+    }
+
     /**
      * Gives list of QuestionPacks
      *

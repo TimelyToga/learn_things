@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -35,6 +36,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
     public static EditText questionAnswer2Form;
     public static EditText questionAnswer3Form;
     public static Spinner qPackSpinner;
+    public static String startingQPackDisplayName;
     public static ArrayAdapter<String> adapter;
 
     private static boolean userClick;
@@ -44,10 +46,22 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
         activity.startActivity(intent);
     }
 
+    public static void launch(Activity activity, String qPackDisplayName){
+        Intent intent = new Intent(activity, AddQuestionActivity.class)
+                .putExtra(G.EXTRA_QPACK_DISPLAY_NAME, qPackDisplayName);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_question);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            startingQPackDisplayName = extras.getString(G.EXTRA_QPACK_DISPLAY_NAME);
+            setSelectedQPack(startingQPackDisplayName);
+        }
 
         // Init forms
         questionTextForm = (EditText)findViewById(R.id.ad_question_text);
@@ -79,7 +93,16 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qPackSpinner.setAdapter(adapter);
         qPackSpinner.setOnItemSelectedListener(this);
-        qPackSpinner.setSelection(1);
+        if(startingQPackDisplayName != null){
+            // Init with starting value
+            int position = adapter.getPosition(startingQPackDisplayName);
+            qPackSpinner.setSelection(position);
+            questionTextForm.setVisibility(View.VISIBLE);
+        } else {
+            // Init w/ default value
+            qPackSpinner.setSelection(1);
+            questionTextForm.setVisibility(View.VISIBLE);
+        }
     }
 
     public void saveQuestion(View v){
@@ -208,6 +231,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
             if(selectedDisplayName.equals(getString(R.string.create_new_question_pack))){
                 // Create new question pack
                 showCreateQPackDialog();
+                questionTextForm.setVisibility(View.INVISIBLE);
             } else {
                 // Otherwise, set selection and allow question creation
                 QuestionPack qPack = QuestionPackDAO.getQPackByDisplayName(selectedDisplayName);
@@ -234,6 +258,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
                 qPackSpinner.setAdapter(adapter);
                 qPackSpinner.setSelection(pos);
                 setSelectedQPack(uuid);
+                questionTextForm.setVisibility(View.VISIBLE);
             }
         });
 

@@ -1,5 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings.question;
 
+import android.util.Log;
+
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
@@ -38,7 +40,7 @@ public class QuestionPack {
         qPack.numAllCorrect = 0;
         qPack.source = qPackSource;
         qPack.qPackDescription = qPackDesc;
-        if(qPackSource == 1){
+        if(qPackSource == THIS_USER_CREATED){
             // Created by this user
             qPack.userEditable = G.TRUE;
         } else {
@@ -67,7 +69,11 @@ public class QuestionPack {
         if(qPack == null){
             // qPack doesn't exist; create it;
             qPack = QuestionPack.createQuestionPack(qPackID, "User Created Questions", "", THIS_USER_CREATED);
+            Log.wtf(QuestionPack.class.getSimpleName(), "\n\n---------->\n\nCreated question Pack instead of finding " +
+                    "it");
         }
+
+        Log.d(QuestionPack.class.getSimpleName(), "All should be good?");
 
         return qPack;
     }
