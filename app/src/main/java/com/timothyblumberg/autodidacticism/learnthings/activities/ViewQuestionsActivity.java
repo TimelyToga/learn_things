@@ -75,6 +75,7 @@ public class ViewQuestionsActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_edit:
                 ToastUtil.showShort("Editing Question");
+                EditQuestionActivity.launch(this, curQuestion);
                 return true;
             case R.id.action_delete:
                 ToastUtil.showShort("Deleting Question: " + curQuestion.question_id);
