@@ -69,6 +69,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionPacksActivity" />
         </activity>
+        <activity
+            android:name=".activities.EditQuestionActivity"
+            android:parentActivityName=".activities.ViewQuestionsActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionsActivity" />
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
