@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
 
 public class EditQuestionActivity extends BaseActivity{
@@ -25,6 +27,9 @@ public class EditQuestionActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_question);
 
+        Intent i = getIntent();
+        curQuestion = QuestionDAO.getQuestionById(i.getStringExtra("Question"));
+
         questionTextForm = (EditText)findViewById(R.id.edit_question_text);
         questionAnswer1Form = (EditText)findViewById(R.id.edit_question_answer1);
         questionAnswer2Form = (EditText)findViewById(R.id.edit_question_answer2);
@@ -34,9 +39,8 @@ public class EditQuestionActivity extends BaseActivity{
     }
 
     public static void launch(Activity activity, Question question) {
-        Intent intent = new Intent(activity, EditQuestionActivity.class);
+        Intent intent = new Intent(activity, EditQuestionActivity.class).putExtra("Question", question.question_id);
         activity.startActivity(intent);
-        curQuestion = question;
     }
 
     private void fillFields() {
@@ -55,7 +59,7 @@ public class EditQuestionActivity extends BaseActivity{
 
     public void saveChanges(View view) {
         curQuestion.qText  = questionTextForm.getText().toString();
-        if(curQuestion.multipleChoice) {
+        if(!curQuestion.multipleChoice) {
             curQuestion.frAnswerText = questionAnswer1Form.getText().toString();
         }
         else {
@@ -63,5 +67,9 @@ public class EditQuestionActivity extends BaseActivity{
             curQuestion.mcAnswerB = "#"+questionAnswer2Form.getText().toString();
             curQuestion.mcAnswerC = "#"+questionAnswer3Form.getText().toString();
         }
+        QuestionDAO.save(curQuestion);
+        Intent i = new Intent(this, ViewQuestionsActivity.class).putExtra(G.EXTRA_QPACK_ID,
+                curQuestion.qpack_id);
+        startActivity(i);
     }
 }
