@@ -100,7 +100,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
             questionTextForm.setVisibility(View.VISIBLE);
         } else {
             // Init w/ default value
-            qPackSpinner.setSelection(0);
+            qPackSpinner.setSelection(1);
             questionTextForm.setVisibility(View.VISIBLE);
         }
     }

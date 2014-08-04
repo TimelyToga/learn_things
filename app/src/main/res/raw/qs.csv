@@ -17,3 +17,43 @@
 000_STARTPACK, What does covert mean?,&hidden; undercover
 000_STARTPACK, What does engender mean?,&cause
 000_STARTPACK, What does hangar mean?,&storage area (like garage) for plane
+000_STARTPACK, What does knotty mean?,&complex difficult to solve
+000_STARTPACK, What does nuance mean?,&something subtle; a fine shade of meaning
+000_STARTPACK, What does plagiarism mean?,&taking credit for someone else's writing or ideas
+000_STARTPACK, What does renown mean?,&fame
+000_STARTPACK, What does tangent mean?,&going off the main subject
+000_STARTPACK, What does abasement mean?,&humiliation; degradation
+000_STARTPACK, What does billowing mean?,&swellinng; fluttering; waving
+000_STARTPACK, What does cower mean?,&recoil in fear or servility; shrink away from
+000_STARTPACK, What does enhance mean?,&improve; make better or clearer
+000_STARTPACK, What does harangue mean?,&noisy attacking speech
+000_STARTPACK, What does labyrinth mean?,&a maze
+000_STARTPACK, What does nullify mean?,&to counter; make unimportant
+000_STARTPACK, What does plaintiff mean?,&petitioner (in court of law)
+000_STARTPACK, What does replete mean?,&full
+000_STARTPACK, What does tangible mean?,&can be touched
+000_STARTPACK, What does abrogate mean?,&cancel; deny; repeal
+000_STARTPACK, What does blasphemy mean?,&speech which offends religious sentiments
+000_STARTPACK, What does credible mean?,&believable
+000_STARTPACK, What does enigma mean?,&puzzle; mystery
+000_STARTPACK, What does harbingers mean?,&indicators; bringers of warnings
+000_STARTPACK, What does labyrinthine mean?,&complicated; highly convoluted
+000_STARTPACK, What does nuzzle mean?,&cuddle; snuggle
+000_STARTPACK, What does plaudit mean?,&statement giving strong praise
+000_STARTPACK, What does reprehensible mean?,&shameful; very bad
+000_STARTPACK, What does tardy mean?,&slow; late; overdue; delayed
+000_STARTPACK, What does absolution mean?,&forgiveness; pardon; release
+000_STARTPACK, What does blatant mean?,&obvious
+000_STARTPACK, What does creditable mean?,&praiseworthy
+000_STARTPACK, What does ensconce mean?,&establish firmly in a position
+000_STARTPACK, What does hasten mean?,&hurry; accelerate; rush
+000_STARTPACK, What does laceration mean?,&a cut
+000_STARTPACK, What does obdurate mean?,&stubborn
+000_STARTPACK, What does plausible mean?,&can be believed; reasonable
+000_STARTPACK, What does reprieve mean?,&a respite; postponement of a sentence
+000_STARTPACK, What does tawdry mean?,&of little value; gaudy
+000_STARTPACK, If x is divisible by 3 and 4, which of the following is also divisible by 6?,@x+12,#x+8,#x+2
+000_STARTPACK, Find x: 6x-11 = 3x + 13 ,&x=8
+000_STARTPACK, Six years ago, Mary was five times Joe's age. If Mary is 21 now, how old is Joe?,@9,#6,#15
+000_STARTPACK, What's the hypotenuse of a right triangle with legs of length 36 and 48?,&60
+000_STARTPACK, What is the sum of all numbers 1 through 25, inclusive?,&325
