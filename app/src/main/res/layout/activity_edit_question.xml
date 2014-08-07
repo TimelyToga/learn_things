@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:animateLayoutChanges="true"
+    android:id="@+id/edit_questions_layout"
+    tools:context="com.timothyblumberg.autodidacticism.learnthings.activities.AddQuestionActivity">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_question_text"
+                android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+                android:imeActionLabel="Next"
+                android:textSize="16pt"
+                android:imeOptions="actionNext"
+                fontPath="fonts/RobotoSlab-Light.ttf"
+                />
+
+            <com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+                android:ems="10"
+                android:minLines="3"
+                android:maxLines="3"
+                android:id="@+id/edit_question_answer1"
+                android:imeOptions="actionNext"
+                fontPath="fonts/RobotoSlab-Light.ttf"
+                />
+
+            <com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+                android:ems="10"
+                android:minLines="3"
+                android:id="@+id/edit_question_answer2"
+                android:imeOptions="actionNext"
+                fontPath="fonts/RobotoSlab-Light.ttf"
+                />
+
+            <com.timothyblumberg.autodidacticism.learnthings.ui.ActionEditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+                android:scrollHorizontally="false"
+                android:ems="10"
+                android:minLines="3"
+                android:maxLines="3"
+                android:id="@+id/edit_question_answer3"
+                android:imeOptions="actionDone"
+                fontPath="fonts/RobotoSlab-Light.ttf"
+                />
+
+        </LinearLayout>
+
+
+
+
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_question_button_title"
+        android:id="@+id/saveQuestionButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="saveChanges"
+        />
+
+
+
+</RelativeLayout>

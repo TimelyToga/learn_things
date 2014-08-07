@@ -64,10 +64,20 @@
         <activity
             android:name=".activities.ViewQuestionsActivity"
             android:parentActivityName=".activities.ViewQPacksActivity"
+            android:noHistory="true"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionPacksActivity" />
+        </activity>
+        <activity
+            android:name=".activities.EditQuestionActivity"
+            android:parentActivityName=".activities.ViewQuestionsActivity"
+            android:noHistory="true"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionsActivity" />
         </activity>
     </application>
 

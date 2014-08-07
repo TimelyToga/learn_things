@@ -52,8 +52,9 @@
 000_STARTPACK, What does plausible mean?,&can be believed; reasonable
 000_STARTPACK, What does reprieve mean?,&a respite; postponement of a sentence
 000_STARTPACK, What does tawdry mean?,&of little value; gaudy
-// 000_STARTPACK, If x is divisible by 3 and 4, which of the following is also divisible by 6?,@x+12,#x+8,#x+2
-000_STARTPACK, Find x: 6x-11 = 3x + 13 ,&x=8
-// 000_STARTPACK, Six years ago, Mary was five times Joe's age. If Mary is 21 now, how old is Joe?,@9,#6,#15
+000_STARTPACK, If x is divisible by 3 and 4 which of the following is divisible by 6?,@x+12,#x+8,#x+2
+000_STARTPACK, Find x: 6x-11 = 3x + 13,&x=8
+000_STARTPACK, Mary was five times Joe's age six years ago. Mary is 21 now. How old is Joe?,@9,#6,#15
 000_STARTPACK, What's the hypotenuse of a right triangle with legs of length 36 and 48?,&60
-// 000_STARTPACK, What is the sum of all numbers 1 through 25, inclusive?,&325
+000_STARTPACK, What is the sum of all numbers 1 through 25 inclusive?,&325
+
