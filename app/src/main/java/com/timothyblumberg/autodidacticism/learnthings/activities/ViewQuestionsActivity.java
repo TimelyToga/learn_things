@@ -69,6 +69,12 @@ public class ViewQuestionsActivity extends BaseActivity {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        questionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info){
         super.onCreateContextMenu(menu, view, info);
 
