@@ -68,8 +68,7 @@ public class EditQuestionActivity extends BaseActivity{
             curQuestion.mcAnswerC = "#"+questionAnswer3Form.getText().toString();
         }
         QuestionDAO.save(curQuestion);
-        Intent i = new Intent(this, ViewQuestionsActivity.class).putExtra(G.EXTRA_QPACK_ID,
-                curQuestion.qpack_id);
-        startActivity(i);
+        // Must relaunch, otherwise the list doesn't update
+        ViewQuestionsActivity.launch(this, curQuestion.qpack_id);
     }
 }

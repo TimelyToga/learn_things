@@ -1,5 +1,7 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -28,6 +30,11 @@ public class ViewQuestionsActivity extends BaseActivity {
     public static List<Question> questionList;
     public static List<String> questionTextList;
 
+    public static void launch(Activity activity, String qPackID) {
+        Intent intent = new Intent(activity, ViewQuestionsActivity.class);
+        intent.putExtra(G.EXTRA_QPACK_ID, qPackID);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
