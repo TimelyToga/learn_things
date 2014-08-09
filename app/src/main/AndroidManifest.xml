@@ -41,9 +41,8 @@
         <activity
             android:name=".activities.AddQuestionActivity"
             android:label="@string/add_questions"
-            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".activities.BaseActivity"
-            >
+            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
@@ -55,29 +54,34 @@
         <activity
             android:name=".activities.ViewQPacksActivity"
             android:label="@string/title_activity_view_question_pack"
-            android:parentActivityName=".activities.BaseActivity"
-            >
+            android:parentActivityName=".activities.BaseActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
         </activity>
         <activity
             android:name=".activities.ViewQuestionsActivity"
-            android:parentActivityName=".activities.ViewQPacksActivity"
             android:noHistory="true"
-            >
+            android:parentActivityName=".activities.ViewQPacksActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionPacksActivity" />
         </activity>
         <activity
             android:name=".activities.EditQuestionActivity"
-            android:parentActivityName=".activities.ViewQuestionsActivity"
             android:noHistory="true"
-            >
+            android:parentActivityName=".activities.ViewQuestionsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.timothyblumberg.autodidacticism.learnthings.activities.ViewQuestionsActivity" />
+        </activity>
+        <activity
+            android:name=".activities.WinActivity"
+            android:label="@string/title_activity_win"
+            android:parentActivityName=".activities.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity" />
         </activity>
     </application>
 

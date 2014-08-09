@@ -56,13 +56,14 @@
     <string name="title_activity_view_question_pack">Question Packs</string>
     <string name="action_add_qpack">Add Question Pack</string>
 
-    <!--ViewQuestioPacksActivity-->
+    <!-- ViewQuestioPacksActivity -->
     <string name="view_question_packs_activity_title">View Question Packs</string>
     <string name="current_question_packs">Current Question Packs:</string>
     <string name="delete_question_pack">Delete Question Pack</string>
     <string name="view_question_pack">View / Modify Questions</string>
 
-    <!--ViewQuestionsActivity-->
+    <!-- ViewQuestionsActivity -->
     <string name="current_questions">Current Questions:</string>
+    <string name="title_activity_win">WinActivity</string>
 
 </resources>
