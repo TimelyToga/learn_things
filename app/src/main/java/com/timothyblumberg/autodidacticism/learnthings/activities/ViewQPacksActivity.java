@@ -51,7 +51,7 @@ public class ViewQPacksActivity extends BaseActivity {
         }
 
         qPackNames.add(0, getString(R.string.create_new_question_pack));
-        qPackAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, qPackNames);
+        qPackAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, qPackNames);
         packView.setAdapter(qPackAdapter);
         packView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -132,15 +132,25 @@ public class ViewQPacksActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String qPackNameText = qPackText.getText().toString();
                 String qPackDescText = qPackDesc.getText().toString();
-                String uuid = UUID.randomUUID().toString();
-                QuestionPack.createQuestionPack(uuid, qPackNameText, qPackDescText, QuestionPack.THIS_USER_CREATED);
-                qPackAdapter.add(qPackNameText);
-                qPackAdapter.notifyDataSetChanged();
-                int pos = qPackAdapter.getPosition(qPackNameText);
-                packView.setAdapter(qPackAdapter);
-                packView.setSelection(pos);
-                setSelectedQPack(uuid);
+
+                QuestionPack existingPack = QuestionPackDAO.getQPackByDisplayName(qPackNameText);
+                if(existingPack == null) {
+                    // Name not taken, create pack
+                    String uuid = UUID.randomUUID().toString();
+                    QuestionPack.createQuestionPack(uuid, qPackNameText, qPackDescText, QuestionPack.THIS_USER_CREATED);
+                    qPackAdapter.add(qPackNameText);
+                    qPackAdapter.notifyDataSetChanged();
+                    int pos = qPackAdapter.getPosition(qPackNameText);
+                    packView.setAdapter(qPackAdapter);
+                    packView.setSelection(pos);
+                    setSelectedQPackID(uuid);
+                } else {
+                    // Pack does exist, bail
+                    ToastUtil.showShort(getString(R.string.q_pack_with_that_name_exists));
+                }
             }
+
+
         });
 
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

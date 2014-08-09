@@ -60,7 +60,8 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             startingQPackDisplayName = extras.getString(G.EXTRA_QPACK_DISPLAY_NAME);
-            setSelectedQPack(startingQPackDisplayName);
+            QuestionPack curPack = QuestionPackDAO.getQPackByDisplayName(startingQPackDisplayName);
+            setSelectedQPackID(curPack.getQPackId());
         }
 
         // Init forms
@@ -111,7 +112,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
         String ans2 = questionAnswer2Form.getText().toString();
         String ans3 = questionAnswer3Form.getText().toString();
 
-        if(!Util.isNotEmpty(selectedQPack)){
+        if(!Util.isNotEmpty(selectedQPackID)){
 
             String message = getString(R.string.select_valid_question_pack);
 
@@ -121,12 +122,12 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
                 // Could be a valid FR question
                 if(isNewQuestionFR()){
                     // Valid FR, create question obj
-                    newQuestion = Question.createFR(qText, ans1, selectedQPack);
+                    newQuestion = Question.createFR(qText, ans1, selectedQPackID);
                 } else {
                     if(isNewQuestionValidMC(ans1, ans2, ans3)){
                         // Valid MC, create question obj
                         String[] ans = {"@" + ans1, "#" + ans2, "#" + ans3};
-                        newQuestion = Question.createMC(qText, ans, selectedQPack);
+                        newQuestion = Question.createMC(qText, ans, selectedQPackID);
                     } else {
                         // Invalid question. Alert.
                         Toast.makeText(this,
@@ -226,7 +227,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(userClick){
-            Log.d(TAG, "selected item");
+            Log.d(TAG, "selected item: " + qPackSpinner.getItemAtPosition(position).toString());
             String selectedDisplayName = qPackSpinner.getItemAtPosition(position).toString();
             if(selectedDisplayName.equals(getString(R.string.create_new_question_pack))){
                 // Create new question pack
@@ -235,7 +236,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
             } else {
                 // Otherwise, set selection and allow question creation
                 QuestionPack qPack = QuestionPackDAO.getQPackByDisplayName(selectedDisplayName);
-                selectedQPack = qPack.getQPackId();
+                setSelectedQPackID(qPack.getQPackId());
                 questionTextForm.setVisibility(View.VISIBLE);
             }
         }
@@ -257,7 +258,7 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
                 int pos = adapter.getPosition(qPackNameText);
                 qPackSpinner.setAdapter(adapter);
                 qPackSpinner.setSelection(pos);
-                setSelectedQPack(uuid);
+                setSelectedQPackID(uuid);
                 questionTextForm.setVisibility(View.VISIBLE);
             }
         });

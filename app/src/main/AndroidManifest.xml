@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name=".activities.AddQuestionActivity"
-            android:label="@string/question_activity_title"
+            android:label="@string/add_questions"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".activities.BaseActivity"
             >

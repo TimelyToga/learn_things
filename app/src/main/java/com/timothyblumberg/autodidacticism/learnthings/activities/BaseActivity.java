@@ -37,7 +37,7 @@ public class BaseActivity extends Activity {
     protected CountDownTimer waitTimer;
     protected ViewGroup mViewGroup;
     protected AlertDialog.Builder alert;
-    public static String selectedQPack;
+    public static String selectedQPackID;
 
 
     @Override
@@ -150,8 +150,8 @@ public class BaseActivity extends Activity {
 
     }
 
-    protected void setSelectedQPack(String newQPackID){
-        selectedQPack = newQPackID;
+    protected void setSelectedQPackID(String newQPackID){
+        selectedQPackID = newQPackID;
     }
 
 
