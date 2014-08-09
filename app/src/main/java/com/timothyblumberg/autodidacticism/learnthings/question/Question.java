@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
 import java.util.UUID;
@@ -86,11 +87,11 @@ public class Question {
         // Set String boolean
         if(correctlyAnswered){
             // Only change correctlyAnswered on correct
-            this.correctlyAnswered = "T";
-            this.lastAnswerCorrect = "T";
+            this.correctlyAnswered = G.CUR_TRUE;
+            this.lastAnswerCorrect = G.CUR_TRUE;
             ++this.num_correct;
         } else {
-            this.lastAnswerCorrect = "F";
+            this.lastAnswerCorrect = G.CUR_FALSE;
             ++this.num_incorrect;
         }
         ++this.numberAsks;

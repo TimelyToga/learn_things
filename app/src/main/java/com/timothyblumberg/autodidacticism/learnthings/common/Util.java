@@ -47,9 +47,11 @@ public class Util{
     }
 
     public static boolean isNotEmpty(String s){
-        if(s.isEmpty() || s.equals("")){
+        if(s == null || s.isEmpty() || s.equals("")){
             return false;
-        } else return true;
+        } else{
+            return true;
+        }
     }
 
     public static boolean doesLayoutHaveChild(int childID, LinearLayout layout){
@@ -61,6 +63,17 @@ public class Util{
 
         // Child not found
         return false;
+    }
+
+    public static void toggleCurTrueFalse(){
+        String curTrue = G.CUR_TRUE;
+        if(curTrue.equals("T")){
+            G.CUR_TRUE = "F";
+            G.CUR_FALSE = "T";
+        } else {
+            G.CUR_TRUE = "T";
+            G.CUR_FALSE = "F";
+        }
     }
 
 }

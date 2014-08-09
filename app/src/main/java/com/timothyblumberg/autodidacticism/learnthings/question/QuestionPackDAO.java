@@ -81,6 +81,9 @@ public class QuestionPackDAO {
     public static String getActivePackListString(){
         String quotes = "'%s', ";
         List<QuestionPack> questionPacks = getActiveQPackList();
+        if(questionPacks.size() == 0){
+            return null;
+        }
         StringBuilder builder = new StringBuilder();
         builder.append("(");
         for(QuestionPack qPack : questionPacks){

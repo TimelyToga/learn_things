@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
+import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class QuestionDAO {
     final public static String RANDOM_QUERY_FORMAT =  "SELECT * FROM Question ORDER BY RANDOM() LIMIT %s";
     final public static String RANDOM_QUERY =  "SELECT * FROM Question ORDER BY RANDOM() LIMIT 1";
     final public static String RAND_RATIO_QUERY = "SELECT *, (num_correct / (num_incorrect + 1) ) as ratio FROM (SELECT * FROM Question ORDER BY RANDOM() LIMIT 3) ORDER BY ratio LIMIT 1";
-    final public static String RAND_WRONG_FROM_ACTIVE = "SELECT * FROM Question WHERE correctlyAnswered = 'F' AND qpack_id IN %s ORDER BY RANDOM() LIMIT 1";
+    final public static String RAND_WRONG_FROM_ACTIVE = "SELECT * FROM Question WHERE correctlyAnswered = '%s' AND qpack_id IN %s ORDER BY RANDOM() LIMIT 1";
 
     final public static String[] queryArray = {RAND_WRONG_FROM_ACTIVE}; //RATIO_QUERY, RANDOM_QUERY, RAND_RATIO_QUERY
 
@@ -41,17 +43,30 @@ public class QuestionDAO {
         }
     }
 
-    public static Question getRandomQuestion() throws CursorIndexOutOfBoundsException{
-        Cursor c = App.getWritableDB().rawQuery(buildRandWrongActiveQueryString(), null);
+    public static Question getRandomQuestion() throws CursorIndexOutOfBoundsException {
+        String query = buildRandWrongActiveQueryString();
+        if (!Util.isNotEmpty(query)) {
+            // Query is null
+            return null;
+        }
+        Cursor c = App.getWritableDB().rawQuery(query, null);
 
         // Move the cursor, grab question_id, convert to Question obj, return
-        c.moveToFirst();
-        int question_idCol = c.getColumnIndex("question_id");
-        String question_id = c.getString(question_idCol);
-        Question rand_q = getQuestionById(question_id);
-        return rand_q;
+        try{
+            c.moveToFirst();
+            int question_idCol = c.getColumnIndex("question_id");
+            String question_id = c.getString(question_idCol);
+            Question rand_q = getQuestionById(question_id);
+            return rand_q;
+        } catch (CursorIndexOutOfBoundsException e){
+            ToastUtil.showShort("Toggling true");
+            Util.toggleCurTrueFalse();
+            return getRandomQuestion();
+        }
 
+//        throw new CursorIndexOutOfBoundsException("No questions match rand query");
     }
+
 
     public static void save(Question question) {
 
@@ -142,7 +157,11 @@ public class QuestionDAO {
 
     private static String buildRandWrongActiveQueryString(){
         String activePackList = QuestionPackDAO.getActivePackListString();
-        return String.format(RAND_WRONG_FROM_ACTIVE, activePackList);
+        if(Util.isNotEmpty(activePackList)){
+            return String.format(RAND_WRONG_FROM_ACTIVE, G.CUR_FALSE, activePackList);
+        }
+
+        return null;
     }
 
     private static String getRandomQuery(){

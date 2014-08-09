@@ -50,7 +50,15 @@ public class AlarmReceiver extends BroadcastReceiver {
             //TODO: Figure out what to do when all questions have been correctly answered
             Log.d("", "All questions from active packs have been correctly answered");
             ToastUtil.showShort("All questions from active packs are correct. Should handle this better");
-            rand_q = QuestionDAO.getQuestionArray(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
+            ToastUtil.showShort("Toggling true");
+            Util.toggleCurTrueFalse();
+            rand_q = QuestionDAO.getRandomQuestion();
+//            rand_q = QuestionDAO.getQuestionArray(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
+        }
+
+        if(rand_q == null){
+            ToastUtil.showShort("There are no active question packs, silly.");
+            return;
         }
 
 

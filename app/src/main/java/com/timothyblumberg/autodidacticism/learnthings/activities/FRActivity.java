@@ -96,6 +96,8 @@ public class FRActivity extends GenericQuestionResultActivity {
         mViewGroup.addView(im);
         findViewById(R.id.fr_correctButton).setVisibility(View.INVISIBLE);
         findViewById(R.id.fr_incorrectButton).setVisibility(View.INVISIBLE);
+
+
     }
 
     /**
