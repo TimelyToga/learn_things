@@ -29,14 +29,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/fr_correctnessText"
             android:maxWidth="@dimen/card_width"
             android:textColor="@color/border_color"
             android:padding="@dimen/card_base_paddings"
-            style="@style/answerTextStyle"
+            style="@style/resultTextStyle"
             android:layout_below="@id/fr_resultImg"
-            android:text="You did it! Would you like reset the questions and start over, or turn off questions from this pack?"
+            android:text="@string/win_text"
             />
 
         <ImageView
@@ -60,7 +59,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="again"
+            android:text="@string/win_again_button"
             android:onClick="handleAgain"
             style="@android:style/Widget.Holo.Button"
             />
@@ -69,7 +68,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="deactivate"
+            android:text="@string/win_deactivate_button"
             android:onClick="handleDeactivate"
             style="@android:style/Widget.Holo.Button"
             />

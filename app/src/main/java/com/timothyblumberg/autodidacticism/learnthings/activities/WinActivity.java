@@ -1,12 +1,28 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.timothyblumberg.autodidacticism.learnthings.R;
+import android.view.View;
 
-public class WinActivity extends Activity {
+import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
+import com.timothyblumberg.autodidacticism.learnthings.common.Util;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPack;
+import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPackDAO;
+
+import java.util.List;
+
+public class WinActivity extends BaseActivity {
+
+    public static void launch(Context context){
+        Intent intent = new Intent(context, WinActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +48,22 @@ public class WinActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void handleAgain(View v){
+        ToastUtil.showShort("Handling Again.");
+        Util.toggleCurTrueFalse();
+        scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
+        finish();
+    }
+
+    public void handleDeactivate(View v){
+        ToastUtil.showShort("Handle Deactivate");
+        List<QuestionPack> activeQPacks = QuestionPackDAO.getActiveQPackList();
+        for(QuestionPack qPack : activeQPacks){
+            qPack.setActive(false);
+            QuestionPackDAO.save(qPack);
+        }
+        finish();
     }
 }

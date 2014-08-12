@@ -8,7 +8,6 @@ import android.widget.Toast;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
-import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
 import java.util.ArrayList;
@@ -59,9 +58,11 @@ public class QuestionDAO {
             Question rand_q = getQuestionById(question_id);
             return rand_q;
         } catch (CursorIndexOutOfBoundsException e){
-            ToastUtil.showShort("Toggling true");
-            Util.toggleCurTrueFalse();
-            return getRandomQuestion();
+//            ToastUtil.showShort("Toggling true");
+//            Util.toggleCurTrueFalse();
+//            return getRandomQuestion();
+
+            return null;
         }
 
 //        throw new CursorIndexOutOfBoundsException("No questions match rand query");

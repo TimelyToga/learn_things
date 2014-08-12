@@ -66,4 +66,10 @@
     <string name="current_questions">Current Questions:</string>
     <string name="title_activity_win">WinActivity</string>
 
+    <!--WinActivity-->
+    <string name="win_text">You did it! Would you like reset the questions and start over, or turn off questions
+        from this pack?</string>
+    <string name="win_again_button">Reset Packs</string>
+    <string name="win_deactivate_button">Deactivate</string>
+
 </resources>

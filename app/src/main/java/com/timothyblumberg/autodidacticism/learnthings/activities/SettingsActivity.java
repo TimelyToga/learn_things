@@ -160,7 +160,7 @@ public class SettingsActivity extends BaseActivity {
                 if(qPack == null) continue;
                 if(Util.doesLayoutHaveChild((int) qPack._id, qPackLayout)){
                     // Don't create another checkbox if one already exists for this qPack
-                    Log.e(TAG, "didn't do shit.");
+                    Log.e(TAG, "Checkbox for: " + qPack.displayName + " exists. DIDN'T CREATE ONE");
                 } else {
                     // Make new checkbox
                     final CheckBox checkBox = (CheckBox) getLayoutInflater().inflate(R.layout.template_checkbox, null);
@@ -177,6 +177,8 @@ public class SettingsActivity extends BaseActivity {
                     qPackLayout.addView(checkBox);
                     qPackLayout.addView(divider);
                 }
+            } else {
+                Log.d(TAG, "SKIPPED BECAUSE LAYOUTSIZE IS GREATER");
             }
 
             // Set checks
@@ -194,6 +196,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 }
                 curChildIndex += 2;
+            } else {
+                Log.d(TAG, "CurChildIndex: " + curChildIndex);
             }
 
         }

@@ -1,10 +1,13 @@
 package com.timothyblumberg.autodidacticism.learnthings.question;
 
+import android.database.CursorIndexOutOfBoundsException;
 import android.util.Log;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.activities.WinActivity;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
 import java.util.UUID;
@@ -146,6 +149,27 @@ public class Question {
         }
         // SHOULD BE UNREACHABLE.
         return App.getAppContext().getString(R.string.error_malformed_answer);
+    }
+
+    public static Question getQuestionOrHandleWin(){
+        Question rand_q = null;
+
+        try{
+            rand_q = QuestionDAO.getRandomQuestion();
+        } catch(CursorIndexOutOfBoundsException e) {
+            //TODO: Figure out what to do when all questions have been correctly answered
+            Log.d("", "All questions from active packs have been correctly answered");
+
+            WinActivity.launch(App.getAppContext());
+        }
+
+        // Handle endcase
+        if(rand_q == null){
+            ToastUtil.showShort("There are no active question packs, silly.");
+            WinActivity.launch(App.getAppContext());
+        }
+
+        return rand_q;
     }
 
 }

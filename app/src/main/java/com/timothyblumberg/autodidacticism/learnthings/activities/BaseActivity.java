@@ -21,6 +21,7 @@ import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionFactory;
 import com.timothyblumberg.autodidacticism.learnthings.user.User;
@@ -108,6 +109,9 @@ public class BaseActivity extends Activity {
             waitTimer.cancel();
             waitTimer = null;
         }
+
+        // Launches WinActivity if necessary
+        Question.getQuestionOrHandleWin();
 
         super.finish();
     }

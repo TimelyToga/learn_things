@@ -7,7 +7,6 @@ import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
@@ -15,9 +14,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
+import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.activities.FRActivity;
 import com.timothyblumberg.autodidacticism.learnthings.activities.MCActivity;
-import com.timothyblumberg.autodidacticism.learnthings.R;
+import com.timothyblumberg.autodidacticism.learnthings.activities.WinActivity;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -26,6 +26,11 @@ import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
  * Created by Tim on 7/24/14.
  */
 public class AlarmReceiver extends BroadcastReceiver {
+
+    public final static int NEW_QUESTION_SUCCESS = 0;
+    public final static int QUESTION_PACK_DEACTIVATED = 1;
+    public final static int QUESTION_PACK_RENEWED = 2;
+
 
     public static final String TAG = BroadcastReceiver.class.getSimpleName();
     @Override
@@ -43,24 +48,16 @@ public class AlarmReceiver extends BroadcastReceiver {
                 Toast.LENGTH_SHORT)
                 .show();
 
-        Question rand_q;
-        try{
-            rand_q = QuestionDAO.getRandomQuestion();
-        } catch(CursorIndexOutOfBoundsException e) {
-            //TODO: Figure out what to do when all questions have been correctly answered
-            Log.d("", "All questions from active packs have been correctly answered");
-            ToastUtil.showShort("All questions from active packs are correct. Should handle this better");
-            ToastUtil.showShort("Toggling true");
-            Util.toggleCurTrueFalse();
-            rand_q = QuestionDAO.getRandomQuestion();
-//            rand_q = QuestionDAO.getQuestionArray(QuestionDAO.RANDOM_QUERY_FORMAT, 1)[0];
-        }
+        Question rand_q = Question.getQuestionOrHandleWin();
 
+        // Handle endcase
         if(rand_q == null){
             ToastUtil.showShort("There are no active question packs, silly.");
+            WinActivity.launch(App.getAppContext());
+
+            // no question exit
             return;
         }
-
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(App.getAppContext());
 
