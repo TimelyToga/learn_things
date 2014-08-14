@@ -19,6 +19,7 @@ public class G {
     public static int INITIAL_TIME_FOR_NOTIF = 2000;
     public static final int SCHEDULE_NOTIF_DEFAULT_TIME = -1;
     public static final int COLOR_FADE_TIME = 500;
+    public static int TEST_COUNTER = 0;
 
     // Notif codes
     public static final int DEFAULT_NOTIFICATIONS_CODE = 98;

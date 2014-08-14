@@ -19,6 +19,10 @@ import java.util.List;
 public class WinActivity extends BaseActivity {
 
     public static void launch(Context context){
+        // Debug
+        G.TEST_COUNTER += 1;
+        ToastUtil.showShort("Launched WinActivity " + G.TEST_COUNTER);
+
         Intent intent = new Intent(context, WinActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -64,6 +68,9 @@ public class WinActivity extends BaseActivity {
             qPack.setActive(false);
             QuestionPackDAO.save(qPack);
         }
+
+        // Launch new so that checkboxes update
+        SettingsActivity.launch(this);
         finish();
     }
 }

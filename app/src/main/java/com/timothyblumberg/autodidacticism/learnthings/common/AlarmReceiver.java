@@ -17,7 +17,6 @@ import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.activities.FRActivity;
 import com.timothyblumberg.autodidacticism.learnthings.activities.MCActivity;
-import com.timothyblumberg.autodidacticism.learnthings.activities.WinActivity;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -31,8 +30,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     public final static int QUESTION_PACK_DEACTIVATED = 1;
     public final static int QUESTION_PACK_RENEWED = 2;
 
-
     public static final String TAG = BroadcastReceiver.class.getSimpleName();
+
     @Override
     public void onReceive(Context context, Intent intent){
         Log.d(TAG, "--> onReceive called!");
@@ -40,7 +39,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public void publishNotif(){
-        // Don't try to make a new notifacation without any questions
+        // Don't try to make a new notification without any questions
         if(QuestionDAO.getTotalNumberOfQuestions() == 0) return;
 
         if(G.DEBUG) Toast.makeText(App.getAppContext(),
@@ -53,9 +52,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         // Handle endcase
         if(rand_q == null){
             ToastUtil.showShort("There are no active question packs, silly.");
-            WinActivity.launch(App.getAppContext());
 
-            // no question exit
+            // Win Condition should already be handled, bounce.
             return;
         }
 

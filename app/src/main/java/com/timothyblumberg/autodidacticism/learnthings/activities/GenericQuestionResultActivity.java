@@ -12,6 +12,7 @@ import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
+import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 
 public class GenericQuestionResultActivity extends BaseActivity {
 
@@ -66,6 +67,19 @@ public class GenericQuestionResultActivity extends BaseActivity {
         im.setLayoutParams(p);
 
         return im;
+    }
+
+    @Override
+    public void finish(){
+        if(waitTimer != null) {
+            waitTimer.cancel();
+            waitTimer = null;
+        }
+
+        // Launches WinActivity if necessary
+        Question.getQuestionOrHandleWin();
+
+        super.finish();
     }
 
 }
