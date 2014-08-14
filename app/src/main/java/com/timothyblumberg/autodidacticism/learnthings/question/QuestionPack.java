@@ -25,8 +25,12 @@ public class QuestionPack {
     public int source;
     public int numQuestions;
     public int numAllCorrect;
-    public String active; // booleanString
-    public String userEditable; // booleanString
+
+    // Boolean Strings
+    public String active;
+    public String userEditable;
+    public String curTrue;
+    public String curFalse;
 
     public static QuestionPack createQuestionPack(String qPackID, String qPackDisplayName,
                                                   String qPackDesc, int qPackSource) {
@@ -61,6 +65,18 @@ public class QuestionPack {
             this.active = G.TRUE;
         } else {
             this.active = G.FALSE;
+        }
+    }
+
+    public void setCurTrueFalse(boolean newTRUE){
+        if(newTRUE){
+            // Standard orientation
+            this.curTrue = "T";
+            this.curFalse = "F";
+        } else {
+            // Inverted
+            this.curTrue = "F";
+            this.curFalse = "T";
         }
     }
 

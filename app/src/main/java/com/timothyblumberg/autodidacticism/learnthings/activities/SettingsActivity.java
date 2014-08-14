@@ -155,7 +155,7 @@ public class SettingsActivity extends BaseActivity {
 
         int curChildIndex = 0;
         for(QuestionPack qPack : qPackList){
-            if(numPacks > layoutSize) {
+            if(numPacks >= layoutSize) {
                 // data validation
                 if(qPack == null) continue;
                 if(Util.doesLayoutHaveChild((int) qPack._id, qPackLayout)){

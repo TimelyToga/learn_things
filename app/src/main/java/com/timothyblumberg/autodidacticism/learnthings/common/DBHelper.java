@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // DB name for version 5 and below was leo.db
     private static final String DATABASE_NAME = "learnthings.db";
-    public static final int DATABASE_VERSION = 11;
+    public static final int DATABASE_VERSION = 12;
     private static final String TAG = DBHelper.class.getSimpleName();
 
     /* Static Initializer to register entities with Cupboard */
