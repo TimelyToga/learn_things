@@ -51,7 +51,7 @@ public class ViewQPacksActivity extends BaseActivity {
         }
 
         qPackNames.add(0, getString(R.string.create_new_question_pack));
-        qPackAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, qPackNames);
+        qPackAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, qPackNames);
         packView.setAdapter(qPackAdapter);
         packView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
