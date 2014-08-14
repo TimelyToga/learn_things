@@ -7,7 +7,9 @@ import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.activities.BaseActivity;
+import com.timothyblumberg.autodidacticism.learnthings.activities.WinActivity;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class QuestionDAO {
         String query = buildRandWrongActiveQueryString();
         if (!Util.isNotEmpty(query)) {
             // Query is null
+            ToastUtil.showShort("There are no question packs checked 'active'.");
             return null;
         }
         Cursor c = App.getWritableDB().rawQuery(query, null);
@@ -58,14 +61,10 @@ public class QuestionDAO {
             Question rand_q = getQuestionById(question_id);
             return rand_q;
         } catch (CursorIndexOutOfBoundsException e){
-//            ToastUtil.showShort("Toggling true");
-//            Util.toggleCurTrueFalse();
-//            return getRandomQuestion();
+            WinActivity.launch(App.getAppContext());
 
             return null;
         }
-
-//        throw new CursorIndexOutOfBoundsException("No questions match rand query");
     }
 
 

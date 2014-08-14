@@ -55,14 +55,12 @@ public class WinActivity extends BaseActivity {
     }
 
     public void handleAgain(View v){
-        ToastUtil.showShort("Handling Again.");
         Util.toggleCurTrueFalse();
         scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
         finish();
     }
 
     public void handleDeactivate(View v){
-        ToastUtil.showShort("Handle Deactivate");
         List<QuestionPack> activeQPacks = QuestionPackDAO.getActiveQPackList();
         for(QuestionPack qPack : activeQPacks){
             qPack.setActive(false);

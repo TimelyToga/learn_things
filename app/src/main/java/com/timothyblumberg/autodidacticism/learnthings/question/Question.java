@@ -7,7 +7,6 @@ import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.activities.WinActivity;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
-import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
 import java.util.UUID;
@@ -165,8 +164,7 @@ public class Question {
 
         // Handle endcase
         if(rand_q == null){
-            ToastUtil.showShort("There are no active question packs, silly.");
-            WinActivity.launch(App.getAppContext());
+            // End case handling should be handled already
         }
 
         return rand_q;

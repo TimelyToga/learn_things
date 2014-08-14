@@ -51,9 +51,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Handle endcase
         if(rand_q == null){
-            ToastUtil.showShort("There are no active question packs, silly.");
-
-            // Win Condition should already be handled, bounce.
+            // Win Condition / Lack of checks should already be handled, bounce.
             return;
         }
 
