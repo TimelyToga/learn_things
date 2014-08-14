@@ -84,7 +84,7 @@ public class QuestionPack {
         QuestionPack qPack = QuestionPackDAO.getQPackById(qPackID);
         if(qPack == null){
             // qPack doesn't exist; create it;
-            qPack = QuestionPack.createQuestionPack(qPackID, "User Created Questions", "", THIS_USER_CREATED);
+//            qPack = QuestionPack.createQuestionPack(qPackID, "User Created Questions", "", THIS_USER_CREATED);
             Log.wtf(QuestionPack.class.getSimpleName(), "\n\n---------->\n\nCreated question Pack instead of finding " +
                     "it");
         }

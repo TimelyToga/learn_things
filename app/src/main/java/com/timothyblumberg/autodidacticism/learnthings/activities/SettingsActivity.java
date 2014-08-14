@@ -86,8 +86,9 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public void onResume(){
-        super.onResume();
         setupQuestionPackList();
+
+        super.onResume();
     }
 
     @Override
@@ -181,9 +182,10 @@ public class SettingsActivity extends BaseActivity {
                 Log.d(TAG, "SKIPPED BECAUSE LAYOUTSIZE IS GREATER");
             }
 
+
             // Set checks
-            if(numPacks >= curChildIndex){
-                View curView= qPackLayout.getChildAt(curChildIndex);
+            if(numPacks >= (curChildIndex / 2)){
+                View curView = qPackLayout.getChildAt(curChildIndex);
                 if(curView.isClickable()){
                     CheckBox curChild = (CheckBox)curView;
                     Log.d(TAG, qPack.qpack_id + " should be checked: " + qPack.active);
@@ -194,6 +196,8 @@ public class SettingsActivity extends BaseActivity {
                         curChild.setChecked(false);
                         Log.d(TAG, qPack.qpack_id + " is not checked.");
                     }
+                } else {
+                    Log.d(TAG, "Got invalid item at index: " + curChildIndex);
                 }
                 curChildIndex += 2;
             } else {
