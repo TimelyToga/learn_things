@@ -8,5 +8,5 @@
     android:text="This is a radio button"
     android:gravity="left|center_vertical"
     style="@style/answerTextStyle"
-    android:onClick="onQuestionFrequencySelected"
+    android:onClick="handleQuestionFrequencySelected"
     android:background="@android:color/white"/>

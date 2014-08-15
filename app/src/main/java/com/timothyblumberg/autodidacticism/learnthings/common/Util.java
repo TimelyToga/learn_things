@@ -53,6 +53,9 @@ public class Util{
             return true;
         }
     }
+    public static boolean isEmpty(String s){
+        return !isNotEmpty(s);
+    }
 
     public static boolean doesLayoutHaveChild(int childID, LinearLayout layout){
         int numChildren = layout.getChildCount();

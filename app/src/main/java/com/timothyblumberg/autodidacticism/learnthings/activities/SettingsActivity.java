@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TimePicker;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
@@ -44,6 +45,8 @@ public class SettingsActivity extends BaseActivity {
     private static ObjectAnimator reverseAnimator;
     private static RelativeLayout settingsMainLayout;
     private static LinearLayout qPackLayout;
+    private static TimePicker startTimePicker;
+    private static TimePicker endTimePicker;
 
 
     public static void launch(Activity activity) {
@@ -74,14 +77,17 @@ public class SettingsActivity extends BaseActivity {
                 getResources().getColor(R.color.light_background_blue));
 
         qPackLayout = (LinearLayout) findViewById(R.id.question_pack_select);
+        startTimePicker = (TimePicker) findViewById(R.id.qStartTimePicker);
+        endTimePicker = (TimePicker) findViewById(R.id.qEndTimePicker);
 
         // General initialization
         initQuestionsAndUser();
         scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
 
-        // List View
+        // Set up Settings items
         registerForContextMenu(qPackLayout);
         setupFrequencyList();
+        setupTimePickers();
     }
 
     @Override
@@ -126,7 +132,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     // @onClick frequency radio button
-    public void onQuestionFrequencySelected(View view) {
+    public void handleQuestionFrequencySelected(View view) {
         int number = view.getId();
         int position = 0;
         for (int a = 0; a < G.questionFrequencyTimes.length; a++) {
@@ -138,11 +144,12 @@ public class SettingsActivity extends BaseActivity {
 
         view.setActivated(true);
         G.curUser.setCurListPosition(position);
-        runBackgroundAnimation();
 
         int newTime = G.questionFrequencyTimes[position];
         G.curUser.updateNotifTime(newTime);
         AlarmReceiver.reportTimeToNextNotif();
+
+        runBackgroundAnimation();
         scheduleNotif(newTime);
     }
 
@@ -230,6 +237,9 @@ public class SettingsActivity extends BaseActivity {
         QuestionPack questionPack = QuestionPackDAO.getQPackByDisplayName(displayName);
         questionPack.setActive(shouldBeChecked);
         QuestionPackDAO.save(questionPack);
+
+        runBackgroundAnimation();
+        scheduleNotif(G.curUser.TIME_UNTIL_NEXT_NOTIFICATION);
     }
 
 
@@ -263,6 +273,24 @@ public class SettingsActivity extends BaseActivity {
             curPosition++;
         }
 
+    }
+
+    private void setupTimePickers(){
+        startTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                String newStartTime = String.format("%d:%d", hourOfDay, minute);
+                G.curUser.setTimes(newStartTime, "");
+            }
+        });
+
+        endTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                String newEndTime = String.format("%d:%d", hourOfDay, minute);
+                G.curUser.setTimes("", newEndTime);
+            }
+        });
     }
 
     private void runBackgroundAnimation() {

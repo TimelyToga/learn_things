@@ -25,6 +25,7 @@
     <string name="question_frequency">Question Frequency:</string>
     <string name="add_questions">Add Questions</string>
     <string name="question_pack_list">Active Question Pack List:</string>
+    <string name="questioning_hours_text">Questioning Hours</string>
 
     <!-- Toast Messages -->
     <string name="toast_time_till_next" formatted="false">Time until next question: %s</string>

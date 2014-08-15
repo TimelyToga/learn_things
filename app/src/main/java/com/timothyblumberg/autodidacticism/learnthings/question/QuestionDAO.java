@@ -61,6 +61,7 @@ public class QuestionDAO {
             Question rand_q = getQuestionById(question_id);
             return rand_q;
         } catch (CursorIndexOutOfBoundsException e){
+            ToastUtil.showShort("Launched from rand q DAO");
             WinActivity.launch(App.getAppContext());
 
             return null;

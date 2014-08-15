@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
-import com.timothyblumberg.autodidacticism.learnthings.activities.WinActivity;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 
@@ -159,7 +158,7 @@ public class Question {
             //TODO: Figure out what to do when all questions have been correctly answered
             Log.d("", "All questions from active packs have been correctly answered");
 
-            WinActivity.launch(App.getAppContext());
+//            WinActivity.launch(App.getAppContext());
         }
 
         // Handle endcase

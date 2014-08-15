@@ -25,6 +25,8 @@ public class User {
     public int total_correct_questions;
     public int TIME_UNTIL_NEXT_NOTIFICATION;
     public int curListPosition;
+    public String startTime;
+    public String endTime;
 
     /* User Information */
     public String name;
@@ -38,6 +40,8 @@ public class User {
         user.TIME_UNTIL_NEXT_NOTIFICATION = G.INITIAL_TIME_FOR_NOTIF;
         user.curTrue = "F";
         user.curListPosition = 0;
+        user.startTime = "9:00am";
+        user.endTime = "11:59pm";
         UserDAO.save(user);
 
         return user;
@@ -60,5 +64,15 @@ public class User {
 
     public String getUserId(){
         return String.valueOf(this._id);
+    }
+
+    public void setTimes(String newStartTime, String newEndTime){
+        if(Util.isNotEmpty(newStartTime)){
+            this.startTime = newStartTime;
+        }
+        if(Util.isNotEmpty(newEndTime)){
+            this.endTime = newEndTime;
+        }
+        UserDAO.save(this);
     }
 }
