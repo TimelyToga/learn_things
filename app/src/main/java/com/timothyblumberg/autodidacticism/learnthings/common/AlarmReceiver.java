@@ -271,7 +271,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private void rescheduleNotif() {
         int timeUntilNextNotif = G.curUser.TIME_UNTIL_NEXT_NOTIFICATION;
-        
+
         AlarmManager alarmManager = (AlarmManager) App.getAppContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(App.getAppContext(), AlarmReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(App.getAppContext(), 0, intent, 0);
