@@ -74,7 +74,6 @@ public class BaseActivity extends FragmentActivity {
     //</editor-fold>
 
 
-
     protected void scheduleNotif(int timeUntilNextNotif) {
         if(timeUntilNextNotif < 0){
             timeUntilNextNotif = G.curUser.TIME_UNTIL_NEXT_NOTIFICATION;

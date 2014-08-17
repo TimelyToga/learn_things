@@ -1,5 +1,6 @@
 package com.timothyblumberg.autodidacticism.learnthings.common;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,6 +21,8 @@ import com.timothyblumberg.autodidacticism.learnthings.activities.MCActivity;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
+import java.util.Calendar;
+
 
 /**
  * Created by Tim on 7/24/14.
@@ -35,7 +38,49 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent){
         Log.d(TAG, "--> onReceive called!");
-        publishNotif();
+
+        final Calendar c = Calendar.getInstance();
+
+        String[] startArray = G.curUser.startTime.split(":");
+        int startHour = Integer.valueOf(startArray[0]);
+        int startMin = Integer.valueOf(startArray[1]);
+
+        String[] endArray = G.curUser.endTime.split(":");
+        int endHour = Integer.valueOf(endArray[0]);
+        int endMin = Integer.valueOf(endArray[1]);
+
+        int curHour = c.get(Calendar.HOUR_OF_DAY);
+        int curMin = c.get(Calendar.MINUTE);
+
+        if((curHour >= startHour) && (curHour <= endHour)){
+            // Hours are equal, handle minutes
+            if(curHour == startHour){
+                if(curMin > startMin){
+                    publishNotif();
+                } else{
+                    rescheduleNotif();
+                    Log.d(TAG, "MINUTES TOO SMALL");
+                }
+            } else if(curHour == endHour){
+                if(curMin < endMin){
+                    publishNotif();
+                } else{
+                    rescheduleNotif();
+                    Log.d(TAG, "MINUTES TOO BIG");
+                }
+            } else {
+                // Publish if current time clearly in range
+                publishNotif();
+            }
+        } else {
+            rescheduleNotif();
+
+            Log.d(TAG, "SKIPPED NOTIFICATION PUBLISH: NOT IN TIME RANGE");
+            Log.d(TAG, "start: " + startHour + ":" + startMin);
+            Log.d(TAG, "end: " + endHour + ":" + endMin);
+            ToastUtil.showShort("cur: " + curHour + ":" + curMin);
+        }
+
     }
 
     public void publishNotif(){
@@ -222,5 +267,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
 
+    }
+
+    private void rescheduleNotif() {
+        int timeUntilNextNotif = G.curUser.TIME_UNTIL_NEXT_NOTIFICATION;
+        
+        AlarmManager alarmManager = (AlarmManager) App.getAppContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(App.getAppContext(), AlarmReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(App.getAppContext(), 0, intent, 0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                Calendar.getInstance().getTimeInMillis() + timeUntilNextNotif,
+                alarmIntent);
     }
 }
