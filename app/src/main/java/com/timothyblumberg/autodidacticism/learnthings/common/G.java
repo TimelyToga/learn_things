@@ -39,6 +39,11 @@ public class G {
     public static final String EXTRA_YOUR_ANSWER = "EXTRA_YOUR_ANSWER";
     public static final String EXTRA_QPACK_ID = "EXTRA_QPACK_ID";
     public static final String EXTRA_QPACK_DISPLAY_NAME = "EXTRA_QPACK_DISPLAY_NAME";
+    public static final String EXTRA_WHICH_TIME = "EXTRA_WHICH_TIME";
+
+    //
+    public static final String START_TIME = "START_TIME";
+    public static final String END_TIME = "END_TIME";
 
     // Notification Frequency variables and constants
     public static final int MILLISECONDS_IN_DAY = 3600*24000;

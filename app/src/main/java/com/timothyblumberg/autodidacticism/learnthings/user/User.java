@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -40,8 +41,8 @@ public class User {
         user.TIME_UNTIL_NEXT_NOTIFICATION = G.INITIAL_TIME_FOR_NOTIF;
         user.curTrue = "F";
         user.curListPosition = 0;
-        user.startTime = "9:00am";
-        user.endTime = "11:59pm";
+        user.startTime = "9:00";
+        user.endTime = "23:59";
         UserDAO.save(user);
 
         return user;
@@ -67,6 +68,8 @@ public class User {
     }
 
     public void setTimes(String newStartTime, String newEndTime){
+        ToastUtil.showShort("Start: " + newStartTime + " End: " + newEndTime);
+
         if(Util.isNotEmpty(newStartTime)){
             this.startTime = newStartTime;
         }

@@ -30,21 +30,28 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/time_picker_wrapper"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_below="@id/questioning_time_text">
 
 
-            <TimePicker
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/qStartTimePicker"
-                android:layout_weight="1"/>
-
-            <TimePicker
+                android:layout_weight="1"
+                android:id="@+id/start_time_button"
+                android:text="@string/start_time_button_text"
+                style="@android:style/Widget.Holo.Button"
+                android:onClick="showStartTimePickerDialog"
+                />
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/qEndTimePicker"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:id="@+id/end_time_button"
+                android:text="@string/end_time_button_text"
+                style="@android:style/Widget.Holo.Button"
+                android:onClick="showEndTimePickerDialog"
+                />
         </LinearLayout>
 
         <TextView

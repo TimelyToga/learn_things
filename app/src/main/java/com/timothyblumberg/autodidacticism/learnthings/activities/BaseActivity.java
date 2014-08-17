@@ -1,6 +1,5 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -9,6 +8,7 @@ import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +31,7 @@ import java.util.Calendar;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends FragmentActivity {
 
     private static final String TAG = MCActivity.class.getSimpleName();
     protected CountDownTimer waitTimer;

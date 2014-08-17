@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,18 +13,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TimePicker;
 
+import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.AlarmReceiver;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
+import com.timothyblumberg.autodidacticism.learnthings.fragments.TimePickerFragment;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPack;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionPackDAO;
@@ -45,13 +48,25 @@ public class SettingsActivity extends BaseActivity {
     private static ObjectAnimator reverseAnimator;
     private static RelativeLayout settingsMainLayout;
     private static LinearLayout qPackLayout;
-    private static TimePicker startTimePicker;
-    private static TimePicker endTimePicker;
+    private static Button startTimeButton;
+    private static Button endTimeButton;
 
 
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, SettingsActivity.class);
         activity.startActivity(intent);
+    }
+
+    public static void updateTimeButtons(String startTime, String endTime){
+        String startText = App.getAppContext().getString(R.string.start_time_button_text);
+        String endText = App.getAppContext().getString(R.string.end_time_button_text);
+        if(Util.isNotEmpty(startTime)){
+            startTimeButton.setText(startText + startTime);
+        }
+
+        if(Util.isNotEmpty(endTime)){
+            endTimeButton.setText(endText + endTime);
+        }
     }
 
 
@@ -77,8 +92,8 @@ public class SettingsActivity extends BaseActivity {
                 getResources().getColor(R.color.light_background_blue));
 
         qPackLayout = (LinearLayout) findViewById(R.id.question_pack_select);
-        startTimePicker = (TimePicker) findViewById(R.id.qStartTimePicker);
-        endTimePicker = (TimePicker) findViewById(R.id.qEndTimePicker);
+        startTimeButton = (Button) findViewById(R.id.start_time_button);
+        endTimeButton = (Button) findViewById(R.id.end_time_button);
 
         // General initialization
         initQuestionsAndUser();
@@ -87,7 +102,7 @@ public class SettingsActivity extends BaseActivity {
         // Set up Settings items
         registerForContextMenu(qPackLayout);
         setupFrequencyList();
-        setupTimePickers();
+        setUpButtons();
     }
 
     @Override
@@ -242,6 +257,10 @@ public class SettingsActivity extends BaseActivity {
         scheduleNotif(G.curUser.TIME_UNTIL_NEXT_NOTIFICATION);
     }
 
+    private void setUpButtons(){
+        startTimeButton.append(G.curUser.startTime);
+        endTimeButton.append(G.curUser.endTime);
+    }
 
     private void setupFrequencyList() {
         RadioGroup askIntensityList = (RadioGroup) findViewById(R.id.askIntensityList);
@@ -275,24 +294,6 @@ public class SettingsActivity extends BaseActivity {
 
     }
 
-    private void setupTimePickers(){
-        startTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                String newStartTime = String.format("%d:%d", hourOfDay, minute);
-                G.curUser.setTimes(newStartTime, "");
-            }
-        });
-
-        endTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                String newEndTime = String.format("%d:%d", hourOfDay, minute);
-                G.curUser.setTimes("", newEndTime);
-            }
-        });
-    }
-
     private void runBackgroundAnimation() {
         backgroundAnimator.setDuration(G.COLOR_FADE_TIME / 2);
         reverseAnimator.setDuration(backgroundAnimator.getDuration());
@@ -317,6 +318,22 @@ public class SettingsActivity extends BaseActivity {
             }
         });
         backgroundAnimator.start();
+    }
+
+    public void showStartTimePickerDialog(View v) {
+        Bundle extras = new Bundle();
+        extras.putString(G.EXTRA_WHICH_TIME, G.START_TIME);
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(extras);
+        newFragment.show(getFragmentManager(), "timePicker");
+    }
+
+    public void showEndTimePickerDialog(View v) {
+        Bundle extras = new Bundle();
+        extras.putString(G.EXTRA_WHICH_TIME, G.END_TIME);
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(extras);
+        newFragment.show(getFragmentManager(), "timePicker");
     }
 
 }

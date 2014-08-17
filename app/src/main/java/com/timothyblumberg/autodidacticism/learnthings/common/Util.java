@@ -79,4 +79,18 @@ public class Util{
         }
     }
 
+    public static String makeTimeString(int hour, int minute){
+        String hourString = String.valueOf(hour);
+        String minuteString = String.valueOf(minute);
+        if(hour < 10){
+            hourString = "0" + hourString;
+        }
+
+        if(minute < 10){
+            minuteString = "0" + minuteString;
+        }
+
+        return hourString + ":" + minuteString;
+    }
+
 }
