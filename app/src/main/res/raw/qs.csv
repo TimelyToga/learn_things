@@ -57,6 +57,51 @@
 000_STARTPACK, Mary was five times Joe's age six years ago. Mary is 21 now. How old is Joe?,@9,#6,#15
 000_STARTPACK, What's the hypotenuse of a right triangle with legs of length 36 and 48?,&60
 000_STARTPACK, What is the sum of all numbers 1 through 25 inclusive?,&325
+000_STARTPACK, What does abbreviate mean?,&to shorten or abridge
+000_STARTPACK, What does abstinence mean?,&the act of refraining from pleasurable activity
+000_STARTPACK, What does adulation mean?,&high praise
+000_STARTPACK, What does adversity mean?,&misfortune or an unfavorable turn of events
+000_STARTPACK, What does aesthetic mean?,&pertaining to beauty or the arts
+000_STARTPACK, What does amicable mean?,&friendly, agreeable
+000_STARTPACK, What does anachronistic mean?,&out-of-date; not attributed to the correct historical period
+000_STARTPACK, What does anecdote mean?,&short and usually funny account of an event
+000_STARTPACK, What does anonymous mean?,&nameless; without a disclosed identity
+000_STARTPACK, What does antagonist mean?,& foe; opponent; adversary
+000_STARTPACK, What does arid mean?,&extremely dry or deathly boring
+000_STARTPACK, What does assiduous mean?,&persistent or hard-working
+000_STARTPACK, What does asylum mean?,&sanctuary; shelter; place of refuge
+000_STARTPACK, What does benevolent mean?,&friendly and helpful
+000_STARTPACK, What does camaraderie mean?,&trust and sociability amongst friends
+000_STARTPACK, What does censure mean?,&to criticize harshly
+000_STARTPACK, What does circuitous mean?,&indirect; taking the longest route
+000_STARTPACK, What does clairvoyant mean?,&exceptionally insightful or able to forsee the future
+000_STARTPACK, What does collaborate mean?,&to cooperate or work together
+000_STARTPACK, What does compassion mean?,&sympathy; helpfulness or mercy
+000_STARTPACK, What does compromise mean?,&to settle a dispute by terms agreeable to both sides
+000_STARTPACK, What does condescending mean?,&possesing an attitude of superiority; patronizing
+000_STARTPACK, What does conformist mean?,&person who complies with accepted rules and customs
+000_STARTPACK, What does congregation mean?,&a crowd of people; an assembly
+000_STARTPACK, What does convergence mean?,&the state of separate elements joining or coming together
+000_STARTPACK, What does deleterious mean?,&harmful; destructive; detrimental
+000_STARTPACK, What does demagogue mean?,&leader that usually appeals to emotion or prejudice
+000_STARTPACK, What does digression mean?,&the act of straying from the main point
+000_STARTPACK, What does diligent mean?,&careful and hard working
+000_STARTPACK, What does discredit mean?,&to harm the reputation of; dishonor or disgrace
+000_STARTPACK, What does reclusive mean?,&preferring to live in isolation
+000_STARTPACK, What does reconciliation mean?,&the act of agreement after a quarrel; the resolution of a dispute
+000_STARTPACK, What does renovation mean?,&repair or making something new again
+000_STARTPACK, What does resilient mean?,&quick to recover
+000_STARTPACK, What does restrained mean?,&controlled or repressed
+000_STARTPACK, What does reverence mean?,&worship; profound respect
+000_STARTPACK, What does sagacity mean?,&wisdom
+000_STARTPACK, What does scrutinize mean?,&to observe carefully
+000_STARTPACK, What does spontaneity mean?,&impulsive action or unplanned events
+000_STARTPACK, What does spurious mean?,&lacking authenticity; false
+000_STARTPACK, What does suppress mean?,&forcibly put an end to
+000_STARTPACK, What does surreptitious mean?,&secret or stealthy
+000_STARTPACK, What does venerable mean?,&respected because of age
+000_STARTPACK, What does vindicate mean?,&to clear from blame or suspicion
+000_STARTPACK, What does fortuitous mean?,&happening by luck; fortunate
 001_WORLDCAPITALS, What is the capital of France?,@Paris,#Madrid,#Toulouse
 001_WORLDCAPITALS, What is the capital of The United States of America?,@Washington D.C.,#Chicago,#New York City
 001_WORLDCAPITALS, What is the capital of Spain?,@Madrid,#Barcelona,#Kiev
@@ -66,3 +111,44 @@
 001_WORLDCAPITALS, What is the capital of Bulgaria?,@Sofia,#Plovdiv,#Bucharest
 001_WORLDCAPITALS, What is the capital of Albania?,@Tirana,#Burrel,#Kosovo
 001_WORLDCAPITALS, What is the capital of Slovenia?,@Ljubljana,#Kranj,#Sisak
+001_WORLDCAPITALS, What is the capital of Afghanistan?,@Kabul,#Kandahar,#Herat
+001_WORLDCAPITALS, What is the capital of Algeria?,@Algiers,#Oran,#Constantine
+001_WORLDCAPITALS, What is the capital of Andorra?,@Andorra la Vella,#Canillo,#Encamp
+001_WORLDCAPITALS, What is the capital of Armenia?,@Yerevan,#Gyumri,#Vanadzor
+001_WORLDCAPITALS, What is the capital of Austria?,@Vienna,#Graz,#Linz
+001_WORLDCAPITALS, What is the capital of Azerbaijan?,@Baku,#Sumaqyit,#Ganja
+001_WORLDCAPITALS, What is the capital of the Bahamas?,@Nassau,#Freeport,#West End
+001_WORLDCAPITALS, What is the capital of Bahrain?,@Manama,#Riffa,#Muharraq
+001_WORLDCAPITALS, What is the capital of Bangladesh?,@Dhaka,#Chittagong,#Khulna
+001_WORLDCAPITALS, What is the capital of Barbados?,@Bridgetown,#Speightstown,#Oistins
+001_WORLDCAPITALS, What is the capital of Belarus?,@Minsk,#Homyel,#Mahilyow
+001_WORLDCAPITALS, What is the capital of Belgium?,@Brussels,#Antwerp,#Charleroi
+001_WORLDCAPITALS, What is the capital of Belize?,@Belmopan,#Belize City,#San Ignacio
+001_WORLDCAPITALS, What is the capital of Bhutan?,@Thimphu,#Phuntsholing,#Punakha
+001_WORLDCAPITALS, What is the capital of Botswana?,@Gaborone,#Francistown,#Molepolole
+001_WORLDCAPITALS, What is the capital of Brunei?,@Bandar Seri Begawan,#Kuala Belait,#Seria
+001_WORLDCAPITALS, What is the capital of Burkina Faso?,@Ouagadougou,#Bobo-Dioulasso,#Koudougou
+001_WORLDCAPITALS, What is the capital of Burma?,@Naypyidaw,#Yangon,#Mandalay
+001_WORLDCAPITALS, What is the capital of Burundi?,@Bujumbura,#Muyinga,#Ruyigi
+001_WORLDCAPITALS, What is the capital of Cambodia?,@Phnom Penh,#Ta Khmao,#Sisophon
+001_WORLDCAPITALS, What is the capital of Cameroon?,@Yaounde,#Douala,#Garoua
+001_WORLDCAPITALS, What is the capital of Canada?,@Ottawa,#Toronto,#Montreal
+001_WORLDCAPITALS, What is the capital of Cape Verde?,@Praia,#Mindelo,#Santa Maria
+001_WORLDCAPITALS, What is the capital of the Central African Republic?,@Bangui,#Bimbo,#Mbaiki
+001_WORLDCAPITALS, What is the capital of Chad?,@N'Djamena,#Moundou,#Sarh
+001_WORLDCAPITALS, What is the capital of Chile?,@Santiago,#Concepcion,#Valparaiso
+001_WORLDCAPITALS, What is the capital of China?,@Beijing,#Shanghai,#Chongqing
+001_WORLDCAPITALS, What is the capital of Colombia?,@Bogota,#Medellin,#Cali
+001_WORLDCAPITALS, What is the capital of Costa Rica?,@San Jose,#Puerto Limon,#Alajuela
+001_WORLDCAPITALS, What is the capital of Croatia?,@Zagreb,#Split,#Rijeka
+001_WORLDCAPITALS, What is the capital of Cuba?,@Havana,#Santiago de Cuba,#Camaguey
+001_WORLDCAPITALS, What is the capital of Cyprus?,@Limassol,#Strovolos,#Nicosia
+001_WORLDCAPITALS, What is the capital of Czech Republic?,@Prague,#Brno,#Ostrava
+001_WORLDCAPITALS, What is the capital of Denmark?,@Copenhagen,#Aarhus,#Odense
+001_WORLDCAPITALS, What is the capital of Djibouti?,@Djibouti,#Ali Sabieh,#Tadjoura
+001_WORLDCAPITALS, What is the capital of the Dominican Republic?,@Santo Domingo,#Santiago,#La Romana
+001_WORLDCAPITALS, What is the capital of Ecuador?,@Quito,#Guayaquil,#Cuenca
+001_WORLDCAPITALS, What is the capital of Egypt?,@Cairo,#Alexandria,#Giza
+001_WORLDCAPITALS, What is the capital of El Salvador?,@San Salvador,#Santa Ana,#Soyapango
+001_WORLDCAPITALS, What is the capital of Equatorial Guinea?,@Malabo,#Bata,#Malabo
+001_WORLDCAPITALS, What is the capital of Eritrea?,@Asmara,#Keren,#Teseney
