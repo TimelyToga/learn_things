@@ -7,8 +7,8 @@ android {
         applicationId 'com.timothyblumberg.autodidacticism.learnthings'
         minSdkVersion 17
         targetSdkVersion 20
-        versionCode 1
-        versionName '0.1'
+        versionCode 2
+        versionName 'Release Candidate 1'
     }
     buildTypes {
         release {
