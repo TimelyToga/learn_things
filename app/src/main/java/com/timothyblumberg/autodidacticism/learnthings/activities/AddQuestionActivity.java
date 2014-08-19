@@ -3,6 +3,7 @@ package com.timothyblumberg.autodidacticism.learnthings.activities;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -80,6 +81,14 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
         setUpSpinner();
         userClick = false;
 
+        // Set EditText Hint font
+        Typeface robotoFont = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                "fonts/RobotoSlab-Light.ttf");
+        questionTextForm.setTypeface(robotoFont);
+        questionAnswer1Form.setTypeface(robotoFont);
+        questionAnswer2Form.setTypeface(robotoFont);
+        questionAnswer3Form.setTypeface(robotoFont);
+        
     }
 
     private void setUpSpinner() {

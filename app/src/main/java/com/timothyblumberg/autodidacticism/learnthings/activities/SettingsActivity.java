@@ -110,6 +110,11 @@ public class SettingsActivity extends BaseActivity {
         registerForContextMenu(qPackLayout);
         setupFrequencyList();
         setUpButtons();
+
+        if(!G.DEBUG){
+            // If production, hide Debug buttons    
+            findViewById(R.id.debug_buttons).setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

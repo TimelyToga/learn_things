@@ -103,7 +103,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout"
+            android:id="@+id/debug_buttons"
             android:layout_below="@id/askIntensityList"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
