@@ -73,8 +73,15 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
 
+        // Handle app exits
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+            return;
+        }
+
+        // View initialization
+        setContentView(R.layout.activity_settings);
         // Set Action Bar title to different from app launcher label
         getActionBar().setTitle(getString(R.string.title_activity_settings));
 

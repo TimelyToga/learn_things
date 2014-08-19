@@ -1,5 +1,6 @@
 package com.timothyblumberg.autodidacticism.learnthings.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -29,6 +30,10 @@ public class GenericQuestionResultActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
+                Intent intent = new Intent(GenericQuestionResultActivity.this, SettingsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("EXIT", true);
+                startActivity(intent);
                 finish();
             }
         };

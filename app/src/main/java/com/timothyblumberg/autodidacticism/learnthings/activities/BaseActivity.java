@@ -108,8 +108,6 @@ public class BaseActivity extends FragmentActivity {
             waitTimer = null;
         }
 
-        // Launch WinActivity if necessary MAY NEED TO READD
-
         super.finish();
     }
 
