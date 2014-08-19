@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.Question;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
@@ -142,7 +143,9 @@ public class AddQuestionActivity extends BaseActivity implements AdapterView.OnI
 
                 // valid question. Save and clear fields.
                 QuestionDAO.save(newQuestion);
-                Toast.makeText(this, newQuestion.qText + " " + newQuestion.question_id, Toast.LENGTH_LONG).show();
+                String message = String.format(getString(R.string.new_q_saved),
+                        QuestionPackDAO.getQPackById(selectedQPackID).displayName);
+                ToastUtil.showShort(message);
                 clearFields();
             } else {
                 if(!Util.isNotEmpty(qText)){

@@ -37,6 +37,7 @@
     <string name="no_question_add_question">Please provide a question</string>
     <string name="select_valid_question_pack">Please select a valid question pack.</string>
     <string name="q_pack_with_that_name_exists">Sorry, you already have a question pack with that name.</string>
+    <string name="new_q_saved">Question saved to %s</string>
 
     <!-- AddQuestionActivity -->
     <string name="question_text_hint">Add question text here…</string>
