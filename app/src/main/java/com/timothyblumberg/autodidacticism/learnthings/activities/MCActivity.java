@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
@@ -72,9 +71,6 @@ public class MCActivity extends GenericQuestionResultActivity {
             }
 
 
-        }  else {
-            if(G.DEBUG) Toast.makeText(this, "No extras", Toast.LENGTH_SHORT).show();
-            correctnessText.setText("Welcome to LearnThings!");
         }
 
         NotificationManager notificationManager = (NotificationManager)
@@ -84,7 +80,7 @@ public class MCActivity extends GenericQuestionResultActivity {
         // Initialization in BaseActivity
         setLayoutTouchListener(mainLayout);
         makeAnimateTimer().start();
-        waitTimer = makeTimer().start();
+        waitTimer = makeTimer(correct).start();
         initQuestionsAndUser();
         scheduleNotif(G.SCHEDULE_NOTIF_DEFAULT_TIME);
     }

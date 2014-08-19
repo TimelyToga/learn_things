@@ -59,7 +59,6 @@ public class FRActivity extends GenericQuestionResultActivity {
 
         // Initialization in BaseActivity
         makeAnimateTimer().start();
-        waitTimer = makeTimer();
         initQuestionsAndUser();
     }
 
@@ -82,7 +81,7 @@ public class FRActivity extends GenericQuestionResultActivity {
     public void performGenericResultButtonClick(boolean correct){
         // Set up timer Business
         setLayoutTouchListener(mainLayout);
-        waitTimer.start();
+        waitTimer = makeTimer(correct).start();
 
         runBackgroundAnimation(correct);
         curQuestion.setOutcome(correct);

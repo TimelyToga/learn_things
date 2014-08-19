@@ -15,6 +15,7 @@ public class G {
 
     // Timer values
     public static final int TIMER_COUNTDOWN_LENGTH = 2400;
+    public static final int INCORRECT_TIMER_COUNTDOWN_LENGTH = 3500;
     public static final int ANIMATION_TIMER_LENGTH = 75;
     public static int INITIAL_TIME_FOR_NOTIF = 2000;
     public static final int SCHEDULE_NOTIF_DEFAULT_TIME = -1;

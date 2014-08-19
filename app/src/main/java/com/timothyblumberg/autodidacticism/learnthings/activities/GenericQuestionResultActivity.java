@@ -22,8 +22,11 @@ public class GenericQuestionResultActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    protected CountDownTimer makeTimer(){
-        return new CountDownTimer(G.TIMER_COUNTDOWN_LENGTH, 1000) {
+    protected CountDownTimer makeTimer(boolean isCorrect){
+        int timerLength;
+        if(isCorrect) timerLength = G.TIMER_COUNTDOWN_LENGTH;
+        else timerLength = G.INCORRECT_TIMER_COUNTDOWN_LENGTH;
+        return new CountDownTimer(timerLength, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
             }
