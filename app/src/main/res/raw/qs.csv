@@ -1,6 +1,7 @@
 // Define question packs; (3 = came with app)
 ## 000_STARTPACK, Vocab Starter Pack, Free response vocabulary questions,3
 ## 001_WORLDCAPITALS, World Capitals, Quizzing on the World's Capitals,3
+## 002_PRESIDENTS, US Presidents,
 // Define questions
 000_STARTPACK, What does abhor mean?,&hate
 000_STARTPACK, What does bigot mean?,&narrow-minded or prejudiced person
@@ -52,6 +53,7 @@
 000_STARTPACK, What does plausible mean?,&can be believed; reasonable
 000_STARTPACK, What does reprieve mean?,&a respite; postponement of a sentence
 000_STARTPACK, What does tawdry mean?,&of little value; gaudy
+000_STARTPACK, What does megalomaniac mean?,&Obsessed with one's own power
 000_STARTPACK, If x is divisible by 3 and 4 which of the following is divisible by 6?,@x+12,#x+8,#x+2
 000_STARTPACK, Find x: 6x-11 = 3x + 13,&x=8
 000_STARTPACK, Mary was five times Joe's age six years ago. Mary is 21 now. How old is Joe?,@9,#6,#15
@@ -102,7 +104,6 @@
 000_STARTPACK, What does venerable mean?,&respected because of age
 000_STARTPACK, What does vindicate mean?,&to clear from blame or suspicion
 000_STARTPACK, What does fortuitous mean?,&happening by luck; fortunate
-001_WORLDCAPITALS, What is the capital of France?,@Paris,#Madrid,#Toulouse
 001_WORLDCAPITALS, What is the capital of The United States of America?,@Washington D.C.,#Chicago,#New York City
 001_WORLDCAPITALS, What is the capital of Spain?,@Madrid,#Barcelona,#Kiev
 001_WORLDCAPITALS, What is the capital of Brazil?,@Brasília,#Rio de Janeiro,#Córdoba
@@ -117,7 +118,7 @@
 001_WORLDCAPITALS, What is the capital of Armenia?,@Yerevan,#Gyumri,#Vanadzor
 001_WORLDCAPITALS, What is the capital of Austria?,@Vienna,#Graz,#Linz
 001_WORLDCAPITALS, What is the capital of Azerbaijan?,@Baku,#Sumaqyit,#Ganja
-001_WORLDCAPITALS, What is the capital of the Bahamas?,@Nassau,#Freeport,#West End
+001_WORLDCAPITALS, What is the capital of The Bahamas?,@Nassau,#Freeport,#West End
 001_WORLDCAPITALS, What is the capital of Bahrain?,@Manama,#Riffa,#Muharraq
 001_WORLDCAPITALS, What is the capital of Bangladesh?,@Dhaka,#Chittagong,#Khulna
 001_WORLDCAPITALS, What is the capital of Barbados?,@Bridgetown,#Speightstown,#Oistins
@@ -152,3 +153,24 @@
 001_WORLDCAPITALS, What is the capital of El Salvador?,@San Salvador,#Santa Ana,#Soyapango
 001_WORLDCAPITALS, What is the capital of Equatorial Guinea?,@Malabo,#Bata,#Malabo
 001_WORLDCAPITALS, What is the capital of Eritrea?,@Asmara,#Keren,#Teseney
+001_WORLDCAPITALS, What is the capital of Estonia?,@Tallinn,#Teseney,#Bata
+001_WORLDCAPITALS, What is the capital of Ethiopia?,@Addis Ababa,#Nekemte,#Machi
+001_WORLDCAPITALS, What is the capital of Finland?,@Helsinki, #Stockholm, #Oslo
+001_WORLDCAPITALS, What is the capital of France?,@Paris,#Madrid,#Toulouse
+001_WORLDCAPITALS, What is the capital of Georgia?,@Tbilsi,#Didgori,#Vake-Saburtalo
+001_WORLDCAPITALS, What is the capital of Germany?,@Berlin,#Frankfurt,#Munich
+001_WORLDCAPITALS, What is the capital of Ghana?,@Accra,#Techiman,#Winneba
+001_WORLDCAPITALS, What is the capital of Greece?,@Athens,#Patras,#Cyprus
+001_WORLDCAPITALS, What is the capital of Guatemala?,@Guetemala City,#El Estor,#Chiquimula
+001_WORLDCAPITALS, What is the capital of Guinea?,@Conakry,#Kankan,#Labe
+001_WORLDCAPITALS, What is the capital of Guyana?,@Georgetown,#Bartica,#New Amsterdam
+001_WORLDCAPITALS, What is the capital of Haiti?,@Port-au-Prince,#Jacmel,#Cap Haitien
+001_WORLDCAPITALS, What is the capital of Honduras?,@Tegucigalpa,#San Pedro Sula,#Catacamas
+001_WORLDCAPITALS, What is the capital of Hungary?,@Budapest,#Miskolc,#Szombathely
+001_WORLDCAPITALS, What is the capital of Iceland?,@Reykjavik,#Akureyri,#
+001_WORLDCAPITALS, What is the capital of India?,@New Delhi,#Bangalore,#Mumbai
+001_WORLDCAPITALS, What is the capital of Indonesia?,@Jakarta,#Manado,#Makassar
+001_WORLDCAPITALS, What is the capital of Iran?,@Tehran,#Isfahan,#Shiraz
+001_WORLDCAPITALS, What is the capital of Iraq?,@Baghdad,#Kirkuk,#Basrah
+001_WORLDCAPITALS, What is the capital of Ireland?,@Dublin,#Belfast,#Waterdford
+// 001_WORLDCAPITALS, What is the capital of ?,@,#,#
