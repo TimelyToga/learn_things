@@ -1,7 +1,7 @@
 // Define question packs; (3 = came with app)
 ## 000_STARTPACK, Vocab Starter Pack, Free response vocabulary questions,3
 ## 001_WORLDCAPITALS, World Capitals, Quizzing on the World's Capitals,3
-## 002_PRESIDENTS, US Presidents,
+## 002_PRESIDENTS, US Presidents, Who were the presidents
 // Define questions
 000_STARTPACK, What does abhor mean?,&hate
 000_STARTPACK, What does bigot mean?,&narrow-minded or prejudiced person
@@ -173,4 +173,49 @@
 001_WORLDCAPITALS, What is the capital of Iran?,@Tehran,#Isfahan,#Shiraz
 001_WORLDCAPITALS, What is the capital of Iraq?,@Baghdad,#Kirkuk,#Basrah
 001_WORLDCAPITALS, What is the capital of Ireland?,@Dublin,#Belfast,#Waterdford
+001_WORLDCAPITALS, What is the capital of Israel?,@Jerusalem,#Tel Aviv,#Gaza
+001_WORLDCAPITALS, What is the capital of Italy?,@Rome,#Milan,#Naples
 // 001_WORLDCAPITALS, What is the capital of ?,@,#,#
+002_PRESIDENTS, 1st President,&George Washington
+002_PRESIDENTS, 2nd President,&John Adams
+002_PRESIDENTS, 3rd President,&Thomas Jefferson
+002_PRESIDENTS, 4th President,&James Maddison
+002_PRESIDENTS, 5th President,&James Monroe
+002_PRESIDENTS, 6th President,&John Quincy Adams
+002_PRESIDENTS, 7th President,&Andrew Jackson
+002_PRESIDENTS, 8th President,&Martin Van Buren
+002_PRESIDENTS, 9th President,&William Henry Harrison
+002_PRESIDENTS, 10th President,&John Tyler
+002_PRESIDENTS, 11th President,&James K. Polk
+002_PRESIDENTS, 12th President,&Zachary Taylor
+002_PRESIDENTS, 13th President,&Millard Fillmore
+002_PRESIDENTS, 14th President,&Franklin Pierce
+002_PRESIDENTS, 15th President,&James Buchanan
+002_PRESIDENTS, 16th President,&Abraham Lincoln
+002_PRESIDENTS, 17th President,&Andrew Johnson
+002_PRESIDENTS, 18th President,&Ulysses S. Grant
+002_PRESIDENTS, 19th President,&Rutherford B. Hayes
+002_PRESIDENTS, 20th President,&James A. Garfield
+002_PRESIDENTS, 21st President,&Chester A. Arthur
+002_PRESIDENTS, 22nd President,&Grover Cleveland
+002_PRESIDENTS, 23rd President,&Benjamin Harrison
+002_PRESIDENTS, 24th President,&Grover Cleveland
+002_PRESIDENTS, 25th President,&William McKinley
+002_PRESIDENTS, 26th President,&Theodore Roosevelt
+002_PRESIDENTS, 27th President,&William Howard Taft
+002_PRESIDENTS, 28th President,&Woodrow Wilson
+002_PRESIDENTS, 29th President,&Warren G. Harding
+002_PRESIDENTS, 30th President,&Calvin Coolidge
+002_PRESIDENTS, 31st President,&Herbert Hoover
+002_PRESIDENTS, 32nd President,&Franklin D. Roosevelt
+002_PRESIDENTS, 33rd President,&Harry S. Truman
+002_PRESIDENTS, 34th President,&Dwight D. Eisenhower
+002_PRESIDENTS, 35th President,&John F. Kennedy
+002_PRESIDENTS, 36th President,&Lyndon B. Johnson
+002_PRESIDENTS, 37th President,&Richard Nixon
+002_PRESIDENTS, 38th President,&Gerald Ford
+002_PRESIDENTS, 39th President,&Jimmy Carter
+002_PRESIDENTS, 40th President,&George H. W. Bush
+002_PRESIDENTS, 41st President,&Bill Clinton
+002_PRESIDENTS, 42nd President,&George W. Bush
+002_PRESIDENTS, 43rd President,&Barrack Obama
