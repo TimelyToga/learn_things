@@ -38,6 +38,8 @@
     <string name="select_valid_question_pack">Please select a valid question pack.</string>
     <string name="q_pack_with_that_name_exists">Sorry, you already have a question pack with that name.</string>
     <string name="new_q_saved">Question saved to %s</string>
+    <string name="making_qs_now">We are generating your questions. Please wait a moment.</string>
+    <string name="finished_making_qs">Your questions have been generated. Please enjoy.</string>
 
     <!-- AddQuestionActivity -->
     <string name="question_text_hint">Add question text here…</string>

@@ -1,5 +1,6 @@
 package com.timothyblumberg.autodidacticism.learnthings.question;
 
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
@@ -7,6 +8,7 @@ import com.google.gson.Gson;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
+import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +28,7 @@ public class QuestionFactory {
     private final static String TAG = QuestionFactory.class.getSimpleName();
 
     public static void initQuestionDBFromCSV(){
-        makeQuestionsFromCSVFile();
+        new MakeQuestionsTask().execute();
     }
 
     public static Question createQuestionfromJson(String json){
@@ -133,6 +135,32 @@ public class QuestionFactory {
                 writer.close();
             } catch (Exception e) {
             }
+        }
+    }
+
+    private static class MakeQuestionsTask extends AsyncTask<Void, Integer, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            makeQuestionsFromCSVFile();
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            ToastUtil.showLong(App.getAppContext().getString(R.string.making_qs_now));
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            ToastUtil.showLong(App.getAppContext().getString(R.string.finished_making_qs));
+            super.onPostExecute(aBoolean);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
         }
     }
 }

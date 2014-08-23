@@ -1,7 +1,7 @@
 // Define question packs; (3 = came with app)
 ## 000_STARTPACK, Vocab Starter Pack, Free response vocabulary questions,3
 ## 001_WORLDCAPITALS, World Capitals, Quizzing on the World's Capitals,3
-## 002_PRESIDENTS, US Presidents, Who were the presidents
+## 002_PRESIDENTS, US Presidents, Who were the presidents, 3
 // Define questions
 000_STARTPACK, What does abhor mean?,&hate
 000_STARTPACK, What does bigot mean?,&narrow-minded or prejudiced person
@@ -53,7 +53,7 @@
 000_STARTPACK, What does plausible mean?,&can be believed; reasonable
 000_STARTPACK, What does reprieve mean?,&a respite; postponement of a sentence
 000_STARTPACK, What does tawdry mean?,&of little value; gaudy
-000_STARTPACK, What does megalomaniac mean?,&Obsessed with one's own power
+000_STARTPACK, What does megalomaniac mean?,&Obsessed with your own power
 000_STARTPACK, If x is divisible by 3 and 4 which of the following is divisible by 6?,@x+12,#x+8,#x+2
 000_STARTPACK, Find x: 6x-11 = 3x + 13,&x=8
 000_STARTPACK, Mary was five times Joe's age six years ago. Mary is 21 now. How old is Joe?,@9,#6,#15
