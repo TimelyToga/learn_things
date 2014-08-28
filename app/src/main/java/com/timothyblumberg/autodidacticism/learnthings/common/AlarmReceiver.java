@@ -78,7 +78,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             Log.d(TAG, "SKIPPED NOTIFICATION PUBLISH: NOT IN TIME RANGE");
             Log.d(TAG, "start: " + startHour + ":" + startMin);
             Log.d(TAG, "end: " + endHour + ":" + endMin);
-            ToastUtil.showShort("cur: " + curHour + ":" + curMin);
+//            ToastUtil.showShort("cur: " + curHour + ":" + curMin);
         }
 
     }
