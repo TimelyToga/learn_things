@@ -18,6 +18,12 @@ import java.util.List;
 public class WinActivity extends BaseActivity {
 
     public static void launch(Context context){
+        if(G.isShowingWinScreen){
+            // Already showing win screen, don't launch again, you dingus
+            return;
+        }
+
+        // Not showing win screen, can launch WinActivity
         Intent intent = new Intent(context, WinActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -27,6 +33,9 @@ public class WinActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
+
+        // Showing win screen, can't currently win again
+        G.isShowingWinScreen = true;
     }
 
 
@@ -47,6 +56,18 @@ public class WinActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void finish(){
+        if(waitTimer != null) {
+            waitTimer.cancel();
+            waitTimer = null;
+        }
+
+        // no showing win screen, can win again
+        G.isShowingWinScreen = false;
+        super.finish();
     }
 
     public void handleAgain(View v){

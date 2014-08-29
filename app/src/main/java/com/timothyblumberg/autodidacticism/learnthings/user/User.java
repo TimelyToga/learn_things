@@ -5,7 +5,6 @@ import android.widget.Toast;
 import com.timothyblumberg.autodidacticism.learnthings.App;
 import com.timothyblumberg.autodidacticism.learnthings.R;
 import com.timothyblumberg.autodidacticism.learnthings.common.G;
-import com.timothyblumberg.autodidacticism.learnthings.common.ToastUtil;
 import com.timothyblumberg.autodidacticism.learnthings.common.Util;
 import com.timothyblumberg.autodidacticism.learnthings.question.QuestionDAO;
 
@@ -68,8 +67,6 @@ public class User {
     }
 
     public void setTimes(String newStartTime, String newEndTime){
-        ToastUtil.showShort("Start: " + newStartTime + " End: " + newEndTime);
-
         if(Util.isNotEmpty(newStartTime)){
             this.startTime = newStartTime;
         }

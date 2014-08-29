@@ -48,11 +48,9 @@ public class G {
 
     // Notification Frequency variables and constants
     public static final int MILLISECONDS_IN_DAY = 3600*24000;
-    public static final int FREQUENCY_TPD5 = MILLISECONDS_IN_DAY / 5;
-    public static final int FREQUENCY_TPD10 = MILLISECONDS_IN_DAY / 10;
-    public static final int FREQUENCY_TPD25 = MILLISECONDS_IN_DAY / 25;
-    public static final int FREQUENCY_50 = MILLISECONDS_IN_DAY / 50;
     public static final int FREQUENCY_SEC3 = MILLISECONDS_IN_DAY / (24*3600/3);
+    public static final int FREQUENCY_MIN3 = MILLISECONDS_IN_DAY / 480;
+    public static final int FREQUENCY_MIN5 = MILLISECONDS_IN_DAY / 288;
     public static final int FREQUENCY_MIN15 = MILLISECONDS_IN_DAY / 96;
     public static final int FREQUENCY_MIN30 = MILLISECONDS_IN_DAY / 48;
     public static final int FREQUENCY_HOURLY = MILLISECONDS_IN_DAY / 24;
@@ -62,6 +60,8 @@ public class G {
     public static final int FREQUENCY_DAILY2 = MILLISECONDS_IN_DAY * 2;
 
     public static final String[] questionFrequencyNames = {"Every 3 Seconds",
+                                                "Every 3 minutes",
+                                                "Every 5 minutes",
                                                 "Every 15 minutes",
                                                 "Every 30 minutes",
                                                 "Every hour",
@@ -71,6 +71,8 @@ public class G {
                                                 "Every two days"};
 
     public static final int[] questionFrequencyTimes = {FREQUENCY_SEC3,
+                                                FREQUENCY_MIN3,
+                                                FREQUENCY_MIN5,
                                                 FREQUENCY_MIN15,
                                                 FREQUENCY_MIN30,
                                                 FREQUENCY_HOURLY,
@@ -78,10 +80,6 @@ public class G {
                                                 FREQUENCY_HOURLY6,
                                                 FREQUENCY_DAILY,
                                                 FREQUENCY_DAILY2};
-
-
-    public final static String QPACK_USER_CREATED = "001_USERCREATED";
-    public final static String QPACK_STARTING = "000_STARTPACK";
 
     // booleanString
     public final static String TRUE = "T";
@@ -101,6 +99,7 @@ public class G {
     public static final String COMMENT_STRING = "//";
     public static final String QUESTION_PACK_STRING = "##";
     public static final long[] VIBRATE_PATTERN = {0, 75, 100, 75, 150, 300};
+    public static boolean isShowingWinScreen = false;
 
 
 }
